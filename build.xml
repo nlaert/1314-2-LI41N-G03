@@ -1,4 +1,4 @@
-<project name="progs" default="test" basedir=".">
+<project name="LS" default="test" basedir=".">
 
   <description> 
     Ant build file for LS

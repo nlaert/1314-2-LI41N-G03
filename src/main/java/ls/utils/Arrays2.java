@@ -10,7 +10,7 @@ public class Arrays2 {
     	int mid;
     	
     	while( beginIndex < endIndex ){
-    		mid = endIndex + beginIndex / 2;
+    		mid = (endIndex + beginIndex) / 2;
     		if( n > a[mid] ) beginIndex = mid + 1;
     		else endIndex = mid - 1;
     	}

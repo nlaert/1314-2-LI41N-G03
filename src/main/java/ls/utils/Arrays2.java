@@ -8,7 +8,7 @@ public class Arrays2 {
     	int beginIndex = 0;
     	int endIndex = a.length;
     	int mid;
-    	
+    	//teste
     	while( beginIndex < endIndex ){
     		mid = (endIndex + beginIndex) / 2;
     		if( n > a[mid] ) beginIndex = mid + 1;

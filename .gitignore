@@ -6,3 +6,9 @@
 *.war
 *.ear
 
+
+testeJDBC/.classpath
+
+testeJDBC/.project
+
+testeJDBC/.settings/org.eclipse.jdt.core.prefs

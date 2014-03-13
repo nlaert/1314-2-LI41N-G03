@@ -6,7 +6,7 @@ public class Arrays2 {
     public static int indexOfLowerBound(int[] a, int n) {
     	
     	int beginIndex = 0;
-    	int endIndex = a.length;
+    	int endIndex = a.length-1;
     	int mid;
     	while( beginIndex < endIndex ){
     		mid = (endIndex + beginIndex) / 2;

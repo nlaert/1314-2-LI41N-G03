@@ -51,7 +51,19 @@ public class Arrays2Test {
         // Assert
         assertEquals(0, Arrays2.indexOfLowerBound(v, value));        
         assertEquals(0, Arrays2.indexOfLowerBound(v, value-1));        
-        assertEquals(v.length, Arrays2.indexOfLowerBound(v, value+1));        
+        assertEquals(v.length, Arrays2.indexOfLowerBound(v, value+1));
+        				//é suposto o lowerbound retornar um indice fora do array??        
      }
+    
+    @Test
+    public void indexOfLowerBound_multiple_values(){
+    	int [] v = new int [10];
+    	for (int i = 0; i<v.length; i++)
+    		v[i] = i;
+    	assertEquals(0,Arrays2.indexOfLowerBound(v, -1));
+    	assertEquals(5,Arrays2.indexOfLowerBound(v, 5));
+    	assertEquals(9,Arrays2.indexOfLowerBound(v, 10));
+    }
+    
 
 }

@@ -51,8 +51,7 @@ public class Arrays2Test {
         // Assert
         assertEquals(0, Arrays2.indexOfLowerBound(v, value));        
         assertEquals(0, Arrays2.indexOfLowerBound(v, value-1));        
-        assertEquals(v.length, Arrays2.indexOfLowerBound(v, value+1));
-        				//é suposto o lowerbound retornar um indice fora do array??        
+        assertEquals(v.length-1, Arrays2.indexOfLowerBound(v, value+1)); 
      }
     
     @Test

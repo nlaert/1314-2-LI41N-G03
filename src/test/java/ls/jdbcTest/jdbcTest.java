@@ -1,6 +1,7 @@
 package ls.jdbcTest;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
 public class jdbcTest {
 	
 	int aluno1 = 100;
-	int aluno2 = 200;
+	int aluno2 = 101;
 	String cmdDeleteAluno1 = "delete from Aluno where bi ="+aluno1;
 	String cmdDeleteAluno2 = "delete from Aluno where bi ="+aluno2;
 	String cmdUpdateAluno2 = "update Aluno set nome='JOAO RODRIGUES' where bi="+aluno2;
@@ -27,9 +28,14 @@ public class jdbcTest {
 	}
 	
 	@Test
-	public void test_Select()
+	public void test_Select() throws SQLException
 	{
-		
+		String select = "select bi, nome from Aluno where bi >= " + aluno1 + " and bi <= " + aluno2;
+		ArrayList <String> result = new ArrayList <String>(2);
+		result.add(aluno1 + "\tNICK\t");
+		result.add(aluno2 + "\tJOAO\t");
+
+		assertEquals(result, CRUD.executeQuery(select));
 	}
 	
 	@Test(expected = SQLException.class)

@@ -1,4 +1,4 @@
-package jdbcTest;
+package ls.jdbc;
 import java.sql.*;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
@@ -11,8 +11,8 @@ public class DataBaseManager {
 	
 	public DataBaseManager() 
 	{
-//		ds.setServerName("10.211.55.8");
-		ds.setServerName("localhost");
+		ds.setServerName("10.211.55.8");
+//		ds.setServerName("localhost");
 		ds.setPortNumber(1433);
 		ds.setDatabaseName("LS");
 		ds.setUser("ls");

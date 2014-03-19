@@ -10,8 +10,8 @@ public class DataBaseManager {
 	
 	public DataBaseManager() 
 	{
-//		ds.setServerName("10.211.55.8");
-		ds.setServerName("localhost");
+		ds.setServerName("10.211.55.9");
+	//	ds.setServerName("localhost");
 		ds.setPortNumber(1433);
 		ds.setDatabaseName("LS");
 		ds.setUser("ls");
@@ -19,7 +19,6 @@ public class DataBaseManager {
 		
 		try{
 			connection = ds.getConnection();
-//			connection = DriverManager.getConnection(url);
 		}
 		catch(SQLException sqlex)
 		{

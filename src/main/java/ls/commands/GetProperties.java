@@ -19,7 +19,7 @@ public class GetProperties implements iCommand {
 	public GetProperties()
 	{
 		map = new HashMap<String,iCommand>();
-		map.put("/detais", new GetDetails());
+		map.put("/details", new GetDetails());
 		map.put("/location", new GetLocation());
 		map.put("/owner", new GetOwner());
 		map.put("/type", new GetType());

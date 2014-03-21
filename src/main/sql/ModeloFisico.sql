@@ -18,14 +18,14 @@ create table [type](
 	)
 
 create table properties (
-	id int identity(1,1) primary key,
+	[pid] int identity(1,1) primary key,
 	[description] varchar(200) not null,
-	price money not null,
-	location varchar(50) not null,
+	[price] money not null,
+	[location] varchar(50) not null,
 	[owner] varchar(15) not null,
 	[type] varchar(15) not null,
-	Constraint FK_owner Foreign key (owner) references users(username),
-	Constraint FK_type Foreign key (type) references Type(type),
+	Constraint FK_owner Foreign key ([owner]) references users(username),
+	Constraint FK_type Foreign key ([type]) references Type([type]),
 	
 	)
 
@@ -37,3 +37,5 @@ insert into properties values ('apartamento nos Olivais',1000,'Lisboa, Olivais',
 select username, password, email, fullname from users where username = 'joao';
 select username, password, email, fullname from users;
 select [type], [description], [price], [location] from properties
+select [type], [description], [price], [location] from properties where pid = 1
+

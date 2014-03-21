@@ -10,8 +10,8 @@ public class app {
 	{
 		Gestao gest = new Gestao("GET /users");
 		Gestao gest1 = new Gestao("GET /properties/location/Lisboa, Olivais");
-//		Gestao gest0 = new Gestao("GET /users/pedro");
-//		Gestao gest1 = new Gestao("GET /users");
+		Gestao gest2 = new Gestao("GET /properties/details/1");
+		Gestao gest3 = new Gestao("GET /properties/owner/joao");
 ////		Gestao gest2 = new Gestao("GET /");
 	}
 }

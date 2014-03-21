@@ -1,5 +1,10 @@
 package ls.utils;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+
 public class Utils {
 
 	public static  String [] limitator(String command)
@@ -19,5 +24,27 @@ public class Utils {
 			divide[0] = command.substring(0,aux+1);
 		}
 		return divide;
+	}
+	
+	public static boolean checkAuth(String username, String password, Connection conn) throws SQLException{
+		PreparedStatement prep = conn.prepareStatement("Select username from Users Where username = ? and password = ?");
+		prep.setString(1, username);
+		prep.setString(2, password);
+		return prep.executeQuery().next();
+	}
+	
+	public static HashMap<String, String> mapper(String parameters){
+		if (parameters == null || parameters.equals(""))
+			return null;
+		HashMap <String, String> dict = new HashMap<String, String>();
+		String [] aux = parameters.split("&");
+		int equal = 0;
+		for (int i = 0; i < aux.length; i++){
+			if (aux[i].indexOf('+')>=0)
+				aux[i] = aux[i].replace('+', ' ');
+			equal = aux[i].indexOf('=');
+			dict.put(aux[i].substring(0, equal), aux[i].substring(equal+1));			
+		}
+		return dict;
 	}
 }

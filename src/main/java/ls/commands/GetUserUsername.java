@@ -1,4 +1,4 @@
-package ls.project.get;
+package ls.commands;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,8 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import ls.jdbc.DataBaseManager;
+import ls.propertiesRental.iCommand;
 
-public class GetUserUsername implements iGet {
+public class GetUserUsername implements iCommand {
 	
 	Statement stmt;
 	PreparedStatement prep;
@@ -16,43 +17,17 @@ public class GetUserUsername implements iGet {
 	
 
 	@Override
-	public void executa(String command) {
+	public void execute(String command) {
 		try {
-			if(command.equals(""))
-				selectWithoutUser();
-			else
+			if(!command.equals(""))
 				selectWithUser(command);
+			else
+				System.out.println("Informacao nao encontrada");
+			
+	
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
-	}
-
-	private void selectWithoutUser() throws SQLException {
-		try {
-			link = new DataBaseManager();
-			stmt = link.getConnetion().createStatement();
-			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			System.out.println("Username \t Password \t Email \t\t\t\t Fullname ");
-			while(rs.next())
-			{
-				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-						rs.getString(3), rs.getString(4));
-			}
-			System.out.println();
-		} catch (SQLException e) {
-			System.out.println(e);
-		} finally
-		{
-			if(rs != null)
-				rs.close();
-			if(stmt != null)
-				stmt.close();
-			if(link != null)
-				link.closeConnection();
-			
-		}
-		
 		
 	}
 
@@ -70,8 +45,7 @@ public class GetUserUsername implements iGet {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} finally
 		{
 			if(rs != null)

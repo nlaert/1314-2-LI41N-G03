@@ -27,8 +27,12 @@ public class DataBaseManager {
 
 	}
 
-	public void closeConnection() throws SQLException {
-		connection.close();
+	public void closeConnection() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public Connection getConnetion() {

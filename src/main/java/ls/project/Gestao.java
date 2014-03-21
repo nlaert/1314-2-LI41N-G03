@@ -1,6 +1,12 @@
 package ls.project;
 
 import java.util.HashMap;
+import java.util.NoSuchElementException;
+
+import ls.project.get.GetProperties;
+import ls.project.get.GetUsers;
+import ls.project.get.iGet;
+import ls.utils.*;
 
 public class Gestao {
 
@@ -21,31 +27,23 @@ public class Gestao {
 	
 	
 	private void run() {
-		
-		String key = limitator();
-		if(map.containsKey(key))
+		if(command.equals(""))
+			System.exit(0);
+		String [] keyValue = Utils.limitator(command);
+		if(map.containsKey(keyValue[0]))
 		{
-			map.get(key).executa(second);
+			map.get(keyValue[0]).executa(keyValue[1]);
 		}
+		else
+		{
+			System.out.println("Nao existe informacao");
+		}
+		
 		//falta se nao conter
 		
 	}
 
 
 
-	public  String limitator()
-	{
-		int first = command.indexOf("/");
-		if(first == command.lastIndexOf("/"))
-		{
-			return command;
-		}
-		else
-		{
-		
-			int aux = command.substring(first+1).indexOf("/") + first;
-			second = command.substring(aux+1);
-			return command.substring(0,aux+1);
-		}
-	}
+	
 }

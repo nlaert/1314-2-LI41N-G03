@@ -28,3 +28,10 @@ create table properties (
 	Constraint FK_type Foreign key (type) references Type(type),
 	
 	)
+
+insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Admin');
+insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
+insert into users values('nick','pass','a35366@alunos.isel.pt','Nick Laert');
+
+select username, password, email, fullname from users where username = 'joao';
+select username, password, email, fullname from users;

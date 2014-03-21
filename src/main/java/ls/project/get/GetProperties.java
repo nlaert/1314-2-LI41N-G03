@@ -1,6 +1,6 @@
-package ls.project;
+package ls.project.get;
 
-public class GetUserUsername implements iGet {
+public class GetProperties implements iGet {
 
 	@Override
 	public void executa(String command) {

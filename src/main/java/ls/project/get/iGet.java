@@ -1,4 +1,4 @@
-package ls.project;
+package ls.project.get;
 
 public interface iGet {
 

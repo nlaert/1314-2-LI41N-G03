@@ -21,7 +21,12 @@ public class PostUsers implements iCommand {
 		}
 		
 		PreparedStatement prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
-		prep. //TODO acabar insert
+		prep.setString(1, map.get("username"));
+		prep.setString(2, map.get("password"));
+		prep.setString(3, map.get("email"));
+		prep.setString(4, map.get("fullname"));
+		prep.executeUpdate();
+		
 	}
 
 }

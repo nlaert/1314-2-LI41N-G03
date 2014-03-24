@@ -19,15 +19,15 @@ public class GetProperties implements iCommand {
 	public GetProperties()
 	{
 		map = new HashMap<String,iCommand>();
-		map.put("/details", new GetDetails());
-		map.put("/location", new GetLocation());
-		map.put("/owner", new GetOwner());
-		map.put("/type", new GetType());
+		map.put("/details", new GetSelectProperties("pid"));
+		map.put("/location", new GetSelectProperties("location"));
+		map.put("/owner", new GetSelectProperties("owner"));
+		map.put("/type", new GetSelectProperties("type"));
 		
 	}
 
 	@Override
-	public void execute(String command) throws SQLException {
+	public void execute(String command) throws CommandsException, SQLException {
 		if(command.equals(""))
 		{
 			selectAllProperties();
@@ -36,6 +36,7 @@ public class GetProperties implements iCommand {
 		String [] keyValue = Utils.limitator(command);
 		if(map.containsKey(keyValue[0]))
 		{
+			keyValue[1] = keyValue[1].substring(1);
 			map.get(keyValue[0]).execute(keyValue[1]);
 		}
 		else

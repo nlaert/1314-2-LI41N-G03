@@ -25,7 +25,7 @@ public class GetUsers implements iCommand {
 	}
 
 	@Override
-	public void execute(String command) throws SQLException {
+	public void execute(String command) throws CommandsException, SQLException {
 
 		if(command.equals(""))
 		{

@@ -8,36 +8,30 @@ import java.sql.Statement;
 import ls.jdbc.DataBaseManager;
 import ls.propertiesRental.iCommand;
 
-public class GetUserUsername implements iCommand {
+public class GetSelectProperties implements iCommand {
 	
 	Statement stmt;
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
 	
-
-	@Override
-	public void execute(String command) throws CommandsException, SQLException {
-		try {
-			if(!command.equals(""))
-				selectWithUser(command);
-			else
-				System.out.println("Informacao nao encontrada");
-			
-	
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		
+	private String source;
+	public GetSelectProperties(String source)
+	{
+		this.source = source;
 	}
-
-	private void selectWithUser(String command) throws SQLException  {
+	@Override
+	public void execute(String command) throws SQLException {
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select username, password, email, fullname from users where username = ?");
-			prep.setString(1, command);
+			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where "+source+" = ?");
+			if(source.equals("pid"))
+				prep.setInt(1, Integer.parseInt(command));
+			else
+				prep.setString(1,command);
+			
 			rs = prep.executeQuery();
-			System.out.println("Username \t Password \t Email \t\t\t\t Fullname ");
+			System.out.println("Type \t\t\t Description \t\t\t\t Price \t\t\t Location ");
 			while(rs.next())
 			{
 				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
@@ -56,8 +50,7 @@ public class GetUserUsername implements iCommand {
 				link.closeConnection();
 			
 		}
-		
-		
+
 	}
 
 }

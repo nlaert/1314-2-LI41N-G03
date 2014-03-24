@@ -12,7 +12,7 @@ public class PostUsers implements iCommand {
 
 	DataBaseManager link;
 	@Override
-	public void execute(String command) throws SQLException {
+	public void execute(String command) throws CommandsException, SQLException {
 		link = new DataBaseManager();
 		HashMap<String, String> map = Utils.mapper(command);
 		if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){

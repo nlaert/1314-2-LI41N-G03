@@ -38,4 +38,8 @@ select username, password, email, fullname from users where username = 'joao';
 select username, password, email, fullname from users;
 select [type], [description], [price], [location] from properties
 select [type], [description], [price], [location] from properties where pid = 1
+select [type], [description], [price], [location] from properties where location = 'Lisboa, Olivais'
+select [type], [description], [price], [location] from properties where [owner] = 'joao'
+select [type], [description], [price], [location] from properties where [type] = 'apartment' 
+
 

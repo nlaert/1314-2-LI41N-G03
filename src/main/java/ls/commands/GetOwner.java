@@ -53,7 +53,7 @@ public class GetOwner implements iCommand {
 
 
 	@Override
-	public void execute(String command) throws SQLException {
+	public void execute(String command) throws CommandsException, SQLException {
 		// TODO Auto-generated method stub
 		
 	}

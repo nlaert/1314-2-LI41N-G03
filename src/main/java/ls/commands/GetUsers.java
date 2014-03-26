@@ -71,6 +71,7 @@ public class GetUsers implements iCommand {
 //						rs.getString(3), rs.getString(4));
 //			}
 //			System.out.println();
+			return list;
 		} catch (SQLException e) {
 			throw new CommandsException("Não é possivel retornar a lista de utilizadores", e);
 		} finally
@@ -95,7 +96,7 @@ public class GetUsers implements iCommand {
 
 			
 		}
-		return list;
+		
 	}
 
 }

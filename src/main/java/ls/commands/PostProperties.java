@@ -20,9 +20,6 @@ public class PostProperties implements iCommand {
 	ResultSet rs;
 	@Override
 	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
-		return postProperties(command);
-	}
-	private ArrayList<String> postProperties(String command) throws ClosingDataAccessException, CloseConnectionException {
 		ArrayList<String> list = new ArrayList<String>();
 		int pid = -1;
 		try{
@@ -44,10 +41,10 @@ public class PostProperties implements iCommand {
 			rs = prep.getGeneratedKeys();  
 			list = Utils.resultSetToArrayList(rs);
 			
-			if(rs.next()){
-				pid = rs.getInt("GENERATED_KEYS");
-				System.out.println("Property PID = "+pid); 
-			}
+//			if(rs.next()){
+//				pid = rs.getInt("GENERATED_KEYS");
+//				System.out.println("Property PID = "+pid); 
+//			}
 			return list;	
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -71,7 +68,6 @@ public class PostProperties implements iCommand {
 
 		}
 		return list;
-		
-	
 	}
+
 }

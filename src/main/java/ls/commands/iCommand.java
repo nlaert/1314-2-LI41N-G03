@@ -10,5 +10,6 @@ import Exception.CommandsException;
 public interface iCommand {
 	
 
-	public ArrayList<String> execute(String command) throws ClosingDataAccessException, CommandsException, CloseConnectionException ;
+	public ArrayList<String> execute(String command) 
+			throws ClosingDataAccessException, CommandsException, CloseConnectionException ;
 }

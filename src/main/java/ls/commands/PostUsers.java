@@ -37,7 +37,7 @@ public class PostUsers implements iCommand {
 				try {
 					prep.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o PreparedStatement",e);
+					throw new ClosingDataAccessException("Nao foi possivel fechar o PreparedStatement",e);
 				}
 			if(link != null)
 				link.closeConnection();

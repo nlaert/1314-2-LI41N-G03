@@ -14,33 +14,23 @@ public class Utils {
 	 * @param command
 	 * @return String[] with 2 positions, the first and second part of String command divided by "/"
 	 */
-	public static String [] limitator(String command)
+
+	
+	public static String limitatorPath(String command)
 	{
-		String [] divide = new String[2];
-		int first = command.indexOf("/");
-		if(first == command.lastIndexOf("/"))
-		{
-			int aux = command.substring(first+1).indexOf(" ");
-			if(aux == -1)
-			{
-				divide[0] = command;
-				divide[1] = "";
-			}
-			else
-			{
-				aux = aux + first;
-				divide[1] = command.substring(aux +2);
-				divide[0] = command.substring(0,aux+1);
-			}
-				
+		int firstIndex = command.indexOf("/");
+		int lastIndex = command.lastIndexOf("/");
+		if(firstIndex == lastIndex)
+			return command;
+		else{
+			return command.substring(0,lastIndex+1);
 		}
-		else
-		{
-			int aux = command.substring(first+1).indexOf("/") + first;
-			divide[1] = command.substring(aux+1);
-			divide[0] = command.substring(0,aux+1);
-		}
-		return divide;
+	}
+	
+	public static String limitatorSpecificCommand(String command)
+	{
+		int lastIndex = command.lastIndexOf("/");
+		return command.substring(lastIndex+1);
 	}
 	
 	public static boolean checkAuth(String username, String password, Connection conn) throws SQLException
@@ -55,6 +45,9 @@ public class Utils {
 	{
 		if (parameters == null || parameters.equals(""))
 			return null;
+		if (parameters.contains(" ")){
+			parameters = parameters.substring(parameters.lastIndexOf(' ')+1);
+		}
 		HashMap <String, String> dict = new HashMap<String, String>();
 		String [] aux = parameters.split("&");
 		int equal = 0;
@@ -86,5 +79,6 @@ public class Utils {
 		for (int i = 0; i < list.size(); i++){
 			System.out.println(list.get(i).toString());
 		}
+		System.out.println();
 	}
 }

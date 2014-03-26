@@ -6,44 +6,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import ls.jdbc.DataBaseManager;
+import ls.utils.Utils;
 import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
-import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetSelectProperties implements iCommand {
-	
+public class GetPropertiesOwner implements iCommand {
+
 	Statement stmt;
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
 	
-	private String source;
-	public GetSelectProperties(String source)
-	{
-		this.source = source;
-	}
+	
 	@Override
 	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+		command = Utils.limitatorSpecificCommand(command);
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where "+source+" = ?");
-			if(source.equals("pid"))
-				prep.setInt(1, Integer.parseInt(command));
-			else
-				prep.setString(1,command);
-			
+			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where owner = ?");
+			prep.setString(1,command);
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
-//			System.out.println("Type \t\t\t Description \t\t\t\t Price \t\t\t Location ");
-//			while(rs.next())
-//			{
-//				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-//						rs.getString(3), rs.getString(4));
-//			}
-//			System.out.println();
 			return list;
 		} catch (SQLException e) {
 			throw new CommandsException("Não é possivel retornar a lista das propriedades");
@@ -63,12 +49,8 @@ public class GetSelectProperties implements iCommand {
 				}
 			if(link != null)
 				link.closeConnection();
-
-			
-		}
-	
 		
-
+		}
 	}
 
 }

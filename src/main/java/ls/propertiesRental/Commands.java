@@ -14,41 +14,38 @@ import ls.commands.PostUsers;
 import ls.commands.iCommand;
 import ls.utils.*;
 
-public class Gestao {
+public class Commands {
 
 	private HashMap<String,iCommand> map;
 	private String command;
-	
-	public Gestao(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException
+
+	public Commands() throws CommandsException, ClosingDataAccessException, CloseConnectionException
 	{
-		this.command = command;
 		map = new HashMap<String,iCommand>();
-		map.put("GET /users",new GetUsers());
-		map.put("GET /properties", new GetProperties());
-		map.put("POST /users", new PostUsers());
-		map.put("POST /properties", new PostProperties());
-		run();
-		
 	}
-	
-	
-	
-	private void run() throws  ClosingDataAccessException, CommandsException, CloseConnectionException {
+
+	public void add(String command, iCommand e)
+	{
+		command=Utils.limitatorPath(command);
+		if(!map.containsKey(command))
+			map.put(command, e);
+	}
+
+	public iCommand find(String command) throws IllegalCommandException
+	{
 		if(command.equals(""))
-			System.exit(0);
-		String [] keyValue = Utils.limitator(command);
-		if(map.containsKey(keyValue[0]))
+			return null;
+		command = Utils.limitatorPath(command);
+		if(map.containsKey(command))
 		{
-			map.get(keyValue[0]).execute(keyValue[1]);
+			return map.get(command);
 		}
 		else{
 			throw new IllegalCommandException("Comando errado!");
 		}
-		
-		
+
 	}
 
 
 
-	
 }

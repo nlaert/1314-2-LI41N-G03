@@ -10,6 +10,7 @@ import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
+import ls.utils.Utils;
 
 public class GetSelectProperties implements iCommand {
 	
@@ -35,13 +36,15 @@ public class GetSelectProperties implements iCommand {
 				prep.setString(1,command);
 			
 			rs = prep.executeQuery();
-			System.out.println("Type \t\t\t Description \t\t\t\t Price \t\t\t Location ");
-			while(rs.next())
-			{
-				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-						rs.getString(3), rs.getString(4));
-			}
-			System.out.println();
+			list = Utils.resultSetToArrayList(rs);
+//			System.out.println("Type \t\t\t Description \t\t\t\t Price \t\t\t Location ");
+//			while(rs.next())
+//			{
+//				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
+//						rs.getString(3), rs.getString(4));
+//			}
+//			System.out.println();
+			return list;
 		} catch (SQLException e) {
 			throw new CommandsException("Não é possivel retornar a lista das propriedades");
 		} finally
@@ -63,7 +66,7 @@ public class GetSelectProperties implements iCommand {
 
 			
 		}
-		return list;
+	
 		
 
 	}

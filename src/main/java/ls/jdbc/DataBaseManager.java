@@ -31,12 +31,12 @@ public class DataBaseManager {
 	}
 
 	public void closeConnection() throws CloseConnectionException   {
-				try {
-					connection.close();
-				} catch (SQLException  | NullPointerException e) {
-					throw new CloseConnectionException("Erro ao fechar a Ligacao",e);
-				}
-			
+		try {
+			connection.close();
+		} catch (SQLException  | NullPointerException e) {
+			throw new CloseConnectionException("Erro ao fechar a Ligacao",e);
+		}
+
 	}
 
 	public Connection getConnetion() {

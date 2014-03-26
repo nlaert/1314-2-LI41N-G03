@@ -42,11 +42,13 @@ public class PostProperties implements iCommand {
 			int count = prep.getUpdateCount();
 			System.out.println(count + " row(s) affected");
 			rs = prep.getGeneratedKeys();  
+			list = Utils.resultSetToArrayList(rs);
 			
 			if(rs.next()){
 				pid = rs.getInt("GENERATED_KEYS");
-				System.out.println("Propertie PID = "+pid); 
+				System.out.println("Property PID = "+pid); 
 			}
+			return list;	
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -60,7 +62,7 @@ public class PostProperties implements iCommand {
 				try {
 					prep.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o statement",e);
+					throw new ClosingDataAccessException("Não foi possivel fechar o Statement",e);
 				}
 			if(link != null)
 				link.closeConnection();
@@ -68,7 +70,8 @@ public class PostProperties implements iCommand {
 
 
 		}
+		return list;
 		
-	return list;	
+	
 	}
 }

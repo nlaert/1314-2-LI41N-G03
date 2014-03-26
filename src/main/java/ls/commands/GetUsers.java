@@ -63,13 +63,14 @@ public class GetUsers implements iCommand {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			System.out.println("Username \t\t Password \t\t Email \t\t\t\t Fullname ");
-			while(rs.next())
-			{
-				System.out.format("%s \t\t\t %s \t\t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-						rs.getString(3), rs.getString(4));
-			}
-			System.out.println();
+//			System.out.println("Username \t\t Password \t\t Email \t\t\t\t Fullname ");
+			list = Utils.resultSetToArrayList(rs);
+//			while(rs.next())
+//			{
+//				System.out.format("%s \t\t\t %s \t\t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
+//						rs.getString(3), rs.getString(4));
+//			}
+//			System.out.println();
 		} catch (SQLException e) {
 			throw new CommandsException("Não é possivel retornar a lista de utilizadores", e);
 		} finally

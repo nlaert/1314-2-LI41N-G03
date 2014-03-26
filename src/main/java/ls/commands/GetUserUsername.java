@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
-import ls.propertiesRental.iCommand;
 
 public class GetUserUsername implements iCommand {
 	
@@ -17,7 +17,7 @@ public class GetUserUsername implements iCommand {
 	
 
 	@Override
-	public void execute(String command) throws CommandsException, SQLException {
+	public void execute(String command) throws CommandsException {
 		try {
 			if(!command.equals(""))
 				selectWithUser(command);

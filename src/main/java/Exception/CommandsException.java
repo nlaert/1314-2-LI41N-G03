@@ -1,6 +1,6 @@
-package ls.commands;
+package Exception;
 import java.sql.SQLException;
-public class CommandsException extends SQLException{
+public class CommandsException extends AppException{
 
 
 	

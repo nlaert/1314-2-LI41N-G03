@@ -11,10 +11,21 @@ public class Utils {
 	{
 		String [] divide = new String[2];
 		int first = command.indexOf("/");
+//		int firstSpace = command.indexOf(" ");
 		if(first == command.lastIndexOf("/"))
 		{
-			divide[0] = command;
-			divide[1] = "";
+			int aux = command.substring(first+1).indexOf(" ");
+			if(aux == -1) {
+				divide[0] = command;
+				divide[1] = "";
+			}
+			else
+			{
+				aux = aux + first;
+				divide[1] = command.substring(aux +2);
+				divide[0] = command.substring(0,aux+1);
+			}
+				
 		}
 		else
 		{

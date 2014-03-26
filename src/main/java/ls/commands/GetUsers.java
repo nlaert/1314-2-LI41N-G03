@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import Exception.ClosingDataAccessException;
+import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
-import ls.propertiesRental.iCommand;
 import ls.utils.Utils;
 
 public class GetUsers implements iCommand {
@@ -25,7 +26,7 @@ public class GetUsers implements iCommand {
 	}
 
 	@Override
-	public void execute(String command) throws CommandsException, SQLException {
+	public void execute(String command) throws ClosingDataAccessException, CommandsException {
 
 		if(command.equals(""))
 		{
@@ -53,7 +54,7 @@ public class GetUsers implements iCommand {
 
 	}
 	
-	private void selectWithoutUser() throws SQLException {
+	private void selectWithoutUser() throws CommandsException, ClosingDataAccessException{
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
@@ -66,13 +67,23 @@ public class GetUsers implements iCommand {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			System.out.println(e);
+			throw new CommandsException("Não é possivel retornar a lista de utilizadores", e);
 		} finally
 		{
 			if(rs != null)
-				rs.close();
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					throw new ClosingDataAccessException("Não é possivel fechar o ResultSet", e);
+				}
 			if(stmt != null)
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					throw new ClosingDataAccessException("Não é possivel fechar o Preparement", e);
+				}
 			if(link != null)
 				link.closeConnection();
 			

@@ -22,17 +22,19 @@ public class DataBaseManager {
 		}
 		catch(SQLException sqlex)
 		{
-			System.out.println(sqlex.getMessage());
+			System.out.println("Erro ao abrir ligação");
 		}
 
 	}
 
-	public void closeConnection() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+	public void closeConnection()  {
+			
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				System.out.println("Erro ao fechar a ligação");
+			}
+		
 	}
 
 	public Connection getConnetion() {

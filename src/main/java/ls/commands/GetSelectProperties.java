@@ -5,8 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Exception.ClosingDataAccessException;
+import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
-import ls.propertiesRental.iCommand;
 
 public class GetSelectProperties implements iCommand {
 	
@@ -21,7 +22,7 @@ public class GetSelectProperties implements iCommand {
 		this.source = source;
 	}
 	@Override
-	public void execute(String command) throws SQLException {
+	public void execute(String command) throws CommandsException, ClosingDataAccessException {
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where "+source+" = ?");
@@ -43,9 +44,17 @@ public class GetSelectProperties implements iCommand {
 		} finally
 		{
 			if(rs != null)
-				rs.close();
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					throw new ClosingDataAccessException("Não foi possivel fechar o ResultSet",e);
+				}
 			if(stmt != null)
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					throw new ClosingDataAccessException("Não foi possivel fechar o statement",e);
+				}
 			if(link != null)
 				link.closeConnection();
 			

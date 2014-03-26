@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import Exception.ClosingDataAccessException;
+import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
-import ls.propertiesRental.iCommand;
 import ls.utils.Utils;
 
 public class GetProperties implements iCommand {
@@ -27,7 +28,7 @@ public class GetProperties implements iCommand {
 	}
 
 	@Override
-	public void execute(String command) throws CommandsException, SQLException {
+	public void execute(String command) throws ClosingDataAccessException, CommandsException {
 		if(command.equals(""))
 		{
 			selectAllProperties();
@@ -44,7 +45,7 @@ public class GetProperties implements iCommand {
 		
 	}
 
-	private void selectAllProperties() throws SQLException {
+	private void selectAllProperties() throws CommandsException, ClosingDataAccessException  {
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
@@ -57,19 +58,27 @@ public class GetProperties implements iCommand {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			System.out.println(e);
+			throw new CommandsException("Não foi possivel retornar a lista de todas as propriedades",e);
 		} finally
 		{
 			if(rs != null)
-				rs.close();
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					throw new ClosingDataAccessException("Não foi possivel fechar o ResultSet",e);
+				}
 			if(stmt != null)
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					throw new ClosingDataAccessException("Não foi possivel fechar o statement",e);
+				}
 			if(link != null)
 				link.closeConnection();
-			
+
 		}
 	}
-		
+
 }
 
 

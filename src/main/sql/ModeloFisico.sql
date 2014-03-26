@@ -18,12 +18,12 @@ create table [type](
 	)
 
 create table properties (
-	[pid] int identity(1,1) primary key,
+	pid int identity(1,1) primary key,
+	[type] varchar(15) not null,
 	[description] varchar(200) not null,
-	[price] money not null,
+	[price] int not null,
 	[location] varchar(50) not null,
 	[owner] varchar(15) not null,
-	[type] varchar(15) not null,
 	Constraint FK_owner Foreign key ([owner]) references users(username),
 	Constraint FK_type Foreign key ([type]) references Type([type]),
 	
@@ -33,7 +33,7 @@ insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Ad
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
 insert into users values('nick','pass','a35366@alunos.isel.pt','Nick Laert');
 insert into type values('room'),('apartment'),('villa');
-insert into properties values ('apartamento nos Olivais',1000,'Lisboa, Olivais','joao','apartment');
+insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
 select username, password, email, fullname from users where username = 'joao';
 select username, password, email, fullname from users;
 select [type], [description], [price], [location] from properties

@@ -81,4 +81,10 @@ public class Utils {
 		}
 		return select;
 	}
+	
+	public static <E> void printArrayList(ArrayList<E> list){
+		for (int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).toString());
+		}
+	}
 }

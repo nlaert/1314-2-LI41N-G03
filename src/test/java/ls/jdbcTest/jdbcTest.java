@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import Exception.CloseConnectionException;
 import ls.jdbc.*;
+import ls.utils.Utils;
 import static org.junit.Assert.*;
 
 public class jdbcTest {
@@ -35,7 +36,6 @@ public class jdbcTest {
 		ArrayList <String> result = new ArrayList <String>(2);
 		result.add(aluno1 + "\tNICK\t");
 		result.add(aluno2 + "\tJOAO\t");
-
 		assertEquals(result, CRUD.executeQuery(select));
 	}
 	

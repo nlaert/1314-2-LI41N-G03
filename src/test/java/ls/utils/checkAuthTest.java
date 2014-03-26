@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import Exception.CloseConnectionException;
 import static org.junit.Assert.*;
 
 public class checkAuthTest {
@@ -18,14 +19,14 @@ public class checkAuthTest {
 	String insertUser = "insert into Users values('" + username + "', '" + password + "', 'test@test.com', 'Tester')";
 	DataBaseManager manager;
 	@Before
-	public void setUp() throws SQLException
+	public void setUp() throws SQLException, CloseConnectionException
 	{
 		CRUD.executeNonQuery(insertUser);
 		manager = new DataBaseManager();
 	}
 	
 	@After
-	public void tearDown() throws SQLException
+	public void tearDown() throws SQLException, CloseConnectionException
 	{
 		CRUD.executeNonQuery("delete from Users where username = '" + username + "'");
 		manager.closeConnection();

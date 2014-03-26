@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import Exception.CloseConnectionException;
 import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
 
@@ -17,10 +19,11 @@ public class GetUserUsername implements iCommand {
 	
 
 	@Override
-	public void execute(String command) throws CommandsException {
+	public ArrayList<String> execute(String command) throws CommandsException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			if(!command.equals(""))
-				selectWithUser(command);
+				list = selectWithUser(command);
 			else
 				System.out.println("Informacao nao encontrada");
 			
@@ -28,10 +31,12 @@ public class GetUserUsername implements iCommand {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return list;
 		
 	}
 
-	private void selectWithUser(String command) throws SQLException  {
+	private ArrayList<String> selectWithUser(String command) throws SQLException, CloseConnectionException  {
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select username, password, email, fullname from users where username = ?");
@@ -56,6 +61,7 @@ public class GetUserUsername implements iCommand {
 				link.closeConnection();
 			
 		}
+		return list;
 		
 		
 	}

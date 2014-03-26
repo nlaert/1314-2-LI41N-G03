@@ -3,8 +3,10 @@ package ls.commands;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
@@ -26,19 +28,19 @@ public class GetUsers implements iCommand {
 	}
 
 	@Override
-	public void execute(String command) throws ClosingDataAccessException, CommandsException {
-
+	public ArrayList<String> execute(String command) throws ClosingDataAccessException, CommandsException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		if(command.equals(""))
 		{
-			selectWithoutUser();
-			return;
+			list = selectWithoutUser();
+			return list;
 
 		}
 
 		String [] keyValue = Utils.limitator(command);
 		if(map.containsKey(keyValue[0]))
 		{
-			map.get(keyValue[0]).execute(keyValue[1]);
+			list = map.get(keyValue[0]).execute(keyValue[1]);
 		}
 		else
 		{
@@ -46,15 +48,17 @@ public class GetUsers implements iCommand {
 			keyValue[0] = keyValue[0].substring(0,1);
 			if(map.containsKey(keyValue[0]))
 			{
-				map.get(keyValue[0]).execute(keyValue[1]);
+				list = map.get(keyValue[0]).execute(keyValue[1]);
 			}
 
 		}
+		return list;
 
 
 	}
 	
-	private void selectWithoutUser() throws CommandsException, ClosingDataAccessException{
+	private ArrayList<String> selectWithoutUser() throws CommandsException, ClosingDataAccessException, CloseConnectionException{
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
@@ -85,9 +89,12 @@ public class GetUsers implements iCommand {
 					throw new ClosingDataAccessException("Não é possivel fechar o Preparement", e);
 				}
 			if(link != null)
+
 				link.closeConnection();
+
 			
 		}
+		return list;
 	}
 
 }

@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import Exception.CloseConnectionException;
 import ls.jdbc.*;
 import static org.junit.Assert.*;
 
@@ -21,14 +22,14 @@ public class jdbcTest {
 	String cmdInsertAluno2 = "insert into Aluno values("+aluno2+",'JOAO')";
 	
 	@Before
-	public void setUp() throws SQLException
+	public void setUp() throws SQLException, CloseConnectionException
 	{
 		CRUD.executeNonQuery(cmdInsertAluno1);
 		CRUD.executeNonQuery(cmdInsertAluno2);
 	}
 	
 	@Test
-	public void test_Select() throws SQLException
+	public void test_Select() throws SQLException, CloseConnectionException
 	{
 		String select = "select bi, nome from Aluno where bi >= " + aluno1 + " and bi <= " + aluno2;
 		ArrayList <String> result = new ArrayList <String>(2);
@@ -39,27 +40,27 @@ public class jdbcTest {
 	}
 	
 	@Test(expected = SQLException.class)
-	public void test_Insert_Duplicate() throws SQLException 
+	public void test_Insert_Duplicate() throws SQLException, CloseConnectionException 
 	{	CRUD.executeNonQuery(cmdDeleteAluno2);
 		assertEquals(1, CRUD.executeNonQuery(cmdInsertAluno2));
 		CRUD.executeNonQuery(cmdInsertAluno2);
 	}
 	
 	@Test
-	public void test_Update() throws SQLException
+	public void test_Update() throws SQLException, CloseConnectionException
 	{
 		assertEquals(1, CRUD.executeNonQuery(cmdUpdateAluno2));
 	}
 	
 	@Test
-	public void test_Delete() throws SQLException
+	public void test_Delete() throws SQLException, CloseConnectionException
 	{
 		
 		assertEquals(1, CRUD.executeNonQuery(cmdDeleteAluno1));
 	}
 	
 	@After
-	public void tearDown() throws SQLException
+	public void tearDown() throws SQLException, CloseConnectionException
 	{
 		CRUD.executeNonQuery(cmdDeleteAluno1);
 		CRUD.executeNonQuery(cmdDeleteAluno2);

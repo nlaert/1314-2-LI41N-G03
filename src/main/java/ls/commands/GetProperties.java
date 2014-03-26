@@ -3,10 +3,13 @@ package ls.commands;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
+import Exception.OpenConnectionException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
@@ -28,24 +31,27 @@ public class GetProperties implements iCommand {
 	}
 
 	@Override
-	public void execute(String command) throws ClosingDataAccessException, CommandsException {
+	public ArrayList<String> execute(String command) throws ClosingDataAccessException, CommandsException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		if(command.equals(""))
 		{
-			selectAllProperties();
-			return;
+			list = selectAllProperties();
+			return list;
 		}
 		String [] keyValue = Utils.limitator(command);
 		if(map.containsKey(keyValue[0]))
 		{
 			keyValue[1] = keyValue[1].substring(1);
-			map.get(keyValue[0]).execute(keyValue[1]);
+			list = map.get(keyValue[0]).execute(keyValue[1]);
 		}
 		else
 			System.out.println("Informacao nao encontrada!");
+		return list;
 		
 	}
 
-	private void selectAllProperties() throws CommandsException, ClosingDataAccessException  {
+	private ArrayList<String> selectAllProperties() throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
@@ -57,9 +63,11 @@ public class GetProperties implements iCommand {
 						rs.getString(3), rs.getString(4));
 			}
 			System.out.println();
+			return list;
 		} catch (SQLException e) {
 			throw new CommandsException("Não foi possivel retornar a lista de todas as propriedades",e);
-		} finally
+		} 
+		finally
 		{
 			if(rs != null)
 				try {
@@ -74,7 +82,7 @@ public class GetProperties implements iCommand {
 					throw new ClosingDataAccessException("Não foi possivel fechar o statement",e);
 				}
 			if(link != null)
-				link.closeConnection();
+					link.closeConnection();
 
 		}
 	}

@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
@@ -22,7 +24,8 @@ public class GetSelectProperties implements iCommand {
 		this.source = source;
 	}
 	@Override
-	public void execute(String command) throws CommandsException, ClosingDataAccessException {
+	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where "+source+" = ?");
@@ -40,7 +43,7 @@ public class GetSelectProperties implements iCommand {
 			}
 			System.out.println();
 		} catch (SQLException e) {
-			System.out.println(e);
+			throw new CommandsException("Não é possivel retornar a lista das propriedades");
 		} finally
 		{
 			if(rs != null)
@@ -57,8 +60,11 @@ public class GetSelectProperties implements iCommand {
 				}
 			if(link != null)
 				link.closeConnection();
+
 			
 		}
+		return list;
+		
 
 	}
 

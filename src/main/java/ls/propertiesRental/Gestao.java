@@ -3,6 +3,7 @@ package ls.propertiesRental;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 import Exception.IllegalCommandException;
@@ -18,7 +19,7 @@ public class Gestao {
 	private HashMap<String,iCommand> map;
 	private String command;
 	
-	public Gestao(String command) throws CommandsException, ClosingDataAccessException
+	public Gestao(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException
 	{
 		this.command = command;
 		map = new HashMap<String,iCommand>();
@@ -32,7 +33,7 @@ public class Gestao {
 	
 	
 	
-	private void run() throws  ClosingDataAccessException, CommandsException {
+	private void run() throws  ClosingDataAccessException, CommandsException, CloseConnectionException {
 		if(command.equals(""))
 			System.exit(0);
 		String [] keyValue = Utils.limitator(command);

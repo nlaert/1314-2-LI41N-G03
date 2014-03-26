@@ -1,5 +1,8 @@
 package ls.commands;
 
+import java.util.ArrayList;
+
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 
@@ -7,5 +10,5 @@ import Exception.CommandsException;
 public interface iCommand {
 	
 
-	public void execute(String command) throws ClosingDataAccessException, CommandsException ;
+	public ArrayList<String> execute(String command) throws ClosingDataAccessException, CommandsException, CloseConnectionException ;
 }

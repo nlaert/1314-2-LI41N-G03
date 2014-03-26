@@ -2,8 +2,10 @@ package ls.commands;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import Exception.CloseConnectionException;
 import Exception.ClosingDataAccessException;
 import Exception.CommandsException;
 import ls.jdbc.DataBaseManager;
@@ -14,13 +16,14 @@ public class PostUsers implements iCommand {
 	DataBaseManager link;
 	PreparedStatement prep;
 	@Override
-	public void execute(String command) throws CommandsException, ClosingDataAccessException {
+	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
 			HashMap<String, String> map = Utils.mapper(command);
 			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
-				return;		
+				return null;		
 			}
 			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
 			prep.setString(1, map.get("username"));
@@ -41,11 +44,9 @@ public class PostUsers implements iCommand {
 				}
 			if(link != null)
 				link.closeConnection();
-
-
-		}
+			}
 		
-		
+		return list;
 		
 	}
 

@@ -1,6 +1,9 @@
 package ls.jdbc;
 import java.sql.*;
 
+import Exception.CloseConnectionException;
+import Exception.OpenConnectionException;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 public class DataBaseManager {
@@ -20,21 +23,20 @@ public class DataBaseManager {
 		try{
 			connection = ds.getConnection();
 		}
-		catch(SQLException sqlex)
+		catch(SQLException e)
 		{
-			System.out.println("Erro ao abrir ligação");
+			System.out.println("Nao e possivel abrir uma nova ligacao.");
 		}
 
 	}
 
-	public void closeConnection()  {
+	public void closeConnection() throws CloseConnectionException   {
+				try {
+					connection.close();
+				} catch (SQLException  | NullPointerException e) {
+					throw new CloseConnectionException("Erro ao fechar a Ligacao",e);
+				}
 			
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				System.out.println("Erro ao fechar a ligação");
-			}
-		
 	}
 
 	public Connection getConnetion() {

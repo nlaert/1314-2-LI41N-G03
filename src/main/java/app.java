@@ -5,13 +5,12 @@ import java.sql.SQLException;
 import ls.commands.*;
 import ls.propertiesRental.Commands;
 import ls.utils.Utils;
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 
 public class App {
 
-	public static void main(String[] args) throws CommandsException, ClosingDataAccessException, CloseConnectionException 
+	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		
 //		Gestao gest1 = new Gestao("GET /properties/location/Lisboa, Olivais");
@@ -28,15 +27,17 @@ public class App {
 		
 		Commands gest = new Commands();
 		gest.add("GET /users", new GetUsers());
-		gest.add("GET /users/{username}", new GetUserUsername());
+		gest.add("GET /users/", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
-		gest.add("GET /properties/details/{pid}", new GetPropertiesDetails());
-		gest.add("GET /properties/location/{location}", new GetPropertiesLocation());
-		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
-		gest.add("GET /properties/type/{type}", new GetPropertiesType());
-		gest.add("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste", new PostUsers());
+		gest.add("GET /properties/details/", new GetPropertiesDetails());
+		gest.add("GET /properties/location/", new GetPropertiesLocation());
+		gest.add("GET /properties/owner/", new GetPropertiesOwner());
+		gest.add("GET /properties/type/", new GetPropertiesType());
+		gest.add("POST /users", new PostUsers());
+		gest.add("POST /properties", new PostProperties());
 		
 		
+		iCommand ex1 = gest.find("GET /users");
 		if(ex1 != null)
 			Utils.printArrayList(ex1.execute("GET /users"));
 		iCommand ex2 = gest.find("GET /users/joao");
@@ -57,10 +58,18 @@ public class App {
 		iCommand ex7 = gest.find("GET /properties/type/apartment");
 		if(ex7 != null)
 			Utils.printArrayList(ex7.execute("GET /properties/type/apartment"));
+		
 		iCommand ex8 = gest.find("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
 		if(ex8 != null)
 		{
 			ex8.execute("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
+		}
+		iCommand ex9 = gest.find("POST /properties auth_username=superadmin&auth_password=ls1213"
+				+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche,+Peniche&owner=nick");
+		if(ex8 != null)
+		{
+			ex9.execute("POST /properties auth_username=superadmin&auth_password=ls1213"
+					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche,+Peniche&owner=nick");
 		}
 		
 		

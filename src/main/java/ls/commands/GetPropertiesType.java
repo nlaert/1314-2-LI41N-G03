@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 
 public class GetPropertiesType implements iCommand {
 
@@ -21,7 +20,7 @@ public class GetPropertiesType implements iCommand {
 	
 	
 	@Override
-	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
 		command = Utils.limitatorSpecificCommand(command);
 		ArrayList<String> list = new ArrayList<String>();
 		try {
@@ -32,20 +31,20 @@ public class GetPropertiesType implements iCommand {
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new CommandsException("Não é possivel retornar a lista das propriedades");
+			throw new IllegalCommandException("Não é possivel retornar a lista das propriedades");
 		} finally
 		{
 			if(rs != null)
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o ResultSet",e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o statement",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o statement",e);
 				}
 			if(link != null)
 				link.closeConnection();

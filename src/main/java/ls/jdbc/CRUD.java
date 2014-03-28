@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Exception.CloseConnectionException;
+import Exception.ConnectionDatabaseException;
 
 public class CRUD {
 	private static DataBaseManager link;
@@ -13,7 +13,7 @@ public class CRUD {
 	static Statement stmt;
 	
 	
-	public static ArrayList<String> executeQuery(String cmdSel) throws SQLException, CloseConnectionException 
+	public static ArrayList<String> executeQuery(String cmdSel) throws SQLException, ConnectionDatabaseException
 	{
 		link = new DataBaseManager();
 		stmt = link.getConnetion().createStatement();
@@ -38,7 +38,7 @@ public class CRUD {
 		
 	}
 
-	public static int executeNonQuery(String cmd) throws SQLException, CloseConnectionException
+	public static int executeNonQuery(String cmd) throws SQLException, ConnectionDatabaseException
 	{
 		int rows = 0;
 		link = new DataBaseManager();

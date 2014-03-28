@@ -5,11 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
-import Exception.OpenConnectionException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
@@ -20,7 +17,7 @@ public class GetProperties implements iCommand {
 	DataBaseManager link;
 
 	@Override
-	public ArrayList<String> execute(String command) throws ClosingDataAccessException, CommandsException, CloseConnectionException {
+	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
@@ -36,7 +33,7 @@ public class GetProperties implements iCommand {
 			//			System.out.println();
 			return list;
 		} catch (SQLException e) {
-			throw new CommandsException("Não foi possivel retornar a lista de todas as propriedades",e);
+			throw new IllegalCommandException("Não foi possivel retornar a lista de todas as propriedades",e);
 		} 
 		finally
 		{
@@ -44,13 +41,13 @@ public class GetProperties implements iCommand {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o ResultSet",e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o Statement",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o Statement",e);
 				}
 			if(link != null)
 				link.closeConnection();

@@ -1,21 +1,23 @@
 package Exception;
 
-public class CloseConnectionException extends AppException{
+public class ConnectionDatabaseException extends AppException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public CloseConnectionException(String message) {
+	public ConnectionDatabaseException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
-	public CloseConnectionException(String message, Throwable e) {
+	public ConnectionDatabaseException(String message, Throwable e) {
 		super(message,e);
 		// TODO Auto-generated constructor stub
 	}
-	public CloseConnectionException(Throwable e) {
+	public ConnectionDatabaseException(Throwable e) {
 		super(e);
 		// TODO Auto-generated constructor stub
 	}
+	
+
 }

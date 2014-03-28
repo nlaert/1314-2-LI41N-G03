@@ -1,16 +1,9 @@
 package ls.propertiesRental;
 
-import java.sql.SQLException;
 import java.util.HashMap;
-
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
 import Exception.IllegalCommandException;
-import ls.commands.GetProperties;
-import ls.commands.GetUsers;
-import ls.commands.PostProperties;
-import ls.commands.PostUsers;
+import Exception.ConnectionDatabaseException;
+import Exception.IllegalCommandException;
 import ls.commands.iCommand;
 import ls.utils.*;
 
@@ -19,12 +12,12 @@ public class Commands {
 	private HashMap<String,iCommand> map;
 	private String command;
 
-	public Commands() throws CommandsException, ClosingDataAccessException, CloseConnectionException
+	public Commands() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		map = new HashMap<String,iCommand>();
 	}
 
-	public void add(String command, iCommand e)
+	public void add(String command, iCommand e) throws IllegalCommandException
 	{
 		command=Utils.limitatorPath(command);
 		if(!map.containsKey(command))
@@ -33,12 +26,13 @@ public class Commands {
 
 	public iCommand find(String command) throws IllegalCommandException
 	{
+		
 		if(command.equals(""))
 			return null;
-		command = Utils.limitatorPath(command);
-		if(map.containsKey(command))
+		String path = Utils.limitatorPath(command);
+		if(map.containsKey(path))
 		{
-			return map.get(command);
+			return map.get(path);
 		}
 		else{
 			throw new IllegalCommandException("Comando errado!");

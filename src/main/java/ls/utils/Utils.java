@@ -7,25 +7,50 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Exception.IllegalCommandException;
+import Exception.IllegalCommandException;
+
 public class Utils {
 	
 	/**
 	 * 
 	 * @param command
 	 * @return String[] with 2 positions, the first and second part of String command divided by "/"
+	 * @throws IllegalCommandException 
+	 * @throws IllegalCommandException 
 	 */
 
 	
-	public static String limitatorPath(String command)
+	public static String limitatorPath(String command) throws IllegalCommandException 
 	{
-		int firstIndex = command.indexOf("/");
-		int lastIndex = command.lastIndexOf("/");
+		char limitator;
+		if(command.contains("GET "))
+		{
+			limitator = '/';
+		}
+		else if(command.contains("POST "))
+		{
+			limitator = ' ';
+		}
+		else
+			throw new IllegalCommandException("Comando inválido!");
+		
+		int firstIndex = command.indexOf(limitator);
+		int lastIndex = command.lastIndexOf(limitator);
 		if(firstIndex == lastIndex)
 			return command;
-		else{
-			return command.substring(0,lastIndex+1);
+		else
+		{
+			if(limitator == '/')
+				return command.substring(0,lastIndex+1);
+			else
+				return command.substring(0,lastIndex);
 		}
+			
+		
 	}
+	
+
 	
 	public static String limitatorSpecificCommand(String command)
 	{

@@ -1,8 +1,6 @@
 package ls.jdbc;
 import java.sql.*;
-
-import Exception.CloseConnectionException;
-import Exception.OpenConnectionException;
+import Exception.ConnectionDatabaseException;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
@@ -30,11 +28,11 @@ public class DataBaseManager {
 
 	}
 
-	public void closeConnection() throws CloseConnectionException   {
+	public void closeConnection() throws ConnectionDatabaseException   {
 		try {
 			connection.close();
 		} catch (SQLException  | NullPointerException e) {
-			throw new CloseConnectionException("Erro ao fechar a Ligacao",e);
+			throw new ConnectionDatabaseException("Erro ao fechar a Ligacao",e);
 		}
 
 	}

@@ -5,9 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import Exception.CloseConnectionException;
-import Exception.CommandsException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
@@ -20,7 +19,7 @@ public class GetUserUsername implements iCommand {
 
 
 	@Override
-	public ArrayList<String> execute(String command) throws CommandsException, CloseConnectionException {
+	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
 		command = Utils.limitatorSpecificCommand(command);
 		ArrayList<String> list = new ArrayList<String>();
 		try {
@@ -29,13 +28,6 @@ public class GetUserUsername implements iCommand {
 			prep.setString(1, command);
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
-			//			System.out.println("Username \t Password \t Email \t\t\t\t Fullname ");
-			//			while(rs.next())
-			//			{
-			//				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-			//						rs.getString(3), rs.getString(4));
-			//			}
-			//			System.out.println();
 			return list;
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -46,7 +38,7 @@ public class GetUserUsername implements iCommand {
 					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new ConnectionDatabaseException("Impossivel fechar o ResutSet", e);
 				}
 			if(stmt != null)
 				try {

@@ -1,17 +1,21 @@
 package Exception;
+import java.sql.SQLException;
+public class IllegalCommandException extends AppException{
 
-
-@SuppressWarnings("serial")
-public class IllegalCommandException extends CommandsException {
 
 	
-	public IllegalCommandException(String msg){
-		super(msg);
+	public IllegalCommandException(String message)
+	{
+		super(message);
 	}
-	public IllegalCommandException(String msg,Throwable cause){
-		super(msg,cause);
+	
+	public IllegalCommandException(String message, Throwable e)
+	{
+		super(message,e);
 	}
-	public IllegalCommandException(Throwable cause){
-		super(cause);
+	
+	public IllegalCommandException(Throwable e)
+	{
+		super(e);
 	}
 }

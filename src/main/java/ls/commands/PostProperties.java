@@ -6,10 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
@@ -19,7 +17,7 @@ public class PostProperties implements iCommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	@Override
-	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		int pid = -1;
 		try{
@@ -40,11 +38,11 @@ public class PostProperties implements iCommand {
 			System.out.println(count + " row(s) affected");
 			rs = prep.getGeneratedKeys();  
 			list = Utils.resultSetToArrayList(rs);
-			
-//			if(rs.next()){
-//				pid = rs.getInt("GENERATED_KEYS");
-//				System.out.println("Property PID = "+pid); 
-//			}
+
+			//			if(rs.next()){
+			//				pid = rs.getInt("GENERATED_KEYS");
+			//				System.out.println("Property PID = "+pid); 
+			//			}
 			return list;	
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
@@ -53,13 +51,13 @@ public class PostProperties implements iCommand {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o ResultSet",e);
 				}
 			if(prep != null)
 				try {
 					prep.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Não foi possivel fechar o Statement",e);
+					throw new ConnectionDatabaseException("Não foi possivel fechar o Statement",e);
 				}
 			if(link != null)
 				link.closeConnection();
@@ -69,5 +67,4 @@ public class PostProperties implements iCommand {
 		}
 		return list;
 	}
-
 }

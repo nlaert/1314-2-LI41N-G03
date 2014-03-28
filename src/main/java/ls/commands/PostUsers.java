@@ -4,10 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import Exception.CloseConnectionException;
-import Exception.ClosingDataAccessException;
-import Exception.CommandsException;
+import Exception.IllegalCommandException;
+import Exception.ConnectionDatabaseException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
@@ -16,7 +14,7 @@ public class PostUsers implements iCommand {
 	DataBaseManager link;
 	PreparedStatement prep;
 	@Override
-	public ArrayList<String> execute(String command) throws CommandsException, ClosingDataAccessException, CloseConnectionException {
+	public ArrayList<String> execute(String command) throws IllegalCommandException,ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
@@ -40,7 +38,7 @@ public class PostUsers implements iCommand {
 				try {
 					prep.close();
 				} catch (SQLException e) {
-					throw new ClosingDataAccessException("Nao foi possivel fechar o PreparedStatement",e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o PreparedStatement",e);
 				}
 			if(link != null)
 				link.closeConnection();

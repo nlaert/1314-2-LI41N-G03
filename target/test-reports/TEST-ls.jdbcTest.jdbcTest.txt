@@ -1,0 +1,7 @@
+Testsuite: ls.jdbcTest.jdbcTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3,64 sec
+
+Testcase: test_Insert_Duplicate took 3,386 sec
+Testcase: test_Update took 0,068 sec
+Testcase: test_Delete took 0,057 sec
+Testcase: test_Select took 0,101 sec

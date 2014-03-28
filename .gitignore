@@ -1,0 +1,18 @@
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+
+testeJDBC/.classpath
+
+testeJDBC/.project
+
+testeJDBC/.settings/org.eclipse.jdt.core.prefs
+
+target/classes/LS.sql
+
+.metadata/

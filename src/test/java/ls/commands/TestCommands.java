@@ -2,12 +2,7 @@ package ls.commands;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
-
-import ls.jdbc.CRUD;
 import ls.propertiesRental.Commands;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +29,7 @@ public class TestCommands {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 	}
-	//
+	//gets dos users e das properties
 	@Test
 	public void Get_All_Users_And_All_Properties_Test() throws IllegalCommandException
 	{
@@ -44,6 +39,8 @@ public class TestCommands {
 		assertTrue(ex1 instanceof GetProperties);
 		
 	}
+	
+	//get de um especifico user
 	@Test
 	public void Get_User_With_Username_Test() throws IllegalCommandException
 	{
@@ -51,12 +48,14 @@ public class TestCommands {
 		assertTrue(ex1 instanceof GetUserUsername);
 	}
 	
+	
 	@Test
 	public void Get_Properties_Location_Test() throws IllegalCommandException
 	{
 		iCommand ex1 = gest.find("GET /properties/location/Peniche|Peniche");
 		assertTrue(ex1 instanceof GetPropertiesLocation);
 	}
+	
 	@Test(expected = IllegalCommandException.class)
 	public void Get_Properties_Location_Wrong_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
@@ -65,6 +64,7 @@ public class TestCommands {
 			ex1.execute("GET /properties/location/Peniche, Peniche");
 	}
 	
+	
 	@Test
 	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
@@ -72,6 +72,8 @@ public class TestCommands {
 		iCommand ex1 = gest.find(command);
 		assertTrue(ex1 instanceof PostUsers);
 	}
+	
+	
 	
 	@Test(expected = IllegalCommandException.class)
 	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
@@ -94,7 +96,6 @@ public class TestCommands {
 		if(ex1!= null)
 			ex1.execute("POST ");
 	}
-	
 	
 	
 	@Test(expected = IllegalCommandException.class)

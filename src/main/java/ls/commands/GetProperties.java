@@ -22,14 +22,7 @@ public class GetProperties implements iCommand {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select [type], [description], [price], [location] from properties");
-			//			System.out.println("Type \t Description \t Price \t\t\t\t Location ");
 			list = Utils.resultSetToArrayList(rs);
-			//			while(rs.next())
-			//			{
-			//				System.out.format("%s \t\t %s \t\t %s \t\t %s \n", rs.getString(1),rs.getString(2), 
-			//						rs.getString(3), rs.getString(4));
-			//			}
-			//			System.out.println();
 			return list;
 		} catch (SQLException e) {
 			throw new IllegalCommandException("Não foi possivel retornar a lista de todas as propriedades",e);

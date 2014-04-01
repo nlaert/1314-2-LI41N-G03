@@ -25,8 +25,7 @@ public class GetPropertiesDetails implements iCommand {
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where pid = ?");
-				prep.setString(1,command);
-			
+			prep.setString(1,command);
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
 			return list;

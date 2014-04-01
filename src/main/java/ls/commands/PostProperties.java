@@ -19,7 +19,6 @@ public class PostProperties implements iCommand {
 	@Override
 	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
-		int pid = -1;
 		try{
 			HashMap<String, String> map = Utils.mapper(command);
 			link = new DataBaseManager();

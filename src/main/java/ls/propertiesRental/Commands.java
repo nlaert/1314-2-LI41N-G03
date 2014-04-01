@@ -28,7 +28,7 @@ public class Commands {
 	{
 		
 		if(command.equals(""))
-			return null;
+			throw new IllegalCommandException("Comando errado!");
 		String path = Utils.limitatorPath(command);
 		if(map.containsKey(path))
 		{

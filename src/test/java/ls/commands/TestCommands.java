@@ -21,12 +21,12 @@ public class TestCommands {
 	{
 		gest = new Commands();
 		gest.add("GET /users", new GetUsers());
-		gest.add("GET /users/{username}", new GetUserUsername());
+		gest.add("GET /users/", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
-		gest.add("GET /properties/details/{pid}", new GetPropertiesDetails());
-		gest.add("GET /properties/location/{location}", new GetPropertiesLocation());
-		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
-		gest.add("GET /properties/type/{type}", new GetPropertiesType());
+		gest.add("GET /properties/details/", new GetPropertiesDetails());
+		gest.add("GET /properties/location/", new GetPropertiesLocation());
+		gest.add("GET /properties/owner/", new GetPropertiesOwner());
+		gest.add("GET /properties/type/", new GetPropertiesType());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 	}
@@ -56,20 +56,43 @@ public class TestCommands {
 	@Test
 	public void Post_Users_Test() throws IllegalCommandException
 	{
-		iCommand ex1 = gest.find("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
+		iCommand ex1 = gest.find("POST /users auth_username=superadmin&auth_password=ls1213&username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT");
 		assertTrue(ex1 instanceof PostUsers);
 	}
+	@Test(expected = IllegalCommandException.class)
+	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("GET ");
+		if(ex1!= null)
+			ex1.execute("GET ");
+	}
+	@Test(expected = IllegalCommandException.class)
+	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("POST ");
+		if(ex1!= null)
+			ex1.execute("POST ");
+		
+		
+	}
 	
+	@Test(expected = IllegalCommandException.class)
+	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("");
+		if(ex1!= null)
+			ex1.execute("");
+		
+	}
 	@Test(expected = IllegalCommandException.class)
 	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		iCommand ex1 = gest.find("POST /users ");
 		if(ex1!= null)
 			ex1.execute("POST /users ");
+		ex1 = gest.find("POST /users");
+		if(ex1!= null)
+			ex1.execute("POST /users");
+		
 	}
-	
-	
-	
-	
-	
 }

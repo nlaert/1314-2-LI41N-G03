@@ -17,8 +17,8 @@ public class PostUsers implements iCommand {
 	public ArrayList<String> execute(String command) throws IllegalCommandException,ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
-			link = new DataBaseManager();
 			HashMap<String, String> map = Utils.mapper(command);
+			link = new DataBaseManager();
 			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		

@@ -2,15 +2,21 @@ package ls.commands;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
+import ls.jdbc.CRUD;
 import ls.propertiesRental.Commands;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import Exception.ConnectionDatabaseException;
 import Exception.IllegalCommandException;
 
 public class TestCommands {
-
+	
+	String deletePostUsers = "delete from Users where user = 'testeJUNIT'";
 	
 	
 	Commands gest;
@@ -28,7 +34,7 @@ public class TestCommands {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 	}
-	
+	//
 	@Test
 	public void Get_All_Users_And_All_Properties_Test() throws IllegalCommandException
 	{
@@ -48,14 +54,31 @@ public class TestCommands {
 	@Test
 	public void Get_Properties_Location_Test() throws IllegalCommandException
 	{
-		iCommand ex1 = gest.find("GET /properties/location/Peniche, Peniche");
+		iCommand ex1 = gest.find("GET /properties/location/Peniche|Peniche");
 		assertTrue(ex1 instanceof GetPropertiesLocation);
 	}
-	@Test
-	public void Post_Users_Test() throws IllegalCommandException
+	@Test(expected = IllegalCommandException.class)
+	public void Get_Properties_Location_Wrong_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		iCommand ex1 = gest.find("POST /users auth_username=superadmin&auth_password=ls1213&username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT");
+		iCommand ex1 = gest.find("GET /properties/location/Peniche, Peniche");
+		if(ex1 != null)
+			ex1.execute("GET /properties/location/Peniche, Peniche");
+	}
+	
+	@Test
+	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException
+	{
+		String command = "POST /users auth_username=superadmin&auth_password=ls1213&username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT";
+		iCommand ex1 = gest.find(command);
 		assertTrue(ex1 instanceof PostUsers);
+	}
+	
+	@Test(expected = IllegalCommandException.class)
+	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("");
+		if(ex1!= null)
+			ex1.execute("");	
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
@@ -70,27 +93,33 @@ public class TestCommands {
 		iCommand ex1 = gest.find("POST ");
 		if(ex1!= null)
 			ex1.execute("POST ");
-		
-		
 	}
 	
-	@Test(expected = IllegalCommandException.class)
-	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
-	{
-		iCommand ex1 = gest.find("");
-		if(ex1!= null)
-			ex1.execute("");
-		
-	}
+	
+	
 	@Test(expected = IllegalCommandException.class)
 	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		iCommand ex1 = gest.find("POST /users ");
 		if(ex1!= null)
 			ex1.execute("POST /users ");
-		ex1 = gest.find("POST /users");
-		if(ex1!= null)
-			ex1.execute("POST /users");
-		
 	}
+	@Test(expected = IllegalCommandException.class)
+	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("GET /users ");
+		if(ex1!= null)
+			ex1.execute("GET /users ");
+	}
+	
+	
+	
+	
+	
+	
+//	@After
+//	public void tearDown() throws SQLException, ConnectionDatabaseException
+//	{
+//		CRUD.executeNonQuery(deletePostUsers);
+//	}
 }

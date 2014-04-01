@@ -21,8 +21,8 @@ public class PostProperties implements iCommand {
 		ArrayList<String> list = new ArrayList<String>();
 		int pid = -1;
 		try{
-			link = new DataBaseManager();
 			HashMap<String, String> map = Utils.mapper(command);
+			link = new DataBaseManager();
 			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		
@@ -38,11 +38,6 @@ public class PostProperties implements iCommand {
 			System.out.println(count + " row(s) affected");
 			rs = prep.getGeneratedKeys();  
 			list = Utils.resultSetToArrayList(rs);
-
-			//			if(rs.next()){
-			//				pid = rs.getInt("GENERATED_KEYS");
-			//				System.out.println("Property PID = "+pid); 
-			//			}
 			return list;	
 		}catch (SQLException e){
 			System.out.println(e.getMessage());

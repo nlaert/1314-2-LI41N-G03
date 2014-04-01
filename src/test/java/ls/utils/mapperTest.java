@@ -6,17 +6,19 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import Exception.IllegalCommandException;
+
 public class mapperTest {
 	HashMap <String, String> map = new HashMap<String, String>();
 	
-	@Test
-	public void mapper_invalid_string_Test(){
+	@Test(expected = IllegalCommandException.class)
+	public void mapper_invalid_string_Test() throws IllegalCommandException{
 		assertEquals(null, Utils.mapper(""));
 		assertEquals(null, Utils.mapper(null));
 	}
 	
 	@Test
-	public void mapper_expected_values_Test(){
+	public void mapper_expected_values_Test() throws IllegalCommandException{
 		StringBuilder builder = new StringBuilder();
 		String [] keys = {"username", "password", "fullname", "email"}, 
 				values = {"lsuser", "lspass", "lsname", "ls@email.com"};

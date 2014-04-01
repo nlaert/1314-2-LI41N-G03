@@ -1,5 +1,4 @@
 package Exception;
-import java.sql.SQLException;
 public class IllegalCommandException extends AppException{
 
 

@@ -1,7 +1,5 @@
 
 
-import java.sql.SQLException;
-
 import ls.commands.*;
 import ls.propertiesRental.Commands;
 import ls.utils.Utils;
@@ -49,9 +47,9 @@ public class App {
 		iCommand ex4 = gest.find("GET /properties/details/1");
 		if(ex4 != null)
 			Utils.printArrayList(ex4.execute("GET /properties/details/1"));
-		iCommand ex5 = gest.find("GET /properties/location/Lisboa, Olivais");
+		iCommand ex5 = gest.find("GET /properties/location/Lisboa|Olivais");
 		if(ex5 != null)
-			Utils.printArrayList(ex5.execute("GET /properties/location/Lisboa, Olivais"));
+			Utils.printArrayList(ex5.execute("GET /properties/location/Lisboa|Olivais"));
 		iCommand ex6 = gest.find("GET /properties/owner/joao");
 		if(ex6 != null)
 			Utils.printArrayList(ex6.execute("GET /properties/owner/joao"));
@@ -65,11 +63,11 @@ public class App {
 			ex8.execute("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
 		}
 		iCommand ex9 = gest.find("POST /properties auth_username=superadmin&auth_password=ls1213"
-				+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche,+Peniche&owner=nick");
+				+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
 		if(ex8 != null)
 		{
 			ex9.execute("POST /properties auth_username=superadmin&auth_password=ls1213"
-					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche,+Peniche&owner=nick");
+					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
 		}
 		
 		

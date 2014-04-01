@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Exception.IllegalCommandException;
-import Exception.IllegalCommandException;
 
 public class Utils {
 	
@@ -16,7 +15,6 @@ public class Utils {
 	 * 
 	 * @param command
 	 * @return String[] with 2 positions, the first and second part of String command divided by "/"
-	 * @throws IllegalCommandException 
 	 * @throws IllegalCommandException 
 	 */
 
@@ -33,7 +31,7 @@ public class Utils {
 			limitator = ' ';
 		}
 		else
-			throw new IllegalCommandException("Comando inválido!");
+			throw new IllegalCommandException("Comando invalido!");
 		
 		int firstIndex = command.indexOf(limitator);
 		int lastIndex = command.lastIndexOf(limitator);
@@ -50,8 +48,6 @@ public class Utils {
 		
 	}
 	
-
-	
 	public static String limitatorSpecificCommand(String command)
 	{
 		int lastIndex = command.lastIndexOf("/");
@@ -66,14 +62,23 @@ public class Utils {
 		return prep.executeQuery().next();
 	}
 	
-	public static HashMap<String, String> mapper(String parameters)
-	{
-		if (parameters == null || parameters.equals(""))
+	public static String locationTransformer(String command){
+		if (command == null || command == "")
 			return null;
-		if (parameters.contains(" ")){
+		return command.replace("|", ", ");
+	}
+	
+	public static HashMap<String, String> mapper(String parameters) throws IllegalCommandException
+	{
+		if (parameters == null)
+			throw new IllegalCommandException("No parameter list found");
+		if (parameters.contains(" "))
 			parameters = parameters.substring(parameters.lastIndexOf(' ')+1);
-		}
+		if (parameters.equals(""))
+			throw new IllegalCommandException("No parameter list found");
 		HashMap <String, String> dict = new HashMap<String, String>();
+		if (parameters.contains("location"))
+			parameters = locationTransformer(parameters);
 		String [] aux = parameters.split("&");
 		int equal = 0;
 		for (int i = 0; i < aux.length; i++)

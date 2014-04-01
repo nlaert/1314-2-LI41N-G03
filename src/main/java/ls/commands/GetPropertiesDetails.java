@@ -31,20 +31,20 @@ public class GetPropertiesDetails implements iCommand {
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Não é possivel retornar a lista das propriedades");
+			throw new IllegalCommandException("Nao e possivel retornar a lista das propriedades");
 		} finally
 		{
 			if(rs != null)
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Não foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet",e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Não foi possivel fechar o statement",e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o statement",e);
 				}
 			if(link != null)
 				link.closeConnection();

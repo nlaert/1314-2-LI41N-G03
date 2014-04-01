@@ -2,8 +2,6 @@ package ls.commands;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
-
 import ls.propertiesRental.Commands;
 
 import org.junit.Before;

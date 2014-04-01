@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import Exception.ConnectionDatabaseException;
 import ls.jdbc.*;
-import ls.utils.Utils;
 import static org.junit.Assert.*;
 
 public class jdbcTest {

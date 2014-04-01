@@ -3,15 +3,12 @@ package ls.propertiesRental;
 import java.util.HashMap;
 import Exception.IllegalCommandException;
 import Exception.ConnectionDatabaseException;
-import Exception.IllegalCommandException;
 import ls.commands.iCommand;
 import ls.utils.*;
 
 public class Commands {
 
 	private HashMap<String,iCommand> map;
-	private String command;
-
 	public Commands() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		map = new HashMap<String,iCommand>();

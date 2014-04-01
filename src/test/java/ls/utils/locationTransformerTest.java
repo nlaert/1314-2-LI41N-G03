@@ -4,10 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import Exception.IllegalCommandException;
+
 public class locationTransformerTest {
 	
 	@Test
-	public void no_separator_occurrence(){
+	public void no_separator_occurrence() throws IllegalCommandException{
 		String command = "Test Test";
 		String command2 = "Test";
 		assertEquals(command, Utils.locationTransformer(command));
@@ -15,7 +17,7 @@ public class locationTransformerTest {
 	}
 	
 	@Test
-	public void separator_transformed(){
+	public void separator_transformed() throws IllegalCommandException{
 		String command = "Lisboa|Olivais";
 		String commandTransformed = "Lisboa, Olivais";
 		String command2 = "GET /properties/location/Lisboa|Olivais";
@@ -25,7 +27,7 @@ public class locationTransformerTest {
 	}
 	
 	@Test
-	public void invalid_strings(){
+	public void invalid_strings() throws IllegalCommandException{
 		assertNull(Utils.locationTransformer(null));
 		assertNull(Utils.locationTransformer(""));
 	}

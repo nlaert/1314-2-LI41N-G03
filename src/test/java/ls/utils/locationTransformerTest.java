@@ -26,6 +26,7 @@ public class locationTransformerTest {
 		assertEquals(command2Transformed, Utils.locationTransformer(command2));
 	}
 	
+<<<<<<< HEAD
 	@Test(expected = IllegalCommandException.class)
 	public void invalid_strings_Null() throws IllegalCommandException{
 		Utils.locationTransformer(null);
@@ -33,6 +34,12 @@ public class locationTransformerTest {
 	@Test(expected = IllegalCommandException.class)
 	public void invalid_strings_Empty() throws IllegalCommandException{
 		Utils.locationTransformer("");
+=======
+	@Test
+	public void invalid_strings() throws IllegalCommandException{
+		assertNull(Utils.locationTransformer(null));
+		assertNull(Utils.locationTransformer(""));
+>>>>>>> FETCH_HEAD
 	}
 
 }

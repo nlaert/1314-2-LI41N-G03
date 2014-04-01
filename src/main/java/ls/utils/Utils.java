@@ -48,8 +48,10 @@ public class Utils {
 		
 	}
 	
-	public static String limitatorSpecificCommand(String command)
+	public static String limitatorSpecificCommand(String command) throws IllegalCommandException
 	{
+		if (command.contains("location"))
+			command = locationTransformer(command);
 		int lastIndex = command.lastIndexOf("/");
 		return command.substring(lastIndex+1);
 	}
@@ -62,9 +64,9 @@ public class Utils {
 		return prep.executeQuery().next();
 	}
 	
-	public static String locationTransformer(String command){
-		if (command == null || command == "")
-			return null;
+	public static String locationTransformer(String command) throws IllegalCommandException{
+		if (command == null || command == "" || command.contains(", "))
+			throw new IllegalCommandException("invalid command");
 		return command.replace("|", ", ");
 	}
 	
@@ -103,6 +105,18 @@ public class Utils {
 			select.add(aux.toString());
 		}
 		return select;
+	}
+	
+	public static String argsToString(String [] args) throws IllegalCommandException{
+		if (args == null || args.length<1)
+			throw new IllegalCommandException("invalid command");
+		StringBuilder str = new StringBuilder();
+		int i;
+		for (i = 0; i < args.length-1; i++){
+			str.append(args[i] + " ");
+		}
+		str.append(args[i]);
+		return str.toString();
 	}
 	
 	public static <E> void printArrayList(ArrayList<E> list){

@@ -69,14 +69,7 @@ public class App {
 			ex9.execute("POST /properties auth_username=superadmin&auth_password=ls1213"
 					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 }
 

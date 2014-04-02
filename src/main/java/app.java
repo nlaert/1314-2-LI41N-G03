@@ -26,6 +26,7 @@ public class App {
 		
 		String command = Utils.argsToString(args);
 		iCommand cmd = gest.find(command);
+<<<<<<< HEAD
 		ArrayList<String> result = cmd.execute(command);
 		Utils.printArrayList(result);
 		
@@ -76,6 +77,9 @@ public class App {
 //					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
 //		}
 //
+=======
+		Utils.printArrayList(cmd.execute(command));
+>>>>>>> FETCH_HEAD
 	}
 }
 

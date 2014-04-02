@@ -1,4 +1,4 @@
-
+package ls.app;
 
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class App {
 		Utils.printArrayList(result);
 		
 		
-		
+//		java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 		
 		
 		

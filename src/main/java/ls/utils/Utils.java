@@ -31,7 +31,7 @@ public class Utils {
 			limitator = ' ';
 		}
 		else
-			throw new IllegalCommandException("Comando invalido!");
+			throw new IllegalCommandException("invalid command!");
 		
 		int firstIndex = command.indexOf(limitator);
 		int lastIndex = command.lastIndexOf(limitator);

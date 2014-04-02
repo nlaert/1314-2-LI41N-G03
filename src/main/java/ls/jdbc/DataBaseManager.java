@@ -1,9 +1,9 @@
 package ls.jdbc;
 import java.sql.*;
 
-import ls.exception.ConnectionDatabaseException;
-
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+
+import ls.exception.ConnectionDatabaseException;
 
 public class DataBaseManager {
 

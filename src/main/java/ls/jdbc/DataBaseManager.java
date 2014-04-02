@@ -7,16 +7,10 @@ import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.HashMap;
 
-<<<<<<< HEAD
-=======
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.utils.Utils;
-
->>>>>>> FETCH_HEAD
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-
-import ls.exception.ConnectionDatabaseException;
 
 public class DataBaseManager {
 
@@ -25,9 +19,10 @@ public class DataBaseManager {
 	
 	public DataBaseManager() 
 	{
-//		ds.setServerName("10.211.55.9");		
+		
 		try{
 			readConnectionFile();
+//			ds.setServerName("10.211.55.9");
 			connection = ds.getConnection();
 		}
 		catch(SQLException e)

@@ -1,13 +1,12 @@
 package ls.commands;
 
 import static org.junit.Assert.*;
-
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.propertiesRental.Commands;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import Exception.ConnectionDatabaseException;
-import Exception.IllegalCommandException;
 
 public class TestCommands {
 	
@@ -90,11 +89,25 @@ public class TestCommands {
 			ex1.execute("GET ");
 	}
 	@Test(expected = IllegalCommandException.class)
+	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("GET /");
+		if(ex1!= null)
+			ex1.execute("GET /");
+	}
+	@Test(expected = IllegalCommandException.class)
 	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		iCommand ex1 = gest.find("POST ");
 		if(ex1!= null)
 			ex1.execute("POST ");
+	}
+	@Test(expected = IllegalCommandException.class)
+	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	{
+		iCommand ex1 = gest.find("POST /");
+		if(ex1!= null)
+			ex1.execute("POST /");
 	}
 	
 	

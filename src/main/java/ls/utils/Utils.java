@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Exception.IllegalCommandException;
+import ls.exception.IllegalCommandException;
 
 public class Utils {
 	

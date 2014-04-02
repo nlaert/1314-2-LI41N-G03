@@ -5,8 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
+
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 

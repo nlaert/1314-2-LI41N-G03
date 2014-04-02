@@ -1,4 +1,4 @@
-package Exception;
+package ls.exception;
 public class IllegalCommandException extends AppException{
 
 

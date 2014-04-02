@@ -1,10 +1,9 @@
 package ls.utils;
 
 import static org.junit.Assert.assertEquals;
+import ls.exception.IllegalCommandException;
 
 import org.junit.Test;
-
-import Exception.IllegalCommandException;
 
 public class ArgsToStringTest {
 	

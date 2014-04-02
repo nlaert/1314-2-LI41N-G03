@@ -1,10 +1,9 @@
 package ls.utils;
 
 import static org.junit.Assert.*;
+import ls.exception.IllegalCommandException;
 
 import org.junit.Test;
-
-import Exception.IllegalCommandException;
 
 public class locationTransformerTest {
 	

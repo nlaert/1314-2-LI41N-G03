@@ -6,8 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
+
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 

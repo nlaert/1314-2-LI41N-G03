@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Exception.ConnectionDatabaseException;
+import ls.exception.ConnectionDatabaseException;
 
 public class CRUD {
 	private static DataBaseManager link;

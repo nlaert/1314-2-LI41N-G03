@@ -1,9 +1,10 @@
 package ls.propertiesRental;
 
 import java.util.HashMap;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
+
 import ls.commands.iCommand;
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.utils.*;
 
 public class Commands {
@@ -25,14 +26,14 @@ public class Commands {
 	{
 		
 		if(command.equals(""))
-			throw new IllegalCommandException("Comando errado!");
+			throw new IllegalCommandException("invalid command");
 		String path = Utils.limitatorPath(command);
 		if(map.containsKey(path))
 		{
 			return map.get(path);
 		}
 		else{
-			throw new IllegalCommandException("Comando errado!");
+			throw new IllegalCommandException("path not found");
 		}
 
 	}

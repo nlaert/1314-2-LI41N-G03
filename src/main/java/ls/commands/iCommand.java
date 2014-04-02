@@ -1,8 +1,9 @@
 package ls.commands;
 
 import java.util.ArrayList;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
+
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 
 
 public interface iCommand {

@@ -1,10 +1,10 @@
 
 
 import ls.commands.*;
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.propertiesRental.Commands;
 import ls.utils.Utils;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
 
 public class App {
 
@@ -24,6 +24,18 @@ public class App {
 		String command = Utils.argsToString(args);
 		iCommand cmd = gest.find(command);
 		Utils.printArrayList(cmd.execute(command));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 //		iCommand ex1 = gest.find("GET /users");
 //		if(ex1 != null)

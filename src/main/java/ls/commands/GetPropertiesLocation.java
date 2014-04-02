@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
-import Exception.IllegalCommandException;
-import Exception.ConnectionDatabaseException;
 
 public class GetPropertiesLocation implements iCommand{
 

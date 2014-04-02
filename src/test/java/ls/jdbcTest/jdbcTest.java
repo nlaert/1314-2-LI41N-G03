@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import Exception.ConnectionDatabaseException;
+import ls.exception.ConnectionDatabaseException;
 import ls.jdbc.*;
 import static org.junit.Assert.*;
 

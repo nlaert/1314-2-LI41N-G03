@@ -10,6 +10,8 @@ import ls.propertiesRental.Commands;
 import ls.utils.Utils;
 
 public class App {
+	
+//	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 
 	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException 
 	{		
@@ -24,58 +26,33 @@ public class App {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		
-		String command = Utils.argsToString(args);
+		String command = argsToString(args);
 		iCommand cmd = gest.find(command);
 		ArrayList<String> result = cmd.execute(command);
-		Utils.printArrayList(result);
+		printArrayList(result);
 		
 		
-//		java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
+
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-//		iCommand ex1 = gest.find("GET /users");
-//		if(ex1 != null)
-//			Utils.printArrayList(ex1.execute("GET /users"));
-//		iCommand ex2 = gest.find("GET /users/joao");
-//		if(ex2 != null)
-//			Utils.printArrayList(ex2.execute("GET /users/joao"));
-//		iCommand ex3 = gest.find("GET /properties");
-//		if(ex3 != null)
-//			Utils.printArrayList(ex3.execute("GET /properties"));
-//		iCommand ex4 = gest.find("GET /properties/details/1");
-//		if(ex4 != null)
-//			Utils.printArrayList(ex4.execute("GET /properties/details/1"));
-//		iCommand ex5 = gest.find("GET /properties/location/Lisboa|Olivais");
-//		if(ex5 != null)
-//			Utils.printArrayList(ex5.execute("GET /properties/location/Lisboa|Olivais"));
-//		iCommand ex6 = gest.find("GET /properties/owner/joao");
-//		if(ex6 != null)
-//			Utils.printArrayList(ex6.execute("GET /properties/owner/joao"));
-//		iCommand ex7 = gest.find("GET /properties/type/apartment");
-//		if(ex7 != null)
-//			Utils.printArrayList(ex7.execute("GET /properties/type/apartment"));
-//		
-//		iCommand ex8 = gest.find("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
-//		if(ex8 != null)
-//		{
-//			ex8.execute("POST /users auth_username=superadmin&auth_password=ls1213&username=teste&password=testepass&email=teste@teste.pt&fullname=teste+teste");
-//		}
-//		iCommand ex9 = gest.find("POST /properties auth_username=superadmin&auth_password=ls1213"
-//				+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
-//		if(ex8 != null)
-//		{
-//			ex9.execute("POST /properties auth_username=superadmin&auth_password=ls1213"
-//					+ "&type=apartment&description=Apartamento+em+Peniche&price=1000&location=Peniche|Peniche&owner=nick");
-//		}
-//
+	}
+	public static String argsToString(String [] args) throws IllegalCommandException{
+		if (args == null || args.length<1)
+			throw new IllegalCommandException("invalid command");
+		StringBuilder str = new StringBuilder();
+		int i;
+		for (i = 0; i < args.length-1; i++){
+			str.append(args[i] + " ");
+		}
+		str.append(args[i]);
+		return str.toString();
+	}
+	
+	public static <E> void printArrayList(ArrayList<E> list){
+		for (int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).toString());
+		}
+		System.out.println();
 	}
 }
 

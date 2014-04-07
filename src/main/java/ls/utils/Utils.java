@@ -107,22 +107,5 @@ public class Utils {
 		return select;
 	}
 	
-	public static String argsToString(String [] args) throws IllegalCommandException{
-		if (args == null || args.length<1)
-			throw new IllegalCommandException("invalid command");
-		StringBuilder str = new StringBuilder();
-		int i;
-		for (i = 0; i < args.length-1; i++){
-			str.append(args[i] + " ");
-		}
-		str.append(args[i]);
-		return str.toString();
-	}
 	
-	public static <E> void printArrayList(ArrayList<E> list){
-		for (int i = 0; i < list.size(); i++){
-			System.out.println(list.get(i).toString());
-		}
-		System.out.println();
-	}
 }

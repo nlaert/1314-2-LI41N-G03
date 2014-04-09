@@ -12,6 +12,7 @@ import ls.utils.Utils;
 public class App {
 	
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
+//	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
 	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException 
 	{		

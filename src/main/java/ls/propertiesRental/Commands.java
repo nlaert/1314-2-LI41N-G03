@@ -1,5 +1,6 @@
 package ls.propertiesRental;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.iCommand;
@@ -9,10 +10,12 @@ import ls.utils.*;
 
 public class Commands {
 
-	private HashMap<String,iCommand> map;
+	
+	private ArrayList<Node> list;
 	public Commands() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		map = new HashMap<String,iCommand>();
+		list = new ArrayList<Node>();
+		
 	}
 
 	public void add(String command, iCommand e) throws IllegalCommandException

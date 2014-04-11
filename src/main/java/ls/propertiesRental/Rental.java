@@ -1,8 +1,6 @@
 package ls.propertiesRental;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import ls.commands.Commands;
 import ls.commands.iCommand;
 import ls.exception.ConnectionDatabaseException;

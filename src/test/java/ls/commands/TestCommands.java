@@ -3,7 +3,7 @@ package ls.commands;
 import static org.junit.Assert.*;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
-import ls.propertiesRental.Commands;
+import ls.propertiesRental.Rental;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,18 +13,18 @@ public class TestCommands {
 	String deletePostUsers = "delete from Users where user = 'testeJUNIT'";
 	
 	
-	Commands gest;
+	Rental gest;
 	@Before
 	public void setUp() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		gest = new Commands();
+		gest = new Rental();
 		gest.add("GET /users", new GetUsers());
-		gest.add("GET /users/", new GetUserUsername());
+		gest.add("GET /users/{username}", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
-		gest.add("GET /properties/details/", new GetPropertiesDetails());
-		gest.add("GET /properties/location/", new GetPropertiesLocation());
-		gest.add("GET /properties/owner/", new GetPropertiesOwner());
-		gest.add("GET /properties/type/", new GetPropertiesType());
+		gest.add("GET /properties/details/{pid}", new GetPropertiesDetails());
+		gest.add("GET /properties/location/{location}", new GetPropertiesLocation());
+		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
+		gest.add("GET /properties/type/{type}", new GetPropertiesType());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 	}

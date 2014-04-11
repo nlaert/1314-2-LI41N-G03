@@ -17,16 +17,17 @@ public class GetPropertiesDetails implements iCommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
+	private String path = "GET /properties/details/{pid}";
 	
 	
 	@Override
 	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
-		command = Utils.limitatorSpecificCommand(command);
 		ArrayList<String> list = new ArrayList<String>();
+		String [] pathParameters = Utils.pathParameters(path,command);
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where pid = ?");
-			prep.setString(1,command);
+			prep.setString(1,pathParameters[0]);
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
 			return list;

@@ -19,33 +19,19 @@ public class Utils {
 	 */
 
 	
-	public static String limitatorPath(String command) throws IllegalCommandException 
+	public static String removeParameterList(String command) throws IllegalCommandException 
 	{
-		char limitator;
-		if(command.contains("GET "))
-		{
-			limitator = '/';
-		}
-		else if(command.contains("POST "))
-		{
-			limitator = ' ';
-		}
-		else
-			throw new IllegalCommandException("invalid command!");
-		
+		if(command == null || command.equals(""))
+			throw new IllegalCommandException("Invalid command");
+		char limitator = ' ';
 		int firstIndex = command.indexOf(limitator);
 		int lastIndex = command.lastIndexOf(limitator);
 		if(firstIndex == lastIndex)
 			return command;
 		else
 		{
-			if(limitator == '/')
-				return command.substring(0,lastIndex+1);
-			else
-				return command.substring(0,lastIndex);
+			return command.substring(0,lastIndex);
 		}
-			
-		
 	}
 	
 	public static String limitatorSpecificCommand(String command) throws IllegalCommandException
@@ -93,7 +79,7 @@ public class Utils {
 		return dict;
 	}
 	
-	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws SQLException
+	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws SQLException 
 	{
 		int columnCount = rs.getMetaData().getColumnCount();
 		ArrayList<String> select = new ArrayList<String>(columnCount);
@@ -105,6 +91,19 @@ public class Utils {
 			select.add(aux.toString());
 		}
 		return select;
+	}
+
+	public static String[] pathParameters(String path, String command) throws IllegalCommandException {
+		ArrayList <String> list = new ArrayList<String>();
+		command = Utils.removeParameterList(command);
+		String [] arraySplitPath = path.split("/");
+		String [] arraySplitCommand = command.split("/");
+		for(int i = 0; i<arraySplitPath.length; i++)
+		{
+			if(arraySplitPath[i].contains("{"))
+				list.add(arraySplitCommand[i]);
+		}
+		return  list.toArray(new String[] {});
 	}
 	
 	

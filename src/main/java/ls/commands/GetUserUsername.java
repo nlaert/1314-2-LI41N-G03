@@ -17,19 +17,21 @@ public class GetUserUsername implements iCommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
+	private String path = "GET /users/{username}";
 
 
 	@Override
 	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
-		command = Utils.limitatorSpecificCommand(command);
-		ArrayList<String> list = new ArrayList<String>();
+		String [] pathParameters = Utils.pathParameters(path,command);
+		
+		ArrayList<String> result = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select username, password, email, fullname from users where username = ?");
-			prep.setString(1, command);
+			prep.setString(1, pathParameters[0]);
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
-			return list;
+			result = Utils.resultSetToArrayList(rs);
+			return result;
 		} catch (SQLException e) {
 			System.out.println(e);
 		} finally
@@ -52,7 +54,7 @@ public class GetUserUsername implements iCommand {
 				link.closeConnection();
 
 		}
-		return list;	
+		return result;	
 	}
 }
 

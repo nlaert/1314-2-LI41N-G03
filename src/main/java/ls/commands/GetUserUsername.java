@@ -18,18 +18,15 @@ public class GetUserUsername implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
-	private String path = "GET /users/{username}";
-
+	private String key = "username";
 
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
-		String [] pathParameters = Utils.pathParameters(path,command[1]);
-		
 		ArrayList<String> result = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select username, password, email, fullname from users where username = ?");
-			prep.setString(1, pathParameters[0]);
+			prep = link.getConnetion().prepareStatement("select password, email, fullname from users where " + key  + " = ?");
+			prep.setString(1, map.get(key));
 			rs = prep.executeQuery();
 			result = Utils.resultSetToArrayList(rs);
 			return result;

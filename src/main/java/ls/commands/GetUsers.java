@@ -28,7 +28,7 @@ public class GetUsers implements ICommand {
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("N��o �� possivel retornar a lista de utilizadores", e);
+			throw new IllegalCommandException("Nao e possivel retornar a lista de utilizadores", e);
 		} finally
 		{
 			if(rs != null)
@@ -36,14 +36,14 @@ public class GetUsers implements ICommand {
 					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					throw new ConnectionDatabaseException("N��o �� possivel fechar o ResultSet", e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet", e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					throw new ConnectionDatabaseException("N��o �� possivel fechar o Preparement", e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o Preparement", e);
 				}
 			if(link != null)
 

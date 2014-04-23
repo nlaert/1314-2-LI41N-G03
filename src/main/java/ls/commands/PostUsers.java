@@ -18,17 +18,17 @@ public class PostUsers implements ICommand {
 	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException,ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
-			HashMap<String, String> parametersMap = Utils.mapper(command[2],map);
+			
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(parametersMap.get("auth_username"), parametersMap.get("auth_password"), link.getConnetion())){
+			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		
 			}
 			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
-			prep.setString(1, parametersMap.get("username"));
-			prep.setString(2, parametersMap.get("password"));
-			prep.setString(3, parametersMap.get("email"));
-			prep.setString(4, parametersMap.get("fullname"));
+			prep.setString(1, map.get("username"));
+			prep.setString(2, map.get("password"));
+			prep.setString(3, map.get("email"));
+			prep.setString(4, map.get("fullname"));
 			prep.executeUpdate();
 			int count = prep.getUpdateCount();
 			System.out.println(count + " row(s) affected");

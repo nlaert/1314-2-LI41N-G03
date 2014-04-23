@@ -49,7 +49,7 @@ insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Ad
 
 
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
-insert into users values('nick','pass','a35366@alunos.isel.pt','Nick Laert');
+insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
 --select username, password, email, fullname from users where username = 'joao';
 --select username, password, email, fullname from users;

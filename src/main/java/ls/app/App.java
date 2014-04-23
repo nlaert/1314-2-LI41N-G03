@@ -8,7 +8,6 @@ import ls.commands.*;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.propertiesRental.Rental;
-import ls.utils.Utils;
 
 public class App {
 	
@@ -32,13 +31,9 @@ public class App {
 
 		ICommand cmd = gest.find(args,map);
 		ArrayList<String> result = cmd.execute(map);
-		printArrayList(result);
-		
-		
-
-		
-		
+		printArrayList(result);		
 	}
+	
 	public static String argsToString(String [] args) throws IllegalCommandException{
 		if (args == null || args.length<1)
 			throw new IllegalCommandException("invalid command");

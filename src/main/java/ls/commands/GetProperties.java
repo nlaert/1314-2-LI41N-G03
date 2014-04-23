@@ -27,7 +27,7 @@ public class GetProperties implements ICommand {
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("N��o foi possivel retornar a lista de todas as propriedades",e);
+			throw new IllegalCommandException("Nao foi possivel retornar a lista de todas as propriedades",e);
 		} 
 		finally
 		{
@@ -35,13 +35,13 @@ public class GetProperties implements ICommand {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("N��o foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet",e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("N��o foi possivel fechar o Statement",e);
+					throw new ConnectionDatabaseException("Nao foi possivel fechar o Statement",e);
 				}
 			if(link != null)
 				link.closeConnection();

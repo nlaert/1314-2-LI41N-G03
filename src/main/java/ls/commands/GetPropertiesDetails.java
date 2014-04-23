@@ -18,16 +18,15 @@ public class GetPropertiesDetails implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
-	private String path = "GET /properties/details/{pid}";
-	
+	private String key = "pid";	
 	
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where pid = ?");
-			prep.setString(1,pathParameters[0]);
+			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where " + key + " = ?");
+			prep.setString(1,map.get(key));
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
 			return list;

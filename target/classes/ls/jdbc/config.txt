@@ -1,1 +1,1 @@
-serverName=10.211.55.9&portNumber=1433&databaseName=LS&user=ls&password=ls1314
+serverName=localhost&portNumber=1433&databaseName=LS&user=ls&password=ls1314

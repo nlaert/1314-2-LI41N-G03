@@ -49,9 +49,9 @@ public class DataBaseManager {
 	private void readConnectionFile() throws IOException{
 		InputStream istream = this.getClass().getResourceAsStream("config.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(istream));
-		HashMap<String, String> config;
+		HashMap<String, String> config = new HashMap<String,String>();
 		try {
-			config = Utils.mapper(br.readLine());
+			config = Utils.mapper(br.readLine(),config);
 		} catch (IllegalCommandException e) {
 			throw new IOException("invalid connection file");
 		}

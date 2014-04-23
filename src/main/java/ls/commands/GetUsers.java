@@ -19,7 +19,7 @@ public class GetUsers implements ICommand {
 
 
 	@Override
-	public ArrayList<String> execute(String[] command, HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();

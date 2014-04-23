@@ -18,10 +18,10 @@ public class PostProperties implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	@Override
-	public ArrayList<String> execute(String[] command, HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
-			HashMap<String, String> parametersMap = Utils.mapper(command[2]);
+			HashMap<String, String> parametersMap = Utils.mapper(command[2],map);
 			link = new DataBaseManager();
 			if (!Utils.checkAuth(parametersMap.get("auth_username"), parametersMap.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");

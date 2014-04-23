@@ -20,7 +20,7 @@ public class GetPropertiesLocation implements ICommand{
 	DataBaseManager link;
 	private String path = "GET /properties/location/{location}";
 	@Override
-	public ArrayList<String> execute(String[] command, HashMap<String, String> map)
+	public ArrayList<String> execute(HashMap<String, String> map)
 			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException {
 		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		

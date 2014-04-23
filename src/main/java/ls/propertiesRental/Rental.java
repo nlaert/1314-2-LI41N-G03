@@ -42,7 +42,8 @@ public class Rental {
 					String[] listPath = list.get(i).path.split(" ");
 					if(comparePath(listPath[1].split("/"),commandPath,map))
 					{
-						map = Utils.mapper(command[2], map);
+						if(command.length == 3)
+							map = Utils.mapper(command[2], map);
 						return list.get(i).command;
 					}
 						

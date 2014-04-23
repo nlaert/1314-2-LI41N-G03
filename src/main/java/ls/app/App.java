@@ -31,7 +31,7 @@ public class App {
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
 		ICommand cmd = gest.find(args,map);
-		ArrayList<String> result = cmd.execute(args,map);
+		ArrayList<String> result = cmd.execute(map);
 		printArrayList(result);
 		
 		

@@ -10,6 +10,6 @@ import ls.exception.IllegalCommandException;
 public interface ICommand {
 	
 
-	public ArrayList<String> execute(String[] command, HashMap<String, String> map) 
+	public ArrayList<String> execute(HashMap<String, String> map) 
 			throws  IllegalCommandException, ConnectionDatabaseException ;
 }

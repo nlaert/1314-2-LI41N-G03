@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
@@ -19,7 +20,7 @@ public class GetPropertiesLocation implements ICommand{
 	DataBaseManager link;
 	private String path = "GET /properties/location/{location}";
 	@Override
-	public ArrayList<String> execute(String[] command)
+	public ArrayList<String> execute(String[] command, HashMap<String, String> map)
 			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException {
 		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		

@@ -60,7 +60,7 @@ public class TestCommands {
 	{
 		ICommand ex1 = gest.find("GET /properties/location/Peniche, Peniche");
 		if(ex1 != null)
-			ex1.execute("GET /properties/location/Peniche, Peniche");
+			ex1.execute("GET /properties/location/Peniche, Peniche", null);
 	}
 	
 	
@@ -79,35 +79,35 @@ public class TestCommands {
 	{
 		ICommand ex1 = gest.find("");
 		if(ex1!= null)
-			ex1.execute("");	
+			ex1.execute("", null);	
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		ICommand ex1 = gest.find("GET ");
 		if(ex1!= null)
-			ex1.execute("GET ");
+			ex1.execute("GET ", null);
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		ICommand ex1 = gest.find("GET /");
 		if(ex1!= null)
-			ex1.execute("GET /");
+			ex1.execute("GET /", null);
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		ICommand ex1 = gest.find("POST ");
 		if(ex1!= null)
-			ex1.execute("POST ");
+			ex1.execute("POST ", null);
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		ICommand ex1 = gest.find("POST /");
 		if(ex1!= null)
-			ex1.execute("POST /");
+			ex1.execute("POST /", null);
 	}
 	
 	
@@ -116,14 +116,14 @@ public class TestCommands {
 	{
 		ICommand ex1 = gest.find("POST /users ");
 		if(ex1!= null)
-			ex1.execute("POST /users ");
+			ex1.execute("POST /users ", null);
 	}
 	@Test(expected = IllegalCommandException.class)
 	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
 	{
 		ICommand ex1 = gest.find("GET /users ");
 		if(ex1!= null)
-			ex1.execute("GET /users ");
+			ex1.execute("GET /users ", null);
 	}
 	
 	

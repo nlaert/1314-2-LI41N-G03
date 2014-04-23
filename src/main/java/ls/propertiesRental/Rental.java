@@ -1,6 +1,8 @@
 package ls.propertiesRental;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import ls.commands.Commands;
 import ls.commands.ICommand;
 import ls.exception.ConnectionDatabaseException;
@@ -25,7 +27,7 @@ public class Rental {
 		
 	}
 
-	public ICommand find(String[] command) throws IllegalCommandException
+	public ICommand find(String[] command, HashMap<String, String> map) throws IllegalCommandException
 	{
 		
 		
@@ -38,8 +40,13 @@ public class Rental {
 				if(aux.equals(command[0])) // avaliar se é GET ou POST
 				{
 					String[] listPath = list.get(i).path.split(" ");
-					if(comparePath(listPath[1].split("/"),commandPath))
+					if(comparePath(listPath[1].split("/"),commandPath,map))
+					{
+						map = Utils.mapper(command[2], map);
 						return list.get(i).command;
+					}
+						
+						
 				}
 			}
 		}
@@ -47,7 +54,7 @@ public class Rental {
 
 	}
 
-	public static boolean comparePath(String [] listPath, String [] commandPath)
+	public boolean comparePath(String [] listPath, String [] commandPath, HashMap<String,String> map)
 	{
 		if(listPath.length != commandPath.length)
 			return false;
@@ -58,6 +65,10 @@ public class Rental {
 			{
 				if(!listPath[i].contains("{"))
 					return false;
+				else{
+					String key = listPath[i].substring(1,listPath[i].length()-1);
+					map.put(key, commandPath[i]);
+				}
 			}
 		}
 		return true;

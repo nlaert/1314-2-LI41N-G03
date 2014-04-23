@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
@@ -21,7 +22,7 @@ public class GetPropertiesOwner implements ICommand {
 	
 	
 	@Override
-	public ArrayList<String> execute(String[] command) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(String[] command, HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		ArrayList<String> list = new ArrayList<String>();
 		try {

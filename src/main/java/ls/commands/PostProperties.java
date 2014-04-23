@@ -18,21 +18,21 @@ public class PostProperties implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	@Override
-	public ArrayList<String> execute(String[] command) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(String[] command, HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
-			HashMap<String, String> map = Utils.mapper(command[2]);
+			HashMap<String, String> parametersMap = Utils.mapper(command[2]);
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
+			if (!Utils.checkAuth(parametersMap.get("auth_username"), parametersMap.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		
 			}
 			prep = link.getConnetion().prepareStatement("insert into properties values (?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
-			prep.setString(1, map.get("type"));
-			prep.setString(2, map.get("description"));
-			prep.setString(3, map.get("price"));
-			prep.setString(4, map.get("location"));
-			prep.setString(5, map.get("owner"));
+			prep.setString(1, parametersMap.get("type"));
+			prep.setString(2, parametersMap.get("description"));
+			prep.setString(3, parametersMap.get("price"));
+			prep.setString(4, parametersMap.get("location"));
+			prep.setString(5, parametersMap.get("owner"));
 			prep.executeUpdate();
 			int count = prep.getUpdateCount();
 			System.out.println(count + " row(s) affected");

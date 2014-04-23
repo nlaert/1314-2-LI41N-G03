@@ -2,6 +2,7 @@ package ls.app;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ls.commands.*;
 import ls.exception.ConnectionDatabaseException;
@@ -27,9 +28,10 @@ public class App {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		
-//		String command = argsToString(args);
-		ICommand cmd = gest.find(args);
-		ArrayList<String> result = cmd.execute(args);
+		HashMap <String,String> map = new HashMap<String, String>(); 
+
+		ICommand cmd = gest.find(args,map);
+		ArrayList<String> result = cmd.execute(args,map);
 		printArrayList(result);
 		
 		

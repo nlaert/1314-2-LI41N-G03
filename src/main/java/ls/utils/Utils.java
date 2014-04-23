@@ -56,13 +56,12 @@ public class Utils {
 		return command.replace("|", ", ");
 	}
 	
-	public static HashMap<String, String> mapper(String parameters) throws IllegalCommandException
+	public static HashMap<String, String> mapper(String parameters, HashMap<String, String> map) throws IllegalCommandException
 	{
 		if (parameters == null)
 			throw new IllegalCommandException("No parameter list found");
 		if (parameters.equals(""))
 			throw new IllegalCommandException("No parameter list found");
-		HashMap <String, String> dict = new HashMap<String, String>();
 		if (parameters.contains("location"))
 			parameters = locationTransformer(parameters);
 		String [] aux = parameters.split("&");
@@ -72,9 +71,9 @@ public class Utils {
 			if (aux[i].indexOf('+')>=0)
 				aux[i] = aux[i].replace('+', ' ');
 			equal = aux[i].indexOf('=');
-			dict.put(aux[i].substring(0, equal), aux[i].substring(equal+1));			
+			map.put(aux[i].substring(0, equal), aux[i].substring(equal+1));			
 		}
-		return dict;
+		return map;
 	}
 	
 	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws SQLException 

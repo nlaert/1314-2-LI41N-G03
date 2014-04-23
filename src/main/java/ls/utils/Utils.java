@@ -79,10 +79,14 @@ public class Utils {
 	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws SQLException 
 	{
 		int columnCount = rs.getMetaData().getColumnCount();
-		ArrayList<String> select = new ArrayList<String>(columnCount);
+		ArrayList<String> select = new ArrayList<String>(columnCount+1);
+		StringBuilder aux = new StringBuilder();
+		for (int i = 1; i<=columnCount; i++)
+			aux.append(rs.getMetaData().getColumnName(i) + "\t");
+		select.add(aux.toString());
 		while(rs.next())
 		{
-			StringBuilder aux = new StringBuilder();
+			aux = new StringBuilder();
 			for (int i = 1; i<=columnCount; i++)
 				aux.append(rs.getString(i) + "\t");
 			select.add(aux.toString());

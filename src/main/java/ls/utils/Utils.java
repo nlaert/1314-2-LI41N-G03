@@ -60,8 +60,6 @@ public class Utils {
 	{
 		if (parameters == null)
 			throw new IllegalCommandException("No parameter list found");
-		if (parameters.contains(" "))
-			parameters = parameters.substring(parameters.lastIndexOf(' ')+1);
 		if (parameters.equals(""))
 			throw new IllegalCommandException("No parameter list found");
 		HashMap <String, String> dict = new HashMap<String, String>();
@@ -106,5 +104,6 @@ public class Utils {
 		return  list.toArray(new String[] {});
 	}
 	
+
 	
 }

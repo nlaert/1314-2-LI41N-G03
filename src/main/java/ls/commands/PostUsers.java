@@ -10,15 +10,15 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class PostUsers implements iCommand {
+public class PostUsers implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
 	@Override
-	public ArrayList<String> execute(String command) throws IllegalCommandException,ConnectionDatabaseException {
+	public ArrayList<String> execute(String[] command) throws IllegalCommandException,ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
-			HashMap<String, String> map = Utils.mapper(command);
+			HashMap<String, String> map = Utils.mapper(command[2]);
 			link = new DataBaseManager();
 			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");

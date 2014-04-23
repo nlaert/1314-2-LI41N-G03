@@ -11,7 +11,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetPropertiesOwner implements iCommand {
+public class GetPropertiesOwner implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -21,8 +21,8 @@ public class GetPropertiesOwner implements iCommand {
 	
 	
 	@Override
-	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
-		String [] pathParameters = Utils.pathParameters(path,command);
+	public ArrayList<String> execute(String[] command) throws IllegalCommandException, ConnectionDatabaseException {
+		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();

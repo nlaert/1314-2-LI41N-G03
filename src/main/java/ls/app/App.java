@@ -27,9 +27,9 @@ public class App {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		
-		String command = argsToString(args);
-		iCommand cmd = gest.find(command);
-		ArrayList<String> result = cmd.execute(command);
+//		String command = argsToString(args);
+		ICommand cmd = gest.find(args);
+		ArrayList<String> result = cmd.execute(args);
 		printArrayList(result);
 		
 		

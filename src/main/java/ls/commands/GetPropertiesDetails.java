@@ -11,7 +11,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetPropertiesDetails implements iCommand {
+public class GetPropertiesDetails implements ICommand {
 	
 	Statement stmt;
 	PreparedStatement prep;
@@ -21,9 +21,9 @@ public class GetPropertiesDetails implements iCommand {
 	
 	
 	@Override
-	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(String[] command) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
-		String [] pathParameters = Utils.pathParameters(path,command);
+		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where pid = ?");

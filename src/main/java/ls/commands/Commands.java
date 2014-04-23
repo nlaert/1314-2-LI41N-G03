@@ -5,10 +5,10 @@ public class Commands {
 
 	public String path;
 	public int size;
-	public iCommand command;
+	public ICommand command;
 
 	
-	public Commands(String path, int size, iCommand command)
+	public Commands(String path, int size, ICommand command)
 	{
 		this.path = path;
 		this.size = size;

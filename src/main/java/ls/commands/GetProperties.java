@@ -10,14 +10,14 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetProperties implements iCommand {
+public class GetProperties implements ICommand {
 
 	Statement stmt;
 	ResultSet rs;
 	DataBaseManager link;
 
 	@Override
-	public ArrayList<String> execute(String command) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<String> execute(String[] command) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
@@ -26,7 +26,7 @@ public class GetProperties implements iCommand {
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Não foi possivel retornar a lista de todas as propriedades",e);
+			throw new IllegalCommandException("N��o foi possivel retornar a lista de todas as propriedades",e);
 		} 
 		finally
 		{
@@ -34,13 +34,13 @@ public class GetProperties implements iCommand {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Não foi possivel fechar o ResultSet",e);
+					throw new ConnectionDatabaseException("N��o foi possivel fechar o ResultSet",e);
 				}
 			if(stmt != null)
 				try {
 					stmt.close();
 				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Não foi possivel fechar o Statement",e);
+					throw new ConnectionDatabaseException("N��o foi possivel fechar o Statement",e);
 				}
 			if(link != null)
 				link.closeConnection();

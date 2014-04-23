@@ -11,7 +11,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetPropertiesLocation implements iCommand{
+public class GetPropertiesLocation implements ICommand{
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -19,9 +19,9 @@ public class GetPropertiesLocation implements iCommand{
 	DataBaseManager link;
 	private String path = "GET /properties/location/{location}";
 	@Override
-	public ArrayList<String> execute(String command)
+	public ArrayList<String> execute(String[] command)
 			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException {
-		String [] pathParameters = Utils.pathParameters(path,command);
+		String [] pathParameters = Utils.pathParameters(path,command[1]);
 		
 		ArrayList<String> list = new ArrayList<String>();
 		try {

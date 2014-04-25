@@ -7,18 +7,31 @@ import java.util.ArrayList;
 
 public class JSON {
 	public static String jsonify(ArrayList<String> params){
-		String [] columns = params.get(0).split("\t");
+		if (params==null || params.size()==0)
+			return "{}";
+		String [] columnsNames = params.get(0).split("\t");//params first line contains columns names
 		StringBuilder result = new StringBuilder();
 		if (params.size()>2)
 			result.append("[");
-		else
-			result.append("{");
 		for (int i = 1; i < params.size(); i++){
-			String [] aux = params.get(i).split("\t");
-			
+			result.append("{");
+			String [] row = params.get(i).split("\t");
+			for (int j = 0; j<row.length; j++){
+				result.append("\"" + columnsNames[j] + "\":");
+				if(isNumeric(row[j]))
+					result.append(row[j]);
+				else
+					result.append("\""+ row[j] + "\"");
+				if(j!=row.length-1)
+					result.append(",");
+			}
+			if(i!=params.size()-1)
+				result.append("},");
 		}
 		
-		
+		result.append("}");
+		if (params.size()>2)
+			result.append("]");
 		return result.toString();
 	}
 

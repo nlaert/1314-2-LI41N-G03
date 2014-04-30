@@ -32,9 +32,10 @@ public class Rental {
 		if(command == null || command.length<2)
 			throw new IllegalCommandException("invalid command");
 		
+		String [] commandPath = command[1].split("/");  //path recebida
 		for(int i = 0; i< list.size(); i++)
 		{
-			String [] commandPath = command[1].split("/");  //path recebida
+			
 			if(commandPath.length == list.get(i).size) // avaliar o tamanho
 			{
 				String aux = list.get(i).path.substring(0,list.get(i).path.indexOf(" "));

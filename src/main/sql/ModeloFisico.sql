@@ -54,7 +54,9 @@ insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
 select [type], [description], [price], [location] from properties
 insert into rental values(1,'joao',2014,10,'pending','2014-01-20',null); 
+insert into rental (property,renter,[year],[week],[status],reserved_date) values(1,'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], [week], [status], reserved_date, confirmed_date from rental;
+
 
 
 --select username, password, email, fullname from users where username = 'joao';

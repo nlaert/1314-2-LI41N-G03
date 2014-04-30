@@ -24,8 +24,10 @@ public class App {
 		gest.add("GET /properties/location/{location}", new GetPropertiesLocation());
 		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
 		gest.add("GET /properties/type/{type}", new GetPropertiesType());
+		gest.add("GET /users/{username}/rentals", new GetUsersRentals());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
+		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
 		
 		HashMap <String,String> map = new HashMap<String, String>(); 
 

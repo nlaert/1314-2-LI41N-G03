@@ -14,7 +14,7 @@ public class Output {
 	
 
 	public static void Print(ArrayList<String> params, HashMap <String, String> map) throws FileException{
-		String result = "", accept = "", output = "";
+		String result = "", accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
 		if (accept.equalsIgnoreCase(html))
@@ -37,15 +37,13 @@ public class Output {
 			bw.close();
 		} catch (IOException e) {
 			throw new FileException("Nao e possivel gravar ficheiro", e);
-		}
-		
-		
+		}	
 	}
 
 	public static <E> String printArrayList(ArrayList<E> list){
 		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < list.size(); i++)
-			str.append(list.get(i).toString());
+			str.append(list.get(i).toString() + "\n");
 		return str.toString();
 	}
 

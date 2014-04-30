@@ -56,7 +56,7 @@ select [type], [description], [price], [location] from properties
 insert into rental values(1,'joao',2014,10,'pending','2014-01-20',null); 
 select property, renter, [year], [week], [status], reserved_date, confirmed_date from rental;
 
-
+select [property], [renter], [year], [week], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
 --select username, password, email, fullname from users where username = 'joao';
 --select username, password, email, fullname from users;
 --select [type], [description], [price], [location] from properties

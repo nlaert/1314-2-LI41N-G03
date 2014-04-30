@@ -56,6 +56,14 @@ public class Utils {
 		return prep.executeQuery().next();
 	}
 	
+	public static boolean checkRental(String sqlCommand,String year, String cw, Connection conn) throws SQLException
+	{
+		PreparedStatement prep = conn.prepareStatement(sqlCommand);
+		prep.setString(1, year);
+		prep.setString(2, cw);
+		return prep.executeQuery().next();
+	}
+	
 	public static String locationTransformer(String command) throws IllegalCommandException{
 		if (command == null || command == "" || command.contains(", "))
 			throw new IllegalCommandException("invalid command");

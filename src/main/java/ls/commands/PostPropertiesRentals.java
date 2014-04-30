@@ -24,28 +24,38 @@ public class PostPropertiesRentals extends CloseCommands implements ICommand {
 			link = new DataBaseManager();
 			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
 			{
-				System.out.println("login invalido!");
-				return null;		
+				throw new ConnectionDatabaseException("Invalid login");	
 			}
-			prep = link.getConnetion().prepareStatement("insert into rental ([property],[renter],[year],[week],[status],[reserved_date]) values(?,?,?,?,?,?)");
+			if(Utils.checkRental("select [year],[cw] from rental where [year] = ? and [cw] = ?",map.get("year"),map.get("cw"), link.getConnetion()))
+			{
+				throw new IllegalCommandException("a rent for the chosen date already exists");
+			}
+			prep = link.getConnetion().prepareStatement("insert into rental ([property],[renter],[year],[cw],[status],[reserved_date]) values(?,?,?,?,?,getDate())");
 			prep.setString(1, map.get("pid"));
-			prep.setString(2, map.get("renter"));
+			prep.setString(2, map.get("auth_username"));
 			prep.setString(3, map.get("year"));
-			prep.setString(4, map.get("week"));
+			prep.setString(4, map.get("cw"));
 			prep.setString(5, "pending");
-			prep.setString(6, map.get("reserved_date"));
-			prep.executeUpdate();
-			int count = prep.getUpdateCount();
-			System.out.println(count + " row(s) affected");
+			int count = prep.executeUpdate();
+			if(count >0)
+			{
+				prep = link.getConnetion().prepareStatement("select [property],[renter],[year],[cw],[status],[reserved_date],[confirmed_date] from rental where [year] = ? and [cw] = ?");
+				prep.setString(1, map.get("year"));
+				prep.setString(2, map.get("cw"));
+				rs = prep.executeQuery();
+				list = Utils.resultSetToArrayList(rs);
+			}
+			return list;
 		} catch(SQLException e)
 		{
 			throw new IllegalCommandException("Nao foi possivel criar um aluguer", e);
-		} finally
+		} 
+		finally
 		{
 			close(prep,link);
 		}
 		
-		return list;
+		
 	}
 	
 	

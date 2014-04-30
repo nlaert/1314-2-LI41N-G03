@@ -46,9 +46,7 @@ public class Rental {
 						if(command.length == 3)
 							map = Utils.mapper(command[2], map);
 						return list.get(i).command;
-					}
-						
-						
+					}	
 				}
 			}
 		}

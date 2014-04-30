@@ -31,20 +31,12 @@ public class App {
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
-		
+		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
 		ICommand cmd = gest.find(args,map);
 		ArrayList<String> result = cmd.execute(map);
 		Output.Print(result, map);		
-	}
-	
-
-	public static <E> void printArrayList(ArrayList<E> list){
-		for (int i = 0; i < list.size(); i++){
-			System.out.println(list.get(i).toString());
-		}
-		System.out.println();
 	}
 }
 

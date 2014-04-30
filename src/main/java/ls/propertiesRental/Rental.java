@@ -29,7 +29,8 @@ public class Rental {
 
 	public ICommand find(String[] command, HashMap<String, String> map) throws IllegalCommandException
 	{
-		
+		if(command == null || command.length<2)
+			throw new IllegalCommandException("invalid command");
 		
 		for(int i = 0; i< list.size(); i++)
 		{

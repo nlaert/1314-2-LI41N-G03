@@ -25,7 +25,7 @@ public class GetPropertiesType implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [type], [description], [price], [location] from properties where " + key + " = ?");
+			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where " + key + " = ?");
 			prep.setString(1,map.get(key));			
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);

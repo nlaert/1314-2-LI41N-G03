@@ -23,7 +23,7 @@ public class GetProperties implements ICommand {
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
-			rs = stmt.executeQuery("select [type], [description], [price], [location] from properties");
+			rs = stmt.executeQuery("select [pid], [type], [description], [price], [location] from properties");
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {

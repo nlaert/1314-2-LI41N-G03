@@ -9,7 +9,7 @@ public class JSON {
 	public static String jsonify(ArrayList<String> params){
 		if (params==null || params.size()==0)
 			return "{}";
-		String [] columnsNames = params.get(0).split("\t");//params first line contains columns names
+		String [] columnsNames = params.get(0).split("\t");
 		StringBuilder result = new StringBuilder();
 		if (params.size()>2)
 			result.append("[");

@@ -13,8 +13,8 @@ public class mapperTest {
 	
 	@Test(expected = IllegalCommandException.class)
 	public void mapper_invalid_string_Test() throws IllegalCommandException{
-		assertEquals(null, Utils.mapper(""));
-		assertEquals(null, Utils.mapper(null));
+		assertEquals(null, Utils.mapper("", map));
+		assertEquals(null, Utils.mapper(null, null));
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class mapperTest {
 			builder.append(keys[i] + "=" + values[i]);
 			map.put(keys[i], values[i]);
 		}
-		assertEquals(map, Utils.mapper(builder.toString()));
+		assertEquals(map, Utils.mapper(builder.toString(), map));
 	}
 
 }

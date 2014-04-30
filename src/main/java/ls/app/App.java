@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import ls.commands.*;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.output.Output;
 import ls.propertiesRental.Rental;
@@ -16,7 +17,7 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
-	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException, IOException 
+	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException, IOException, FileException 
 	{		
 		Rental gest = new Rental();
 		gest.add("GET /users", new GetUsers());

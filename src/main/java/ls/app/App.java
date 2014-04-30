@@ -28,6 +28,8 @@ public class App {
 		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
 		gest.add("GET /properties/type/{type}", new GetPropertiesType());
 		gest.add("GET /users/{username}/rentals", new GetUsersRentals());
+		gest.add("GET /properties/{pid}/rentals", new GetPropertiesRentals());
+		gest.add("GET /properties/{pid}/rentals/{year}/{cw}", new GetPropertiesRentalsWithDate());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());

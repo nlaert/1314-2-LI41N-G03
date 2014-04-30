@@ -16,3 +16,4 @@ testeJDBC/.settings/org.eclipse.jdt.core.prefs
 target/classes/LS.sql
 
 .metadata/
+src/main/java/ls/jdbc/config.txt

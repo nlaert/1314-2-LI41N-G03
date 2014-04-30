@@ -33,7 +33,7 @@ public class PostUsers extends CloseCommands implements ICommand {
 			int count = prep.getUpdateCount();
 			System.out.println(count + " row(s) affected");
 		}catch (SQLException e){
-			System.out.println(e.getMessage());
+			throw new IllegalCommandException("Nao foi possivel adicionar um cliente",e);
 		}finally{
 			close(prep,link);
 			}

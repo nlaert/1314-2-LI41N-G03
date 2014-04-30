@@ -2,6 +2,7 @@ package ls.commands;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,9 +27,25 @@ public class PostPropertiesRentals extends CloseCommands implements ICommand {
 				System.out.println("login invalido!");
 				return null;		
 			}
+			prep = link.getConnetion().prepareStatement("insert into rental ([property],[renter],[year],[week],[status],[reserved_date]) values(?,?,?,?,?,?)");
+			prep.setString(1, map.get("pid"));
+			prep.setString(2, map.get("renter"));
+			prep.setString(3, map.get("year"));
+			prep.setString(4, map.get("week"));
+			prep.setString(5, "pending");
+			prep.setString(6, map.get("reserved_date"));
+			prep.executeUpdate();
+			int count = prep.getUpdateCount();
+			System.out.println(count + " row(s) affected");
+		} catch(SQLException e)
+		{
+			throw new IllegalCommandException("Nao foi possivel criar um aluguer", e);
+		} finally
+		{
+			close(prep,link);
 		}
 		
-		return null;
+		return list;
 	}
 	
 	

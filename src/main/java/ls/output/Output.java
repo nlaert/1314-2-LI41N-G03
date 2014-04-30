@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ls.exception.FileException;
+
 public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
-	public static void Print(ArrayList<String> params, HashMap <String, String> map) throws IOException{
-		String result = "", accept = "";
+
+	public static void Print(ArrayList<String> params, HashMap <String, String> map) throws FileException{
+		String result = "", accept = "", output = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
 		if (accept.equalsIgnoreCase(html))
@@ -26,10 +29,17 @@ public class Output {
 		System.out.println(result);			
 	}
 	
-	private static void printToFile(String filename, String result) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-		bw.write(result);
-		bw.close();
+	private static void printToFile(String filename, String result) throws FileException {
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(filename));
+			bw.write(result);
+			bw.close();
+		} catch (IOException e) {
+			throw new FileException("Nao e possivel gravar ficheiro", e);
+		}
+		
+		
 	}
 
 	public static <E> String printArrayList(ArrayList<E> list){

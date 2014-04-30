@@ -12,7 +12,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetPropertiesType implements ICommand {
+public class GetPropertiesType extends CloseCommands implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -34,20 +34,7 @@ public class GetPropertiesType implements ICommand {
 			throw new IllegalCommandException("Nao e possivel retornar a lista das propriedades");
 		} finally
 		{
-			if(rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet",e);
-				}
-			if(stmt != null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o statement",e);
-				}
-			if(link != null)
-				link.closeConnection();
+			close(rs, prep, link);
 		
 		}
 	}

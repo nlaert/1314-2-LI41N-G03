@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
+import ls.jdbc.DataBaseManager;
 
 public class Utils {
 	
@@ -17,6 +20,10 @@ public class Utils {
 	 * @return String[] with 2 positions, the first and second part of String command divided by "/"
 	 * @throws IllegalCommandException 
 	 */
+	Statement stmt;
+	ResultSet rs;
+	DataBaseManager link;
+	
 
 	
 	public static String removeParameterList(String command) throws IllegalCommandException 

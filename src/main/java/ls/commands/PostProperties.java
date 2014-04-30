@@ -12,7 +12,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class PostProperties implements ICommand {
+public class PostProperties extends CloseCommands implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -41,20 +41,7 @@ public class PostProperties implements ICommand {
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
 		}finally{
-			if(rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet",e);
-				}
-			if(prep != null)
-				try {
-					prep.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o Statement",e);
-				}
-			if(link != null)
-				link.closeConnection();
+			close(rs, prep, link);
 
 
 

@@ -10,7 +10,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class PostUsers implements ICommand {
+public class PostUsers extends CloseCommands implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -35,14 +35,7 @@ public class PostUsers implements ICommand {
 		}catch (SQLException e){
 			System.out.println(e.getMessage());
 		}finally{
-			if(prep != null)
-				try {
-					prep.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o PreparedStatement",e);
-				}
-			if(link != null)
-				link.closeConnection();
+			close(prep,link);
 			}
 		
 		return list;

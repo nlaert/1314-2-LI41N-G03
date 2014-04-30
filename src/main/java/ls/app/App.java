@@ -1,12 +1,14 @@
 package ls.app;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.*;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
+import ls.output.Output;
 import ls.propertiesRental.Rental;
 
 public class App {
@@ -14,7 +16,7 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
-	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException 
+	public static void main(String[] args) throws IllegalCommandException, ConnectionDatabaseException, IOException 
 	{		
 		Rental gest = new Rental();
 		gest.add("GET /users", new GetUsers());
@@ -31,7 +33,7 @@ public class App {
 
 		ICommand cmd = gest.find(args,map);
 		ArrayList<String> result = cmd.execute(map);
-		printArrayList(result);		
+		Output.Print(result, map);		
 	}
 	
 

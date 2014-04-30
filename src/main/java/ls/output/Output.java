@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 public class Output {
 	
-	private static String html = "text/html", text = "text/plain", json = "application/json";
+	private static String html = "text/html", json = "application/json";
 	
-	public static void Print(ArrayList<String> params, HashMap <String, String> map){
-		String result = "", accept = "", output = "";
+	public static void Print(ArrayList<String> params, HashMap <String, String> map) throws IOException{
+		String result = "", accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
 		if (accept.equalsIgnoreCase(html))

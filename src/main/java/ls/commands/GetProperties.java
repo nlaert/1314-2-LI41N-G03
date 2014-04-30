@@ -11,7 +11,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetProperties implements ICommand {
+public class GetProperties extends CloseCommands implements ICommand {
 
 	Statement stmt;
 	ResultSet rs;
@@ -31,20 +31,7 @@ public class GetProperties implements ICommand {
 		} 
 		finally
 		{
-			if(rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet",e);
-				}
-			if(stmt != null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o Statement",e);
-				}
-			if(link != null)
-				link.closeConnection();
+			close(rs,stmt,link);
 
 		}
 	}

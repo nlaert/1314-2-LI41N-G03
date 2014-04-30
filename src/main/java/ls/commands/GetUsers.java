@@ -11,7 +11,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetUsers implements ICommand {
+public class GetUsers extends CloseCommands implements ICommand {
 
 	Statement stmt;
 	ResultSet rs;
@@ -31,25 +31,7 @@ public class GetUsers implements ICommand {
 			throw new IllegalCommandException("Nao e possivel retornar a lista de utilizadores", e);
 		} finally
 		{
-			if(rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o ResultSet", e);
-				}
-			if(stmt != null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					throw new ConnectionDatabaseException("Nao foi possivel fechar o Preparement", e);
-				}
-			if(link != null)
-
-				link.closeConnection();
-
-
+			close(rs, stmt, link);
 		}
 	}
 }

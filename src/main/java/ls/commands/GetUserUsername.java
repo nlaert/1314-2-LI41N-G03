@@ -12,7 +12,7 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 import ls.utils.Utils;
 
-public class GetUserUsername implements ICommand {
+public class GetUserUsername extends CloseCommands implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -34,22 +34,7 @@ public class GetUserUsername implements ICommand {
 			System.out.println(e);
 		} finally
 		{
-			if(rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					throw new ConnectionDatabaseException("Impossivel fechar o ResutSet", e);
-				}
-			if(stmt != null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			if(link != null)
-				link.closeConnection();
+			close(rs, prep, link);
 
 		}
 		return result;	

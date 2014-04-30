@@ -38,10 +38,11 @@ create table rental(
 	[week] int,
 	[status] varchar(15) check ([status] in ('pending', 'confirmed')),
 	[reserved_date] date,
-	[confirmed_date] date
+	[confirmed_date] date,
 	Constraint FK_property foreign key ([property]) references properties(pid),
 	Constraint FK_renter foreign key ([renter]) references users(username),
-	Constraint PK primary key ([property], [renter], [year], [week])
+	Constraint PK primary key ([property], [renter], [year], [week]),
+	Constraint validar unique ([property], [year],[week])
 )
 
 insert into type values('room'),('apartment'),('villa');
@@ -51,6 +52,11 @@ insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Ad
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
 insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
+select [type], [description], [price], [location] from properties
+insert into rental values(1,'joao',2014,10,'pending','2014-01-20',null); 
+select property, renter, [year], [week], [status], reserved_date, confirmed_date from rental;
+
+
 --select username, password, email, fullname from users where username = 'joao';
 --select username, password, email, fullname from users;
 --select [type], [description], [price], [location] from properties

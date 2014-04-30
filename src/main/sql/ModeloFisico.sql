@@ -57,11 +57,10 @@ insert into rental values(1,'joao',2014,11,'pending','2014-01-20',null);
 --insert into rental (property,renter,[year],[cw],[status],reserved_date) values(1,'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
 
-<<<<<<< HEAD
+
 select [year], [cw] from rental where [year] = 2014 and [cw]=10
-=======
 select [property], [renter], [year], [week], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
->>>>>>> FETCH_HEAD
+
 
 --select username, password, email, fullname from users where username = 'joao';
 --select username, password, email, fullname from users;

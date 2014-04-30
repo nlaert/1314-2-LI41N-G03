@@ -77,6 +77,8 @@ public class Utils {
 			if (aux[i].indexOf('+')>=0)
 				aux[i] = aux[i].replace('+', ' ');
 			equal = aux[i].indexOf('=');
+			if (equal<0)
+				throw new IllegalCommandException("Invalid Parameter List");
 			map.put(aux[i].substring(0, equal), aux[i].substring(equal+1));			
 		}
 		return map;

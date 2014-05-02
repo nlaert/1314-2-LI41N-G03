@@ -1,11 +1,12 @@
 package ls.app;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import ls.commands.*;
+import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
@@ -17,9 +18,56 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
+<<<<<<< HEAD
 	public static void main(String[] args) throws  ConnectionDatabaseException, IOException, FileException, IllegalCommandException
 	{		
 		Rental gest = new Rental();
+=======
+	private static Rental gest;
+	public static void main(String[] args)
+	{	
+		try {
+			gest = new Rental();
+			addCommands();
+			
+			if (args.length<1)
+				prompt();
+			else
+				executeCommand(args);
+		} catch (AppException e) {
+			e.getMessage();
+		}
+				
+	}
+	
+	private static void prompt(){
+		Scanner k = new Scanner(System.in);
+		System.out.println("Enter a command");
+		String in = "";
+		while (!(in = k.nextLine()).equals("EXIT")){
+			if (in.equals("OPTION /"))
+				gest.printCommands();
+			else
+				try {
+					executeCommand(in.split(" "));
+				} catch (AppException e) {
+					e.getMessage();
+				}
+			System.out.println("Enter a command");
+		}
+		k.close();
+	}
+	
+	private static void executeCommand(String [] command) throws IllegalCommandException, ConnectionDatabaseException, FileException{
+		HashMap <String,String> map = new HashMap<String, String>(); 
+
+		ICommand cmd = gest.find(command,map);
+		ArrayList<String> result = cmd.execute(map);
+		Output.Print(result, map);
+	}
+
+	private static void addCommands() throws IllegalCommandException{
+>>>>>>> FETCH_HEAD
 		gest.add("GET /users", new GetUsers());
 		gest.add("GET /users/{username}", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
@@ -35,12 +83,15 @@ public class App {
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
 		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
+<<<<<<< HEAD
 		gest.add("DELETE /properties/{pid}/rentals/{year}/{cw}", new DeletePropertiesRental());
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
 		ICommand cmd = gest.find(args,map);
 		ArrayList<String> result = cmd.execute(map);
 		Output.Print(result, map);		
+=======
+>>>>>>> FETCH_HEAD
 	}
 }
 

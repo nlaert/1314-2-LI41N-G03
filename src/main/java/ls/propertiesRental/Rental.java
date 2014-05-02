@@ -82,38 +82,3 @@ public class Rental {
 		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//String [] arraySplit = command[1].split("/");
-//
-//for(int i = 0; i<list.size();i++)
-//{
-//	boolean fail = false;
-//	if(list.get(i).size == arraySplit.length)
-//	{
-//		String []aux = list.get(i).path.split(" ");
-//		for(int j = 0; j<aux.length; j++)
-//		{
-//			if(!aux[j].equals(arraySplit[j]) && !aux[j].contains("{"))
-//			{
-//				fail = true;
-//				break;
-//			}
-//			
-//		}
-//		if(!fail)
-//			return list.get(i).command;
-//	}
-//}

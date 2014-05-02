@@ -18,11 +18,6 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
-<<<<<<< HEAD
-	public static void main(String[] args) throws  ConnectionDatabaseException, IOException, FileException, IllegalCommandException
-	{		
-		Rental gest = new Rental();
-=======
 	private static Rental gest;
 	public static void main(String[] args)
 	{	
@@ -67,7 +62,6 @@ public class App {
 	}
 
 	private static void addCommands() throws IllegalCommandException{
->>>>>>> FETCH_HEAD
 		gest.add("GET /users", new GetUsers());
 		gest.add("GET /users/{username}", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
@@ -83,15 +77,7 @@ public class App {
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
 		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
-<<<<<<< HEAD
 		gest.add("DELETE /properties/{pid}/rentals/{year}/{cw}", new DeletePropertiesRental());
-		HashMap <String,String> map = new HashMap<String, String>(); 
-
-		ICommand cmd = gest.find(args,map);
-		ArrayList<String> result = cmd.execute(map);
-		Output.Print(result, map);		
-=======
->>>>>>> FETCH_HEAD
 	}
 }
 

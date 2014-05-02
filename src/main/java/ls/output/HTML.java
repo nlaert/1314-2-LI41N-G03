@@ -10,8 +10,9 @@ public class HTML {
 			return "";
 		String [] columnsNames = params.get(0).split("\t");//params first line contains columns names
 		StringBuilder result = new StringBuilder();
+		int style = 150 * columnsNames.length;
 		if(params.size() >= 2)
-			result.append("<html><body><table border =\"1\">");
+			result.append("<html><body><table style =\"width:"+style+"px\"  border =\"1\">");
 		for(int i = 0;i<params.size();i++)
 		{
 			result.append("<tr>");

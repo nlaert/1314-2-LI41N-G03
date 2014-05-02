@@ -74,6 +74,13 @@ public class Rental {
 		}
 		return true;
 	}
+
+	public void printCommands() {
+		for (int i = 0; i < list.size(); i++){
+			System.out.println(list.get(i).path);
+		}
+		
+	}
 }
 
 

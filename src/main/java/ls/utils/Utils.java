@@ -48,24 +48,7 @@ public class Utils {
 		return command.substring(lastIndex+1);
 	}
 	
-	public static boolean checkAuth(String username, String password, Connection conn) throws SQLException
-	{
-		PreparedStatement prep = conn.prepareStatement("Select username from Users Where username = ? and password = ?");
-		prep.setString(1, username);
-		prep.setString(2, password);
-		return prep.executeQuery().next();
-	}
 	
-	public static boolean checkBDD(String sqlCommand,String[] option, Connection conn) throws SQLException
-	{
-		PreparedStatement prep = conn.prepareStatement(sqlCommand);
-		for(int i = 1; i<=option.length;i++)
-		{
-			prep.setString(i, option[i-1]);
-		}
-		
-		return prep.executeQuery().next();
-	}
 	
 	public static String locationTransformer(String command) throws IllegalCommandException{
 		if (command == null || command == "" || command.contains(", "))
@@ -95,23 +78,7 @@ public class Utils {
 		return map;
 	}
 	
-	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws SQLException 
-	{
-		int columnCount = rs.getMetaData().getColumnCount();
-		ArrayList<String> select = new ArrayList<String>(columnCount+1);
-		StringBuilder aux = new StringBuilder();
-		for (int i = 1; i<=columnCount; i++)
-			aux.append(rs.getMetaData().getColumnName(i) + "\t");
-		select.add(aux.toString());
-		while(rs.next())
-		{
-			aux = new StringBuilder();
-			for (int i = 1; i<=columnCount; i++)
-				aux.append(rs.getString(i) + "\t");
-			select.add(aux.toString());
-		}
-		return select;
-	}
+	
 
 	public static String[] pathParameters(String path, String command) throws IllegalCommandException {
 		ArrayList <String> list = new ArrayList<String>();

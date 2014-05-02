@@ -10,9 +10,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class PostProperties extends CloseCommands implements ICommand {
+public class PostProperties extends CommandsUtils implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -22,7 +21,7 @@ public class PostProperties extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		
 			}
@@ -33,19 +32,14 @@ public class PostProperties extends CloseCommands implements ICommand {
 			prep.setString(4, map.get("location"));
 			prep.setString(5, map.get("owner"));
 			prep.executeUpdate();
-			int count = prep.getUpdateCount();
-			System.out.println(count + " row(s) affected");
 			rs = prep.getGeneratedKeys();  
-			list = Utils.resultSetToArrayList(rs);
+			list.add("pid");
+			list = resultSetToArrayList(rs);
 			return list;	
 		}catch (SQLException e){
-			System.out.println(e.getMessage());
+			throw new ConnectionDatabaseException("Connection error",e);
 		}finally{
 			close(rs, prep, link);
-
-
-
 		}
-		return list;
 	}
 }

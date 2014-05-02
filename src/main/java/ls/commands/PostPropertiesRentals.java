@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class PostPropertiesRentals extends CloseCommands implements ICommand {
+public class PostPropertiesRentals extends CommandsUtils implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -22,11 +21,11 @@ public class PostPropertiesRentals extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
 			{
 				throw new ConnectionDatabaseException("Invalid login");	
 			}
-			if(Utils.checkBDD("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
+			if(checkBDD("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
 			{
 				throw new IllegalCommandException("a rent for the chosen date already exists");
 			}
@@ -43,12 +42,12 @@ public class PostPropertiesRentals extends CloseCommands implements ICommand {
 				prep.setString(1, map.get("year"));
 				prep.setString(2, map.get("cw"));
 				rs = prep.executeQuery();
-				list = Utils.resultSetToArrayList(rs);
+				list = resultSetToArrayList(rs);
 			}
 			return list;
 		} catch(SQLException e)
 		{
-			throw new IllegalCommandException("Nao foi possivel criar um aluguer", e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		} 
 		finally
 		{

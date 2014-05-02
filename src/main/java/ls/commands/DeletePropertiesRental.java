@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class DeletePropertiesRental extends CloseCommands implements ICommand {
+public class DeletePropertiesRental extends CommandsUtils implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -23,7 +22,7 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
 			{
 				throw new ConnectionDatabaseException("Invalid login");	
 			}
@@ -38,18 +37,15 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 			int rows = prep.executeUpdate();
 			list.add("Rows Updated");
 			list.add(Integer.toString(rows));
-
 			return list;
 		} catch(SQLException e)
 		{
-			throw new IllegalCommandException("Nao foi possivel fazer o delete", e);
+			throw new IllegalCommandException("it is not possible to Delete", e);
 		} 
 		finally
 		{
 			close(prep,link);
 		}
-
-
 	}
 	private boolean checkPending(HashMap<String, String> map) throws IllegalCommandException {
 		String currentStatus = "";
@@ -70,7 +66,7 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 				return false;
 		}catch(SQLException e)
 		{
-			throw new IllegalCommandException("Illegal command",e);
+			throw new IllegalCommandException("Illegal command");
 		}
 
 	}

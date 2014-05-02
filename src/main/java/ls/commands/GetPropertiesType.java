@@ -10,9 +10,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetPropertiesType extends CloseCommands implements ICommand {
+public class GetPropertiesType extends CommandsUtils implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -28,10 +27,10 @@ public class GetPropertiesType extends CloseCommands implements ICommand {
 			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where " + key + " = ?");
 			prep.setString(1,map.get(key));			
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Nao e possivel retornar a lista das propriedades");
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs, prep, link);

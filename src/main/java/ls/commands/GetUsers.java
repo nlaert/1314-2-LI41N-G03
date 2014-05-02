@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetUsers extends CloseCommands implements ICommand {
+public class GetUsers extends CommandsUtils implements ICommand {
 
 	Statement stmt;
 	ResultSet rs;
@@ -25,10 +24,11 @@ public class GetUsers extends CloseCommands implements ICommand {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
+			
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Nao e possivel retornar a lista de utilizadores", e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs, stmt, link);

@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetProperties extends CloseCommands implements ICommand {
+public class GetProperties extends CommandsUtils implements ICommand {
 
 	Statement stmt;
 	ResultSet rs;
@@ -24,10 +23,10 @@ public class GetProperties extends CloseCommands implements ICommand {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select [pid], [type], [description], [price], [location] from properties");
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Nao foi possivel retornar a lista de todas as propriedades",e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		} 
 		finally
 		{

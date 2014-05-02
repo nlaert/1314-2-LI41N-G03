@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetPropertiesRentals extends CloseCommands implements ICommand {
+public class GetPropertiesRentals extends CommandsUtils implements ICommand {
 
 	PreparedStatement prep;
 	ResultSet rs;
@@ -19,7 +18,7 @@ public class GetPropertiesRentals extends CloseCommands implements ICommand {
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map)
 			throws IllegalCommandException, ConnectionDatabaseException {
-		
+
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
@@ -27,11 +26,11 @@ public class GetPropertiesRentals extends CloseCommands implements ICommand {
 					+ "from rental where [property] = ?");
 			prep.setString(1, map.get("pid"));
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		} catch(SQLException e)
 		{
-			throw new IllegalCommandException("Nao e possivel retornar a lista", e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs,prep,link);

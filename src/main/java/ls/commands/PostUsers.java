@@ -8,9 +8,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class PostUsers extends CloseCommands implements ICommand {
+public class PostUsers extends CommandsUtils implements ICommand {
 
 	DataBaseManager link;
 	PreparedStatement prep;
@@ -20,7 +19,7 @@ public class PostUsers extends CloseCommands implements ICommand {
 		try{
 			
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				System.out.println("login invalido!");
 				return null;		
 			}
@@ -30,10 +29,11 @@ public class PostUsers extends CloseCommands implements ICommand {
 			prep.setString(3, map.get("email"));
 			prep.setString(4, map.get("fullname"));
 			prep.executeUpdate();
-			int count = prep.getUpdateCount();
-			System.out.println(count + " row(s) affected");
+			int rows = prep.executeUpdate();
+			list.add("Rows Updated");
+			list.add(Integer.toString(rows));
 		}catch (SQLException e){
-			throw new IllegalCommandException("Nao foi possivel adicionar um cliente",e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		}finally{
 			close(prep,link);
 			}

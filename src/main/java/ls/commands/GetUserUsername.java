@@ -10,9 +10,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetUserUsername extends CloseCommands implements ICommand {
+public class GetUserUsername extends CommandsUtils implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -28,16 +27,17 @@ public class GetUserUsername extends CloseCommands implements ICommand {
 			prep = link.getConnetion().prepareStatement("select password, email, fullname from users where " + key  + " = ?");
 			prep.setString(1, map.get(key));
 			rs = prep.executeQuery();
-			result = Utils.resultSetToArrayList(rs);
+
+			result = resultSetToArrayList(rs);
+
 			return result;
 		} catch (SQLException e) {
-			System.out.println(e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs, prep, link);
 
 		}
-		return result;	
 	}
 }
 

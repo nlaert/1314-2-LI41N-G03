@@ -10,15 +10,13 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetPropertiesLocation extends CloseCommands implements ICommand{
+public class GetPropertiesLocation extends CommandsUtils implements ICommand{
 
 	Statement stmt;
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
-	private String key = "location";	
 	
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map)
@@ -27,13 +25,13 @@ public class GetPropertiesLocation extends CloseCommands implements ICommand{
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where " + key + " = ?");
-			prep.setString(1,map.get(key));
+			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where location = ?");
+			prep.setString(1,map.get("location"));
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Nao e possivel retornar a lista das propriedades");
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs,stmt,link);

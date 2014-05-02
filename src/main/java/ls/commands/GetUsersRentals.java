@@ -10,9 +10,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetUsersRentals extends CloseCommands implements ICommand {
+public class GetUsersRentals extends CommandsUtils implements ICommand {
 
 	Statement stmt;
 	PreparedStatement prep;
@@ -30,10 +29,10 @@ public class GetUsersRentals extends CloseCommands implements ICommand {
 					+ "[reserved_date], [confirmed_date] from rental where" + key + " = ?");
 			prep.setString(1, map.get("username"));
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		}catch (SQLException e){
-			throw new IllegalCommandException("invalid command",e);
+			throw new ConnectionDatabaseException("Connection error",e);
 		}finally{
 			close(rs, prep, link);
 		}

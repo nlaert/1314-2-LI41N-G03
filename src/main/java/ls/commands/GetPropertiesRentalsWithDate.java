@@ -9,9 +9,8 @@ import java.util.HashMap;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
-import ls.utils.Utils;
 
-public class GetPropertiesRentalsWithDate extends CloseCommands implements ICommand{
+public class GetPropertiesRentalsWithDate extends CommandsUtils implements ICommand{
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
@@ -28,10 +27,10 @@ public class GetPropertiesRentalsWithDate extends CloseCommands implements IComm
 			prep.setString(2,map.get("year"));
 			prep.setString(3,map.get("cw"));
 			rs = prep.executeQuery();
-			list = Utils.resultSetToArrayList(rs);
+			list = resultSetToArrayList(rs);
 			return list;
 		} catch (SQLException e) {
-			throw new IllegalCommandException("Nao e possivel retornar a lista das propriedades");
+			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
 		{
 			close(rs, prep, link);

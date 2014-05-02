@@ -44,25 +44,31 @@ create table rental(
 	Constraint PK primary key ([property], [renter], [year], [cw]),
 	Constraint validar unique ([property], [year],[cw])
 )
-
+-- Adicionar todos os tipos
 insert into type values('room'),('apartment'),('villa');
+
+-- Adicionar o superAdmin para administrar
 insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Admin');
 
-
+--Post de dois utilizadores manualmente
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
 insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
+
+--Associar um apartamento ao Joao
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
-select [type], [description], [price], [location] from properties
-insert into rental values(1,'joao',2014,11,'pending','2014-01-20',null); 
---insert into rental (property,renter,[year],[cw],[status],reserved_date) values(1,'nick',2014,10,'pending','2014-01-20'); 
+
+--Arrendar ao nick
+ insert into rental (property,renter,[year],[cw],[status],reserved_date) values(1,'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
 
+--select [property], [renter], [year], [cw], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
 
-select [year], [cw] from rental where [year] = 2014 and [cw]=10
-=======
-
-select [year], [cw] from rental where [year] = 2014 and [cw]=10
-select [property], [renter], [year], [cw], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
+/*
+Select us.[username], prop.[owner] from Users as us 
+inner join [properties] as prop
+on(prop.[owner] = us.username)
+where us.[password] = 'pass' and prop.pid = 1 and us.[username] = 'joao'
+*/
 
 
 

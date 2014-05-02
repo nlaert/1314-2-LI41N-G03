@@ -26,7 +26,7 @@ public class PostPropertiesRentals extends CloseCommands implements ICommand {
 			{
 				throw new ConnectionDatabaseException("Invalid login");	
 			}
-			if(Utils.checkRental("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
+			if(Utils.checkBDD("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
 			{
 				throw new IllegalCommandException("a rent for the chosen date already exists");
 			}

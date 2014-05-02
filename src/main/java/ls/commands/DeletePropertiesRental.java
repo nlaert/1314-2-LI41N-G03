@@ -1,6 +1,5 @@
 package ls.commands;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map)
 			throws IllegalCommandException, ConnectionDatabaseException {
-		
+
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
@@ -30,26 +29,31 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 			}
 			if(!checkPending(map))
 			{
-				throw new IllegalCommandException("a rent for the chosen date as confirmed");
+				throw new IllegalCommandException("a rent for the chosen date as confirmed or not exists");
 			}
-			prep = link.getConnetion().prepareStatement("delete from rentals where [property] = ? and [year] = ? and [cw] = ?");
-			
-			
-		return null;
-	} catch(SQLException e)
-	{
-		throw new IllegalCommandException("Nao foi possivel fazer o delete", e);
-	} 
-	finally
-	{
-		close(prep,link);
-	}
-	
+			prep = link.getConnetion().prepareStatement("delete from rental where [property] = ? and [year] = ? and [cw] = ?");
+			prep.setString(1, map.get("pid"));
+			prep.setString(2, map.get("year"));
+			prep.setString(3, map.get("cw"));
+			int rows = prep.executeUpdate();
+			list.add("Rows Updated");
+			list.add(Integer.toString(rows));
 
-}
+			return list;
+		} catch(SQLException e)
+		{
+			throw new IllegalCommandException("Nao foi possivel fazer o delete", e);
+		} 
+		finally
+		{
+			close(prep,link);
+		}
+
+
+	}
 	private boolean checkPending(HashMap<String, String> map) throws IllegalCommandException {
 		String currentStatus = "";
-		
+
 		try{
 			prep = link.getConnetion().prepareStatement("select [status] from rental where [property] = ? and [year] = ? and [cw] = ?");
 			prep.setString(1,map.get("pid"));
@@ -68,6 +72,6 @@ public class DeletePropertiesRental extends CloseCommands implements ICommand {
 		{
 			throw new IllegalCommandException("Illegal command",e);
 		}
-		
+
 	}
 }

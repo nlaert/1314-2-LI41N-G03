@@ -26,8 +26,8 @@ public class GetUsersPropertiesOwned extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where " + key + " = ?");
-			prep.setString(1,map.get(key));
+			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where [owner] = ?");
+			prep.setString(1,map.get("username"));
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
 			return list;

@@ -19,7 +19,7 @@ public class Rental {
 		
 	}
 
-	public void add(String command, ICommand e) throws IllegalCommandException
+	public void add(String command, ICommand e) 
 	{
 		//necessario verificar se ja existe ?
 		list.add(new Commands(command, command.split("/").length, e));

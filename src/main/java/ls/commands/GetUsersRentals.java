@@ -18,7 +18,7 @@ public class GetUsersRentals extends CloseCommands implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	DataBaseManager link;
-	private String key = "renter";
+	private String key = "[renter]";
 	
 	@Override
 	public ArrayList<String> execute(HashMap<String, String> map)
@@ -26,14 +26,14 @@ public class GetUsersRentals extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
-			prep = link.getConnetion().prepareStatement("select [property], [renter], [year], [week], [status], "
+			prep = link.getConnetion().prepareStatement("select [property], [renter], [year], [cw], [status], "
 					+ "[reserved_date], [confirmed_date] from rental where" + key + " = ?");
 			prep.setString(1, map.get("username"));
 			rs = prep.executeQuery();
 			list = Utils.resultSetToArrayList(rs);
 			return list;
 		}catch (SQLException e){
-			throw new IllegalCommandException("invalid command");
+			throw new IllegalCommandException("invalid command",e);
 		}finally{
 			close(rs, prep, link);
 		}

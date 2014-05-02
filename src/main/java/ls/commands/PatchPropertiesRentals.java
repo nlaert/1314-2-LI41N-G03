@@ -23,12 +23,17 @@ public class PatchPropertiesRentals extends CloseCommands implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			if (!Utils.checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
-				throw new ConnectionDatabaseException("invalid username or password");
-			if (!checkOwner(map.get("auth_username"), map.get("pid")))
-				throw new ConnectionDatabaseException("You are not the owner of this property!");
+			if (!Utils.checkBDD("Select us.[username], prop.[owner] from Users as us "
+					+ "inner join [properties] as prop on(prop.[owner] = us.username) "
+					+ "where us.[username] = ? and us.[password] = ? and prop.[pid] = ?", 
+					new String[] {map.get("auth_username"),map.get("auth_password"),map.get("pid")}, link.getConnetion()))
+			{
+				throw new ConnectionDatabaseException("You are not the owner of this property or invalid username/password!");
+			}
 			
-			prep = link.getConnetion().prepareStatement("update rental set status = 'confirmed', confirmed_date = GETDATE() where property = ? and year = ? and cw = ?");
+			prep = link.getConnetion().prepareStatement("update rental set status = 'confirmed', "
+					+ "confirmed_date = GETDATE() where property = ? and year = ? and cw = ?");
+			
 			prep.setString(1, map.get("pid"));
 			prep.setString(2, map.get("year"));
 			prep.setString(3, map.get("cw"));
@@ -43,17 +48,4 @@ public class PatchPropertiesRentals extends CloseCommands implements ICommand {
 		return list;
 	}
 	
-	
-	public boolean checkOwner(String owner, String pid) throws IllegalCommandException{
-		try {
-			prep = link.getConnetion().prepareStatement("select owner from properties where owner = ? and pid = ?");
-			prep.setString(1, owner);
-			prep.setString(2, pid);
-			rs = prep.executeQuery();
-			return rs.next();
-		} catch (SQLException e) {
-			throw new IllegalCommandException("Invalid Command");
-		}
-	}
-
 }

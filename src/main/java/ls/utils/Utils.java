@@ -56,10 +56,10 @@ public class Utils {
 		return prep.executeQuery().next();
 	}
 	
-	public static boolean checkRental(String sqlCommand,String[] option, Connection conn) throws SQLException
+	public static boolean checkBDD(String sqlCommand,String[] option, Connection conn) throws SQLException
 	{
 		PreparedStatement prep = conn.prepareStatement(sqlCommand);
-		for(int i = 1; i<option.length;i++)
+		for(int i = 1; i<=option.length;i++)
 		{
 			prep.setString(i, option[i-1]);
 		}

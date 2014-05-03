@@ -12,7 +12,7 @@ public class HTML {
 		StringBuilder result = new StringBuilder();
 		int style = 150 * columnsNames.length;
 		if(params.size() >= 2)
-			result.append("<html><body><table style =\"width:"+style+"px\"  border =\"1\">");
+			result.append("<html><body><table style =\"width:"+style+"px\" border =\"1\">");
 		for(int i = 0;i<params.size();i++)
 		{
 			result.append("<tr>");

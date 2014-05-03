@@ -20,8 +20,7 @@ public class PostUsers extends CommandsUtils implements ICommand {
 			
 			link = new DataBaseManager();
 			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
-				System.out.println("login invalido!");
-				return null;		
+				throw new ConnectionDatabaseException("Invalid login");		
 			}
 			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
 			prep.setString(1, map.get("username"));

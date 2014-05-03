@@ -38,19 +38,32 @@ public class CRUD {
 		
 	}
 
-	public static int executeNonQuery(String cmd) throws SQLException, ConnectionDatabaseException
+	public static int executeNonQuery(String cmd) throws ConnectionDatabaseException
 	{
 		int rows = 0;
 		link = new DataBaseManager();
-		stmt = link.getConnetion().createStatement();
-		rows = stmt.executeUpdate(cmd);
-
-		if(rs != null)
-			rs.close();
-		if(stmt != null)
-			stmt.close();
-		if(link != null)
-			link.closeConnection();
+		try {
+			stmt = link.getConnetion().createStatement();
+			rows = stmt.executeUpdate(cmd);
+		} catch (SQLException e) {
+			throw new ConnectionDatabaseException("Connection error");
+		}
+		finally{
+			if(rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					throw new ConnectionDatabaseException("ResultSet could not be closed");
+				}
+			if(stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					throw new ConnectionDatabaseException("Statement could not be closed");
+				}
+			if(link != null)
+				link.closeConnection();
+		}
 
 		return rows;
 	}

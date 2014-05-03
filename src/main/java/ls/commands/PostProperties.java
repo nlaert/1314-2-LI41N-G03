@@ -22,8 +22,7 @@ public class PostProperties extends CommandsUtils implements ICommand {
 		try{
 			link = new DataBaseManager();
 			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
-				System.out.println("login invalido!");
-				return null;		
+				throw new ConnectionDatabaseException("Invalid login");		
 			}
 			prep = link.getConnetion().prepareStatement("insert into properties values (?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			prep.setString(1, map.get("type"));

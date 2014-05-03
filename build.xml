@@ -12,6 +12,7 @@
   <property name="target-classes"  location="target/classes"/>
   <property name="target-test-classes"  location="target/test-classes"/>
   <property name="target-test-reports"	location="target/test-reports"/>
+  <property name="vendor-main-lib"		location="vendor/main/lib"/>
 
   <path id="main.extlibs.class.path">
     <fileset dir="vendor/main/lib">
@@ -76,8 +77,8 @@
   </target>
 
   <target name="test" depends="compile-test" description="Runs the tests">
-    <junit printsummary="on" haltonfailure="true" showoutput="true" >
-      <classpath>
+	<junit printsummary="on" haltonfailure="true" showoutput="true" >
+	  <classpath>
         <pathelement location="${target-classes}"/>
         <pathelement location="${target-test-classes}"/>
         <path refid="test.extlibs.class.path" />
@@ -94,9 +95,27 @@
     </junit>
   </target>
   
-  <target name="package" depends="test" description="Packages the main classes into a jar" >
-    <echo message="TODO: Replace GROUPID with your group identifier (.e.g LI41D-G00)" />
-    <jar jarfile="${target}/1314-2-LS-LI41N-G03.jar" basedir="${target-classes}"/>
+  <target name="package" depends="test" description="Packages the main classes into a jar">
+   
+   
+   <manifestclasspath property="mf.classpath" jarfile="${target}/1314-2-LS-LI41N-G03.jar">
+        <classpath>
+            <fileset dir="vendor/main/lib/" includes="sqljdbc4.jar"/>
+        </classpath><!--end tag-->
+   </manifestclasspath>
+    
+    
+    <echo message="TODO: Replace GROUPID with your group identifier (.e.g LI41D-G00)"/>
+    <jar 	jarfile="${target}/1314-2-LS-LI41N-G03.jar" basedir="${target-classes}" >
+    	<manifest>
+    		<attribute name="Main-Class" value="ls.app.App"/>
+     		<attribute name="Class-Path" value="${mf.classpath}"/>
+    	</manifest>
+    </jar>
+  </target>
+
+</project>
+
   </target>
 
 </project>

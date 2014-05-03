@@ -15,8 +15,9 @@ public class HTMLTest {
 		aux.add("username	password	email	fullname");
 		aux.add("nick	pass	a35466@alunos.isel.pt	Nick Laert");
 		aux.add("joao	pass	a35392@alunos.isel.pt	Joao Rodrigues");
+		int style = 150 * (aux.get(0).split("\t").length);
 		System.out.println(HTML.htmlify(aux));
-		String result = "<html><body><table border =\"1\"><tr><th>username</th><th>password</th><th>email</th><th>fullname</th></tr>"
+		String result = "<html><body><table style =\"width:"+style+"px\" border =\"1\"><tr><th>username</th><th>password</th><th>email</th><th>fullname</th></tr>"
 		+"<tr><td>nick</td><td>pass</td><td>a35466@alunos.isel.pt</td><td>Nick Laert</td></tr><tr>"
 		+"<td>joao</td><td>pass</td><td>a35392@alunos.isel.pt</td><td>Joao Rodrigues</td></tr></table></body></html>";
 		assertEquals(HTML.htmlify(aux), result);

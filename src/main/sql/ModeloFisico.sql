@@ -42,7 +42,9 @@ create table rental(
 	Constraint FK_property foreign key ([property]) references properties(pid),
 	Constraint FK_renter foreign key ([renter]) references users(username),
 	Constraint PK primary key ([property], [renter], [year], [cw]),
-	Constraint validar unique ([property], [year],[cw])
+	Constraint validar unique ([property], [year],[cw]),
+	Constraint check_year check ([year]>=YEAR(GETDATE()))
+
 )
 -- Adicionar todos os tipos
 insert into type values('room'),('apartment'),('villa');
@@ -63,6 +65,8 @@ select property, renter, [year], cw, [status], reserved_date, confirmed_date fro
 
 --select [property], [renter], [year], [cw], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
 
+
+select DATEPART(WEEK, GETDATE())
 /*
 Select us.[username], prop.[owner] from Users as us 
 inner join [properties] as prop

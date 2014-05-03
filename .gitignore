@@ -14,7 +14,7 @@ testeJDBC/.project
 testeJDBC/.settings/org.eclipse.jdt.core.prefs
 
 target/classes/LS.sql
-
-.metadata/
 src/main/java/ls/jdbc/config.txt
 target/classes/ls/jdbc/config.txt
+.metadata/
+

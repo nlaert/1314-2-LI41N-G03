@@ -22,7 +22,7 @@ public class PatchPropertiesRentals extends CommandsUtils implements ICommand {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
-			if (!checkBDD("Select us.[username], prop.[owner] from Users as us "
+			if (!checkIfExists("Select us.[username], prop.[owner] from Users as us "
 					+ "inner join [properties] as prop on(prop.[owner] = us.username) "
 					+ "where us.[username] = ? and us.[password] = ? and prop.[pid] = ?", 
 					new String[] {map.get("auth_username"),map.get("auth_password"),map.get("pid")}, link.getConnetion()))

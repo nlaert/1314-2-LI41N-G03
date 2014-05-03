@@ -1,7 +1,8 @@
-package ls.utils;
+package ls.commands;
 
 import java.sql.SQLException;
 
+import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
 import ls.jdbc.CRUD;
 import ls.jdbc.DataBaseManager;
@@ -34,21 +35,21 @@ public class checkAuthTest {
 	
 	@Test
 	public void checkAuth_wrong_password() throws SQLException{
-		assertFalse(Utils.checkAuth(username, password + "a", manager.getConnetion()));
+		assertFalse(CommandsUtils.checkAuth(username, password + "a", manager.getConnetion()));
 	}
 	
 	@Test
 	public void checkAuth_null_password() throws SQLException{
-		assertFalse(Utils.checkAuth(username, null, manager.getConnetion()));
+		assertFalse(CommandsUtils.checkAuth(username, null, manager.getConnetion()));
 	}
 	
 	@Test
 	public void checkAuth_wrong_username() throws SQLException{
-		assertFalse(Utils.checkAuth(username  + "a", password, manager.getConnetion()));
+		assertFalse(CommandsUtils.checkAuth(username  + "a", password, manager.getConnetion()));
 	}
 	
 	@Test
 	public void checkAuth_correct_credentials() throws SQLException{
-		assertTrue(Utils.checkAuth(username, password, manager.getConnetion()));
+		assertTrue(CommandsUtils.checkAuth(username, password, manager.getConnetion()));
 	}
 }

@@ -38,15 +38,13 @@ public abstract class CommandsUtils {
 			link.closeConnection();
 	}
 	
-	public boolean checkAuth(String username, String password, Connection conn) throws SQLException
+	public static boolean checkAuth(String username, String password, Connection conn) throws SQLException
 	{
-		PreparedStatement prep = conn.prepareStatement("Select username from Users Where username = ? and password = ?");
-		prep.setString(1, username);
-		prep.setString(2, password);
-		return prep.executeQuery().next();
+		String auth = ("Select username from Users Where username = ? and password = ?");
+		return checkIfExists(auth, new String [] {username, password}, conn);
 	}
 	
-	public boolean checkBDD(String sqlCommand,String[] option, Connection conn) throws SQLException
+	public static boolean checkIfExists(String sqlCommand,String[] option, Connection conn) throws SQLException
 	{
 		PreparedStatement prep = conn.prepareStatement(sqlCommand);
 		for(int i = 1; i<=option.length;i++)
@@ -57,7 +55,7 @@ public abstract class CommandsUtils {
 		return prep.executeQuery().next();
 	}
 	
-	public ArrayList<String> resultSetToArrayList(ResultSet rs) throws IllegalCommandException, SQLException
+	public static ArrayList<String> resultSetToArrayList(ResultSet rs) throws IllegalCommandException, SQLException
 	{
 		if(!rs.next())
 			throw new IllegalCommandException("Parameters not found");

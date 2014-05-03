@@ -96,7 +96,7 @@
   
   <target name="package" depends="test" description="Packages the main classes into a jar" >
     <echo message="TODO: Replace GROUPID with your group identifier (.e.g LI41D-G00)" />
-    <jar jarfile="${target}/1314-2-LS-GROUPID.jar" basedir="${target-classes}"/>
+    <jar jarfile="${target}/1314-2-LS-LI41N-G03.jar" basedir="${target-classes}"/>
   </target>
 
 </project>

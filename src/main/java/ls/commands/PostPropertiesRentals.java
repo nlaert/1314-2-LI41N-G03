@@ -25,7 +25,7 @@ public class PostPropertiesRentals extends CommandsUtils implements ICommand {
 			{
 				throw new ConnectionDatabaseException("Invalid login");	
 			}
-			if(checkBDD("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
+			if(checkIfExists("select [year],[cw] from rental where [year] = ? and [cw] = ?",new String[] {map.get("year"),map.get("cw")}, link.getConnetion()))
 			{
 				throw new IllegalCommandException("a rent for the chosen date already exists");
 			}

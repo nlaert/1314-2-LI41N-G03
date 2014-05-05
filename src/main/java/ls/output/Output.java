@@ -26,7 +26,8 @@ public class Output {
 		
 		if (map.containsKey("output-file"))
 			printToFile(map.get("output-file"), result);
-		System.out.println(result);			
+		else
+			System.out.println(result);			
 	}
 	
 	private static void printToFile(String filename, String result) throws FileException {
@@ -36,7 +37,7 @@ public class Output {
 			bw.write(result);
 			bw.close();
 		} catch (IOException e) {
-			throw new FileException("Nao e possivel gravar ficheiro", e);
+			throw new FileException("Could not write to the file", e);
 		}	
 	}
 

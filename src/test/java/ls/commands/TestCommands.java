@@ -1,6 +1,7 @@
 package ls.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -93,11 +94,13 @@ public class TestCommands {
 	
 	
 	@Test
-	public void Get_Properties_Location_Test() throws IllegalCommandException
+	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		String [] properties = {"GET", "/properties/location/Peniche|Peniche"};
 		ICommand ex1 = gest.find(properties, map);
 		assertTrue(ex1 instanceof GetPropertiesLocation);
+		ArrayList<String> list =ex1.execute(map); 
+		assertTrue(list.size()>1);
 	}	
 	
 	@Test
@@ -187,15 +190,7 @@ public class TestCommands {
 	{
 		
 		
-////		Inserir um cliente = 1
-//		CRUD.executeNonQuery(insertClient1);
-////		Inserir outro cliente = 2
-//		CRUD.executeNonQuery(insertClient2);
-////		Inserir uma propriedade ao cliente 1
-//		CRUD.executeNonQuery(insertPropertyClient1);
-////		Saber o PID da propriedade
-//		ArrayList<String> list = CRUD.executeQuery(selectPidFromPropertyClient1);
-//		pid = Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("\t")));
+
 //		Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
 		CRUD.executeNonQuery(insertRentalOnClient2);
@@ -207,57 +202,30 @@ public class TestCommands {
 			list=ex1.execute(map);
 		}
 		assertEquals(list.get(1),"1");
-//		CRUD.executeNonQuery(deletePropertyClient1);
-//		CRUD.executeNonQuery(deleteCliente1);
-//		CRUD.executeNonQuery(deleteCliente2);
+
 			
 		
 	}
 	@Test(expected= IllegalCommandException.class)
 	public void Delete_Rental_confirmed_Test() throws ConnectionDatabaseException, IllegalCommandException
 	{
-//		String selectPidFromPropertyClient1 ="select pid from properties where [owner] = 'testeJUNIT1'";
-//		
-////		Inserir um cliente = 1
-//		CRUD.executeNonQuery(insertClient1);
-////		Inserir outro cliente = 2
-//		CRUD.executeNonQuery(insertClient2);
-////		Inserir uma propriedade ao cliente 1
-//		CRUD.executeNonQuery(insertPropertyClient1);
-////		Saber o PID da propriedade
-//		ArrayList<String> list = CRUD.executeQuery(selectPidFromPropertyClient1);
-//		pid = Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("\t")));
+
 //		Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'confirmed',GETDATE(),GETDATE())";
 		CRUD.executeNonQuery(insertRentalOnClient2);
 //		Eliminar aluguer do cliente 2
 		String [] delete = {"DELETE", "/properties/"+pid+"/rentals/"+2100+"/"+12,"auth_username=testeJUNIT2&auth_password=junit2"};
-		ArrayList<String> list = new ArrayList<String>();
 		ICommand ex1 = gest.find(delete, map);
 		if(ex1!= null){
-			list=ex1.execute(map);
+			ex1.execute(map);
 		}
-//		assertEquals(list.get(1),"1");
-//		CRUD.executeNonQuery(deletePropertyClient1);
-//		CRUD.executeNonQuery(deleteCliente1);
-//		CRUD.executeNonQuery(deleteCliente2);
 			
 		
 	}
 	@Test
 	public void Patch_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException
 	{
-//		String selectPidFromPropertyClient1 ="select pid from properties where [owner] = 'testeJUNIT1'";
-//
-//		//	Inserir um cliente = 1
-//		CRUD.executeNonQuery(insertClient1);
-//		//	Inserir outro cliente = 2
-//		CRUD.executeNonQuery(insertClient2);
-//		//	Inserir uma propriedade ao cliente 1
-//		CRUD.executeNonQuery(insertPropertyClient1);
-//		//	Saber o PID da propriedade
-//		ArrayList<String> list = CRUD.executeQuery(selectPidFromPropertyClient1);
-//		pid = Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("\t")));
+
 		//	Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
 		CRUD.executeNonQuery(insertRentalOnClient2);
@@ -269,9 +237,6 @@ public class TestCommands {
 			list=ex1.execute(map);
 		}
 		assertEquals(list.get(1),"1");
-//		CRUD.executeNonQuery(deletePropertyClient1);
-//		CRUD.executeNonQuery(deleteCliente1);
-//		CRUD.executeNonQuery(deleteCliente2);
 
 
 	}
@@ -286,8 +251,6 @@ public class TestCommands {
 		CRUD.executeNonQuery(deleteRentalClient2);
 		
 	}
-	
-	
 	
 	@AfterClass
 	public static void tearDown() throws SQLException, ConnectionDatabaseException

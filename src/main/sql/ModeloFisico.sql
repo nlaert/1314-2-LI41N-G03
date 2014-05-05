@@ -60,7 +60,7 @@ insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
 
 --Arrendar ao nick
- insert into rental (property,renter,[year],[cw],[status],reserved_date) values(1,'nick',2014,10,'pending','2014-01-20'); 
+ insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
 
 --select [property], [renter], [year], [cw], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
@@ -84,4 +84,4 @@ where us.[password] = 'pass' and prop.pid = 1 and us.[username] = 'joao'
 --select [type], [description], [price], [location] from properties where [owner] = 'joao'
 --select [type], [description], [price], [location] from properties where [type] = 'apartment' 
 
-
+--insert into rental values(2,'testeJUNIT2',2100,12,'pending',GETDATE(),null)

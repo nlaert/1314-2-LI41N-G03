@@ -55,7 +55,7 @@ public class Rental {
 
 	}
 
-	public boolean comparePath(String [] listPath, String [] commandPath, HashMap<String,String> map)
+	public boolean comparePath(String [] listPath, String [] commandPath, HashMap<String,String> map) throws IllegalCommandException
 	{
 		if(listPath.length != commandPath.length)
 			return false;
@@ -68,6 +68,10 @@ public class Rental {
 					return false;
 				else{
 					String key = listPath[i].substring(1,listPath[i].length()-1);
+					if(key.equals("location"))
+					{
+						commandPath[i] = Utils.locationTransformer(commandPath[i]);
+					}
 					map.put(key, commandPath[i]);
 				}
 			}

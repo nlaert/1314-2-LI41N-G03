@@ -94,11 +94,13 @@ public class TestCommands {
 	
 	
 	@Test
-	public void Get_Properties_Location_Test() throws IllegalCommandException
+	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		String [] properties = {"GET", "/properties/location/Peniche|Peniche"};
 		ICommand ex1 = gest.find(properties, map);
 		assertTrue(ex1 instanceof GetPropertiesLocation);
+		ArrayList<String> list =ex1.execute(map); 
+		assertTrue(list.size()>1);
 	}	
 	
 	@Test

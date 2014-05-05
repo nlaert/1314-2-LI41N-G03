@@ -59,7 +59,7 @@ public class TestCommands {
 			CRUD.executeNonQuery(insertPropertyClient1);
 			//	Saber o PID da propriedade
 			ArrayList<String> list = CRUD.executeQuery(selectPidFromPropertyClient1);
-			pid = Integer.parseInt(list.get(0).substring(0, list.get(0).indexOf("\t")));
+			pid = Integer.parseInt(list.get(1).substring(0, list.get(1).indexOf("\t")));
 	}
 	
 	@Before
@@ -87,7 +87,7 @@ public class TestCommands {
 	{
 		String [] user = {"GET", "/users/testeJUNIT1"};
 		ICommand ex1 = gest.find(user, map);
-		ArrayList<String> list = CRUD.executeQuery("select user from users where username = 'testeJUNIT1'");
+		ArrayList<String> list = CRUD.executeQuery("select password, email, fullname from users where username = 'testeJUNIT1'");
 		assertEquals(ex1.execute(map), list);
 	}
 	

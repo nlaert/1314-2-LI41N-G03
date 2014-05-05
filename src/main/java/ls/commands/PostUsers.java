@@ -27,7 +27,6 @@ public class PostUsers extends CommandsUtils implements ICommand {
 			prep.setString(2, map.get("password"));
 			prep.setString(3, map.get("email"));
 			prep.setString(4, map.get("fullname"));
-			prep.executeUpdate();
 			int rows = prep.executeUpdate();
 			list.add("Rows Updated");
 			list.add(Integer.toString(rows));

@@ -103,9 +103,15 @@ public class TestCommands {
 	@Test
 	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		String [] command = {"POST", "/users", "auth_username=superadmin&auth_password=ls1213&username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT"};
+		String username = "testeJUNIT3";
+		String [] command = {"POST", "/users", "auth_username=superadmin&auth_password=ls1213&username=" + username + "&password=testeJUNIT&email=testeJUNIT10@teste.pt&fullname=teste+JUNIT"};
 		ICommand ex1 = gest.find(command, map);
+		ex1.execute(map);
+		String cmd = "Select username from users where username = ?";
+		ArrayList<String> list = CRUD.executeQuery(cmd, new String [] {username});
 		assertTrue(ex1 instanceof PostUsers);
+		assertTrue(list.get(1).contains(username));
+		CRUD.executeNonQuery("delete from users where username = ?", new String [] {username});
 	}
 	
 	@Test(expected = ConnectionDatabaseException.class)

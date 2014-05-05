@@ -1,0 +1,7 @@
+Testsuite: ls.commands.checkAuthTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,766 sec
+
+Testcase: checkAuth_null_password took 0,593 sec
+Testcase: checkAuth_wrong_username took 0,047 sec
+Testcase: checkAuth_wrong_password took 0,063 sec
+Testcase: checkAuth_correct_credentials took 0,047 sec

@@ -1,23 +1,29 @@
 Testsuite: ls.commands.TestCommands
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,035 sec
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1,953 sec
 ------------- Standard Output ---------------
+Invalid login
+No parameter list found
+Invalid command
+Invalid command
+No parameter list found
+a rent for the chosen date as confirmed or not exists
 invalid command
 Invalid command
 Invalid command
-Invalid command
-Invalid command
-No parameter list found
-No parameter list found
 ------------- ---------------- ---------------
 
-Testcase: Get_All_Users_And_All_Properties_Test took 0,011 sec
-Testcase: Get_User_With_Username_Test took 0,001 sec
-Testcase: Get_Properties_Location_Test took 0 sec
-Testcase: Post_Users_Test took 0,001 sec
-Testcase: Empty_Command_Test took 0 sec
-Testcase: Get_Wrong_Command_Test took 0 sec
-Testcase: Get_Wrong_Command2_Test took 0 sec
-Testcase: Post_Wrong_Command_Test took 0 sec
-Testcase: Post_Wrong_Command2_Test took 0,001 sec
-Testcase: Post_Users_Wrong_Command_Test took 0 sec
-Testcase: Get_Users_Wrong_Command_Test took 0,001 sec
+Testcase: Post_Users_Without_Authentication_Test took 0,109 sec
+Testcase: Post_Users_Wrong_Command_Test took 0,016 sec
+Testcase: Get_All_Users_And_All_Properties_Test took 0,015 sec
+Testcase: Post_Wrong_Command_Test took 0,032 sec
+Testcase: Post_Wrong_Command2_Test took 0,015 sec
+Testcase: Get_Users_Wrong_Command_Test took 0,016 sec
+Testcase: Delete_Rental_Pending_Test took 0,078 sec
+Testcase: Delete_Rental_confirmed_Test took 0,062 sec
+Testcase: Get_User_With_Username_Test took 0,11 sec
+Testcase: Empty_Command_Test took 0,015 sec
+Testcase: Post_Users_Test took 0,11 sec
+Testcase: Get_Wrong_Command_Test took 0,015 sec
+Testcase: Patch_Pending_Test took 0,079 sec
+Testcase: Get_Properties_Location_Test took 0,109 sec
+Testcase: Get_Wrong_Command2_Test took 0,031 sec

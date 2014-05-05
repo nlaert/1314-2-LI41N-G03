@@ -4,6 +4,6 @@ Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,016 sec
 Invalid command
 ------------- ---------------- ---------------
 
-Testcase: null_command_Test took 0,004 sec
-Testcase: path_without_parameters_Test took 0 sec
 Testcase: path_with_separated_parameters_Test took 0 sec
+Testcase: null_command_Test took 0 sec
+Testcase: path_without_parameters_Test took 0 sec

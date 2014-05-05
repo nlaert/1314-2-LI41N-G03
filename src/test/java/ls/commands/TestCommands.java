@@ -12,6 +12,7 @@ import ls.jdbc.CRUD;
 import ls.propertiesRental.Rental;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,9 +24,7 @@ public class TestCommands {
 	static String insertClient2 = "insert into users values('testeJUNIT2','junit2','junit2@junit.com','junit Teste 2')";
 	static String insertPropertyClient1 = "insert into properties values"
 			+ "('villa','villa ao pe do mar',1000, 'Peniche, Peniche', 'testeJUNIT1')";
-	static String deletePropertyClient1 = "delete from properties where [owner] = 'testeJUNIT1'";
-	static String deleteCliente1 = "delete from users where username = 'testeJUNIT1'";
-	static String deleteCliente2 = "delete from users where username = 'testeJUNIT2'";
+	
 	static String selectPidFromPropertyClient1 ="select pid from properties where [owner] = 'testeJUNIT1'";
 	
 	HashMap<String, String> map;
@@ -276,16 +275,22 @@ public class TestCommands {
 	@After
 	public void clean() throws ConnectionDatabaseException
 	{
-		CRUD.executeNonQuery(deletePropertyClient1);
-		CRUD.executeNonQuery(deleteCliente1);
-		CRUD.executeNonQuery(deleteCliente2);
+		
+		String deleteRentalClient2 = "delete from rental where [renter] = 'testeJUNIT2'";
+		CRUD.executeNonQuery(deleteRentalClient2);
+		
 	}
 	
 	
 	
-//	@AfterClass
-//	public static void tearDown() throws SQLException, ConnectionDatabaseException
-//	{
-//		CRUD.executeNonQuery(deletePostUsers);
-//	}
+	@AfterClass
+	public static void tearDown() throws SQLException, ConnectionDatabaseException
+	{
+		String deletePropertyClient1 = "delete from properties where [owner] = 'testeJUNIT1'";
+		String deleteCliente1 = "delete from users where username = 'testeJUNIT1'";
+		String deleteCliente2 = "delete from users where username = 'testeJUNIT2'";
+		CRUD.executeNonQuery(deletePropertyClient1);
+		CRUD.executeNonQuery(deleteCliente1);
+		CRUD.executeNonQuery(deleteCliente2);
+	}
 }

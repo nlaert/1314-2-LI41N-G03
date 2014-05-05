@@ -86,11 +86,10 @@ public class TestCommands {
 	@Test
 	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException
 	{
-		
-		String [] user = {"GET", "/users/joao"};
+		String [] user = {"GET", "/users/testeJUNIT1"};
 		ICommand ex1 = gest.find(user, map);
-		assertTrue(ex1 instanceof GetUserUsername);
-		//CRUD.executeQuery("select user from users where user = 'joao'");
+		ArrayList<String> list = CRUD.executeQuery("select user from users where username = 'testeJUNIT1'");
+		assertEquals(ex1.execute(map), list);
 	}
 	
 	

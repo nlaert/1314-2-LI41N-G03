@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 
 public class CRUD {
 	private static DataBaseManager link;
@@ -13,21 +15,14 @@ public class CRUD {
 	static Statement stmt;
 	
 	
-	public static ArrayList<String> executeQuery(String cmdSel) throws  ConnectionDatabaseException
+	public static ArrayList<String> executeQuery(String cmdSel) throws  ConnectionDatabaseException, IllegalCommandException
 	{
 		try{
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery(cmdSel);
 			ArrayList<String> select = new ArrayList<>();
-			int columnCount = rs.getMetaData().getColumnCount();
-			while(rs.next())
-			{
-				StringBuilder aux = new StringBuilder();
-				for (int i = 1; i<=columnCount; i++)
-					aux.append(rs.getString(i) + "\t");
-				select.add(aux.toString());
-			} 
+			select = CommandsUtils.resultSetToArrayList(rs);
 			return select;
 		}catch (SQLException e) {
 			throw new ConnectionDatabaseException("Connection error",e);

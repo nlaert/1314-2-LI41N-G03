@@ -52,6 +52,7 @@ insert into type values('room'),('apartment'),('villa');
 -- Adicionar o superAdmin para administrar
 insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Admin');
 
+/*
 --Post de dois utilizadores manualmente
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
 insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
@@ -62,26 +63,4 @@ insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisbo
 --Arrendar ao nick
  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
-
---select [property], [renter], [year], [cw], [status], [reserved_date], [confirmed_date] from rental where renter = 'joao'
-
-
-select DATEPART(WEEK, GETDATE())
-/*
-Select us.[username], prop.[owner] from Users as us 
-inner join [properties] as prop
-on(prop.[owner] = us.username)
-where us.[password] = 'pass' and prop.pid = 1 and us.[username] = 'joao'
 */
-
-
-
---select username, password, email, fullname from users where username = 'joao';
---select username, password, email, fullname from users;
---select [type], [description], [price], [location] from properties
---select [type], [description], [price], [location] from properties where pid = 1
---select [type], [description], [price], [location] from properties where location = 'Lisboa, Olivais'
---select [type], [description], [price], [location] from properties where [owner] = 'joao'
---select [type], [description], [price], [location] from properties where [type] = 'apartment' 
-
---insert into rental values(2,'testeJUNIT2',2100,12,'pending',GETDATE(),null)

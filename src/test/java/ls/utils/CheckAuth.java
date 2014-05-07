@@ -1,16 +1,6 @@
 package ls.utils;
 
-import java.sql.SQLException;
-
-import ls.exception.ConnectionDatabaseException;
-import ls.jdbc.CRUD;
 import ls.jdbc.DataBaseManager;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class CheckAuth {
 

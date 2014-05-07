@@ -1,29 +1,32 @@
 Testsuite: ls.commands.TestCommands
-Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2,231 sec
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,939 sec
 ------------- Standard Output ---------------
 Invalid login
-No parameter list found
+invalid command
 invalid command
 Invalid command
 Invalid command
-No parameter list found
 Invalid command
 a rent for the chosen date as confirmed or not exists
 Invalid command
+No parameter list found
+No parameter list found
+a rent for the chosen date as confirmed or not exists
 ------------- ---------------- ---------------
 
-Testcase: Get_All_Users_And_All_Properties_Test took 0,031 sec
-Testcase: Post_Users_Without_Authentication_Test took 0,063 sec
-Testcase: Post_Users_Wrong_Command_Test took 0,047 sec
-Testcase: Get_Properties_Location_Test took 0,078 sec
-Testcase: Empty_Command_Test took 0,031 sec
-Testcase: Get_Wrong_Command_Test took 0,031 sec
-Testcase: Post_Wrong_Command2_Test took 0,032 sec
-Testcase: Get_Users_Wrong_Command_Test took 0,031 sec
-Testcase: Get_Wrong_Command2_Test took 0,031 sec
-Testcase: Delete_Rental_Pending_Test took 0,224 sec
-Testcase: Delete_Rental_confirmed_Test took 0,201 sec
-Testcase: Patch_Pending_Test took 0,25 sec
-Testcase: Post_Wrong_Command_Test took 0,024 sec
+Testcase: Get_All_Users_And_All_Properties_Test took 0,018 sec
+Testcase: Get_User_With_Username_Test took 0,063 sec
+Testcase: Get_Properties_Location_Test took 0,026 sec
+Testcase: Post_Users_Test took 0,057 sec
+Testcase: Post_Users_Without_Authentication_Test took 0,031 sec
+Testcase: Get_Wrong_Command_Test took 0,013 sec
+Testcase: Get_Wrong_Command2_Test took 0,015 sec
+Testcase: Post_Wrong_Command_Test took 0,012 sec
+Testcase: Post_Wrong_Command2_Test took 0,014 sec
+Testcase: Post_Users_Wrong_Command_Test took 0,013 sec
+Testcase: Get_Users_Wrong_Command_Test took 0,022 sec
+Testcase: Delete_Rental_Pending_Test took 0,04 sec
+Testcase: Delete_Rental_confirmed_Test took 0,041 sec
+Testcase: Patch_Pending_Test took 0,049 sec
 Testcase: Get_User_With_Username_Test took 0,16 sec
 Testcase: Post_Users_Test took 0,129 sec

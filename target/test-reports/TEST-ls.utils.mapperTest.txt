@@ -1,8 +1,8 @@
 Testsuite: ls.utils.mapperTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,031 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,016 sec
 ------------- Standard Output ---------------
 No parameter list found
 ------------- ---------------- ---------------
 
-Testcase: mapper_invalid_string_Test took 0,015 sec
-Testcase: mapper_expected_values_Test took 0 sec
+Testcase: mapper_expected_values_Test took 0,005 sec
+Testcase: mapper_invalid_string_Test took 0,001 sec

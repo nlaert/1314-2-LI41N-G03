@@ -1,11 +1,11 @@
 Testsuite: ls.utils.locationTransformerTest
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,031 sec
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,032 sec
 ------------- Standard Output ---------------
 invalid command
 invalid command
 ------------- ---------------- ---------------
 
-Testcase: no_separator_occurrence took 0,016 sec
-Testcase: separator_transformed took 0 sec
-Testcase: invalid_strings_Empty took 0 sec
+Testcase: no_separator_occurrence took 0 sec
 Testcase: invalid_strings_Null took 0 sec
+Testcase: invalid_strings_Empty took 0 sec
+Testcase: separator_transformed took 0 sec

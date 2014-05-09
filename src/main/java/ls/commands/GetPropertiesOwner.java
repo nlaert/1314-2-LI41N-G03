@@ -25,7 +25,10 @@ public class GetPropertiesOwner extends CommandsUtils implements ICommand {
 		try {
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement("select [pid], [type], [description], [price], [location] from properties where " + key + " = ?");
-			prep.setString(1,map.get(key));
+			if (map.containsKey("owner"))
+				prep.setString(1,map.get("owner"));
+			else if (map.containsKey("username"))
+				prep.setString(1,map.get("username"));
 			rs = prep.executeQuery();
 			list = resultSetToArrayList(rs);
 			return list;

@@ -21,6 +21,10 @@ public class GetUsers extends CommandsUtils implements ICommand {
 	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
+			
+			UsersDB usersDB = new UsersDB(cn) 
+			List<User> users = usersDB.getAll();
+			
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");

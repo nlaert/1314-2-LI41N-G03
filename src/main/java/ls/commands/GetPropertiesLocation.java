@@ -19,7 +19,7 @@ public class GetPropertiesLocation extends CommandsUtils implements ICommand{
 	DataBaseManager link;
 	
 	@Override
-	public ArrayList<String> execute(HashMap<String, String> map)
+	public ArrayList<E> execute(HashMap<String, String> map)
 			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException {
 		
 		ArrayList<String> list = new ArrayList<String>();

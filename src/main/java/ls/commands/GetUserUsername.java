@@ -20,7 +20,7 @@ public class GetUserUsername extends CommandsUtils implements ICommand {
 	private String key = "username";
 
 	@Override
-	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<E> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();

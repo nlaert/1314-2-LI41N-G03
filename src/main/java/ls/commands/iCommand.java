@@ -7,10 +7,10 @@ import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 
 
-public interface ICommand {
+public interface ICommand<E> {
 	
 
-	public ArrayList<String> execute(HashMap<String, String> map) 
+	public ArrayList<E> execute(HashMap<String, String> map) 
 			throws  IllegalCommandException, ConnectionDatabaseException ;
 	
 }

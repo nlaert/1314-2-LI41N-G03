@@ -17,7 +17,7 @@ public class PostProperties extends CommandsUtils implements ICommand {
 	PreparedStatement prep;
 	ResultSet rs;
 	@Override
-	public ArrayList<String> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
+	public ArrayList<E> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();

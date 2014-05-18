@@ -16,4 +16,11 @@ public class Property {
 		this.location = location;
 		this.owner = owner;
 	}
+
+	@Override
+	public String toString() {
+		return "pid=" + pid + ", type=" + type + ", description="
+				+ description + ", price=" + price + ", location=" + location
+				+ ", owner=" + owner.username;
+	}
 }

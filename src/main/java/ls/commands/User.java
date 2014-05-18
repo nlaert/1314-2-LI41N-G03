@@ -13,4 +13,10 @@ public class User {
 		this.email = email;
 		this.fullName = fullName;
 	}
+
+	@Override
+	public String toString() {
+		return "username=" + username + ", password=" + password
+				+ ", email=" + email + ", fullName=" + fullName;
+	}
 }

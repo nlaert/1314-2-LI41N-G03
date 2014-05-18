@@ -14,23 +14,19 @@ import ls.exception.ConnectionDatabaseException;
 import ls.jdbc.DataBaseManager;
 
 public class UsersDB extends CommandsUtils {
-	Statement stmt;
-	ResultSet rs;
-	DataBaseManager link;
-	private PreparedStatement prep;
+	static Statement stmt;
+	static ResultSet rs;
+	static DataBaseManager link;
+	private static PreparedStatement prep;
 	
-	public List<User> getAll() throws ConnectionDatabaseException
+	public static List<User> getAll() throws ConnectionDatabaseException
 	{
-		ArrayList<User> list = new ArrayList<User>();
-		
 		try {
 			
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			list = resultSetToUserArrayList();
-			
-			return list;
+			return resultSetToUserArrayList();
 		} catch (SQLException e) {
 			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
@@ -39,10 +35,9 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 	
-	public User getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException
+	public static User getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException
 	{
-	try {
-			
+		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			prep = link.getConnetion().prepareStatement("select password, email, fullname from users where username = ?");
@@ -61,7 +56,7 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 
-	private User resultSetToUser() throws SQLException {
+	private static User resultSetToUser() throws SQLException {
 		String username, pass, email, name;
 		username = rs.getString("username");
 		pass = rs.getString("password");
@@ -70,7 +65,7 @@ public class UsersDB extends CommandsUtils {
 		return new User(username, pass, email, name);
 	}
 
-	private ArrayList<User> resultSetToUserArrayList() throws SQLException {
+	private static ArrayList<User> resultSetToUserArrayList() throws SQLException {
 		ArrayList<User> list = new ArrayList<User>();
 		while(rs.next()){
 			list.add(resultSetToUser());

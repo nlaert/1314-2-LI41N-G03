@@ -20,7 +20,7 @@ public abstract class CommandsUtils {
 	}
 	
 	
-	public void close(ResultSet rs, Statement stmt, DataBaseManager link) throws ConnectionDatabaseException
+	public static void close(ResultSet rs, Statement stmt, DataBaseManager link) throws ConnectionDatabaseException
 	{
 		if(rs != null)
 			try {

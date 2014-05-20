@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import ls.commands.CommandsUtils;
 import ls.commands.User;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 
 public class UsersDB extends CommandsUtils {
@@ -19,14 +19,17 @@ public class UsersDB extends CommandsUtils {
 	static DataBaseManager link;
 	private static PreparedStatement prep;
 	
-	public static List<User> getAll() throws ConnectionDatabaseException
+	public static ArrayList<User> getAll() throws ConnectionDatabaseException, IllegalCommandException
 	{
 		try {
 			
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			return resultSetToUserArrayList();
+			if (rs.next())
+				return resultSetToUserArrayList();
+			else
+				throw new IllegalCommandException("Parameters not found");
 		} catch (SQLException e) {
 			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
@@ -35,19 +38,21 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 	
-	public static User getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException
+	public static User getUser(HashMap<String, String> map) throws ConnectionDatabaseException
+	{
+		return getUserByUsername(map).get(0);
+	}
+	
+	public static ArrayList<User> getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException
 	{
 		try {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
-			prep = link.getConnetion().prepareStatement("select password, email, fullname from users where username = ?");
+			prep = link.getConnetion().prepareStatement("select username, password, email, fullname from users where username = ?");
 			prep.setString(1, map.get("username"));
 			rs = prep.executeQuery();
-			if (rs.next())
-				return resultSetToUser();
-			else
-				return null;
-//				throw new IllegalCommandException("Parameters not found");
+			return resultSetToUserArrayList();
+			
 		} catch (SQLException e) {
 			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
@@ -55,7 +60,59 @@ public class UsersDB extends CommandsUtils {
 			close(rs, stmt, link);
 		}
 	}
+	
+	public static ArrayList<String> PostUser(HashMap<String, String> map) throws ConnectionDatabaseException
+	{
+		ArrayList<String> list = new ArrayList<String>();
+		try{
+			
+			link = new DataBaseManager();
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
+				throw new ConnectionDatabaseException("Invalid login");		
+			}
+			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
+			prep.setString(1, map.get("username"));
+			prep.setString(2, map.get("password"));
+			prep.setString(3, map.get("email"));
+			prep.setString(4, map.get("fullname"));
+			int rows = prep.executeUpdate();
+			list.add("Rows Updated");
+			list.add(Integer.toString(rows));
+		}catch (SQLException e){
+			throw new ConnectionDatabaseException("Connection error",e);
+		}finally{
+			close(prep,link);
+			}
+		
+		return list;
+		
+	}
+	
+	public static ArrayList<User> GetUsersRentals(HashMap<String,String>map) throws ConnectionDatabaseException
+	{
+		try{
+			link = new DataBaseManager();
+			prep = link.getConnetion().prepareStatement("select [property], [renter], [year], [cw], [status], "
+					+ "[reserved_date], [confirmed_date] from rental where [renter] = ?");
+			prep.setString(1, map.get("username"));
+			rs = prep.executeQuery();
+			return resultSetToUserArrayList();
+		}catch (SQLException e){
+			throw new ConnectionDatabaseException("Connection error",e);
+		}finally{
+			close(rs, prep, link);
+		}
+	}
+	
+	
 
+	
+	
+	
+	
+	
+	
+	
 	private static User resultSetToUser() throws SQLException {
 		String username, pass, email, name;
 		username = rs.getString("username");

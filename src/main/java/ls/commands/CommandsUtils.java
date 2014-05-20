@@ -14,7 +14,7 @@ import ls.jdbc.DataBaseManager;
 public abstract class CommandsUtils {
 
 	
-	public void close(Statement stmt, DataBaseManager link) throws ConnectionDatabaseException
+	public static void close(Statement stmt, DataBaseManager link) throws ConnectionDatabaseException
 	{
 		close(null,stmt,link);
 	}

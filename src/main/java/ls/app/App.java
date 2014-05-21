@@ -10,6 +10,7 @@ import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
+import ls.http.server.ServerHTTP;
 import ls.output.Output;
 import ls.propertiesRental.Rental;
 
@@ -19,7 +20,7 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
 	private static Rental gest;
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{	
 		try {
 			gest = new Rental();
@@ -34,14 +35,22 @@ public class App {
 		}
 				
 	}
+	private static void startServer() throws Exception
+	{
+		System.out.println("Server Started!!!");
+		new ServerHTTP(gest).initServer();
 	
-	private static void prompt(){
+	}
+	
+	private static void prompt() throws Exception{
 		Scanner k = new Scanner(System.in);
 		System.out.println("Enter a command");
 		String in = "";
 		while (!(in = k.nextLine()).equals("EXIT")){
 			if (in.equals("OPTION /"))
 				gest.printCommands();
+			else if(in.contains("LISTEN /"))
+				startServer();
 			else
 				try {
 					executeCommand(in.split(" "));
@@ -57,7 +66,7 @@ public class App {
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
 		ICommand cmd = gest.find(command,map);
-		ArrayList<String> result = cmd.execute(map);
+		ArrayList result = cmd.execute(map);
 		Output.Print(result, map);
 	}
 

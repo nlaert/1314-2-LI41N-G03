@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ls.commands.IType;
 import ls.exception.FileException;
 
 public class Output {
@@ -13,7 +14,7 @@ public class Output {
 	private static String html = "text/html", json = "application/json";
 	
 
-	public static void Print(ArrayList<String> params, HashMap <String, String> map) throws FileException{
+	public static void Print(ArrayList<IType> params, HashMap <String, String> map) throws FileException{
 		String result = "", accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");

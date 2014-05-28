@@ -1,6 +1,6 @@
 package ls.commands;
 
-public class Rental {
+public class Rental implements IType {
 	
 	public Property property;
 	public User renter;
@@ -23,10 +23,15 @@ public class Rental {
 
 	@Override
 	public String toString() {
-		return "property=" + property.pid + ", renter=" + renter.username
-				+ ", year=" + year + ", cw=" + cw + ", status=" + status
-				+ ", reserved_date=" + reserved_date + ", confirmed_date="
+		return property.pid + "\t" + renter.username
+				+ "\t" + year + "\t" + cw + "\t" + status
+				+ "\t" + reserved_date + "\t"
 				+ confirmed_date;
+	}
+
+	@Override
+	public String[] getColumNames() {
+		return new String[] {"pid", "renter", "year", "cw", "status", "reserved date", "confirmed date"};
 	}
 
 }

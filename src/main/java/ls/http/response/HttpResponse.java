@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import ls.output.HTML;
+
 public class HttpResponse {
 
     private final HttpStatusCode _status;
@@ -26,8 +28,9 @@ public class HttpResponse {
         _status = status;
         _body = body;
     }
-    
-    public HttpResponse withHeader(String name, String value) {
+   
+
+	public HttpResponse withHeader(String name, String value) {
         _headers.put(name, value);
         return this;
     }
@@ -45,6 +48,7 @@ public class HttpResponse {
         
     private void sendWithoutBody(HttpServletResponse resp) throws IOException {
         resp.setStatus(_status.valueOf());
+        
     }
     
     private void sendWithBufferedBody(HttpServletResponse resp) throws IOException {

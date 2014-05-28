@@ -12,7 +12,7 @@ public class Html implements HttpContent {
 
     private Writable _content;
     
-    protected Html(Writable... cs) {
+    public Html(Writable... cs) {
         _content = new CompositeWritable(cs);
     }
            

@@ -26,10 +26,8 @@ public class UsersDB extends CommandsUtils {
 			link = new DataBaseManager();
 			stmt = link.getConnetion().createStatement();
 			rs = stmt.executeQuery("select username, password, email, fullname from users");
-			if (rs.next())
-				return resultSetToUserArrayList();
-			else
-				throw new IllegalCommandException("Parameters not found");
+			return resultSetToUserArrayList();
+			
 		} catch (SQLException e) {
 			throw new ConnectionDatabaseException("Connection error",e);
 		} finally
@@ -38,12 +36,12 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 	
-	public static User getUser(HashMap<String, String> map) throws ConnectionDatabaseException
+	public static User getUser(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException
 	{
 		return getUserByUsername(map).get(0);
 	}
 	
-	public static ArrayList<User> getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException
+	public static ArrayList<User> getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException
 	{
 		try {
 			link = new DataBaseManager();
@@ -88,7 +86,7 @@ public class UsersDB extends CommandsUtils {
 		
 	}
 	
-	public static ArrayList<User> GetUsersRentals(HashMap<String,String>map) throws ConnectionDatabaseException
+	public static ArrayList<User> GetUsersRentals(HashMap<String,String>map) throws ConnectionDatabaseException, IllegalCommandException
 	{
 		try{
 			link = new DataBaseManager();
@@ -122,11 +120,17 @@ public class UsersDB extends CommandsUtils {
 		return new User(username, pass, email, name);
 	}
 
-	private static ArrayList<User> resultSetToUserArrayList() throws SQLException {
-		ArrayList<User> list = new ArrayList<User>();
-		while(rs.next()){
-			list.add(resultSetToUser());
+	private static ArrayList<User> resultSetToUserArrayList() throws SQLException, IllegalCommandException {
+		if(!rs.next())
+		{
+			throw new IllegalCommandException("User not found!");
 		}
+		
+		ArrayList<User> list = new ArrayList<User>();
+		do{
+			list.add(resultSetToUser());
+		}while(rs.next());
+		
 		return list;
 	}
 

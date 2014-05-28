@@ -23,7 +23,7 @@ public class RentalsDB extends CommandsUtils{
 	
 	
 	
-	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException {
+	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		while(rs.next()){
 			list.add(resultSetToRental());
@@ -31,7 +31,7 @@ public class RentalsDB extends CommandsUtils{
 		return list;
 	}
 	
-	public static Rental resultSetToRental() throws SQLException, ConnectionDatabaseException{
+	public static Rental resultSetToRental() throws SQLException, ConnectionDatabaseException, IllegalCommandException{
 		String status, reserved_date, confirmed_date;
 		int year, cw;
 		HashMap <String, String> map = new HashMap<String, String>();
@@ -102,7 +102,7 @@ public class RentalsDB extends CommandsUtils{
 		}
 	}
 
-	public static ArrayList<Rental> getPropertiesRentals(HashMap<String, String> map) throws ConnectionDatabaseException {
+	public static ArrayList<Rental> getPropertiesRentals(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try{
 			link = new DataBaseManager();
@@ -121,7 +121,7 @@ public class RentalsDB extends CommandsUtils{
 		}
 	}
 
-	public static ArrayList<Rental> getPropertiesRentalsWithDate(HashMap<String, String> map) throws ConnectionDatabaseException {
+	public static ArrayList<Rental> getPropertiesRentalsWithDate(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try {
 			link = new DataBaseManager();

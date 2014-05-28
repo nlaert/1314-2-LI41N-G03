@@ -11,6 +11,7 @@ import ls.commands.CommandsUtils;
 import ls.commands.Property;
 import ls.commands.User;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 
 public class PropertiesDB  extends CommandsUtils  {
@@ -19,11 +20,11 @@ public class PropertiesDB  extends CommandsUtils  {
 	static DataBaseManager link;
 	private static PreparedStatement prep;
 	
-	public static Property getPropertyByPid(HashMap<String, String> map) throws ConnectionDatabaseException
+	public static Property getPropertyByPid(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException
 	{
 		return getPropertiesDetails(map).get(0);
 	}
-	public static ArrayList<Property> getProperties() throws ConnectionDatabaseException
+	public static ArrayList<Property> getProperties() throws ConnectionDatabaseException, IllegalCommandException
 	{
 		ArrayList<Property> list = new ArrayList<Property>();
 		try {
@@ -41,7 +42,7 @@ public class PropertiesDB  extends CommandsUtils  {
 
 		}
 	}
-	private static Property resultSetToProperty() throws SQLException, ConnectionDatabaseException {
+	private static Property resultSetToProperty() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
 		String type, description, location, ownerUsername;
 		int pid, price;
 		pid = rs.getInt("pid");
@@ -56,14 +57,14 @@ public class PropertiesDB  extends CommandsUtils  {
 		return new Property(pid, type, description, price, location, owner);
 	}
 
-	private static ArrayList<Property> resultSetToPropertyArrayList() throws SQLException, ConnectionDatabaseException {
+	private static ArrayList<Property> resultSetToPropertyArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Property> list = new ArrayList<Property>();
 		while(rs.next()){
 			list.add(resultSetToProperty());
 		}
 		return list;
 	}
-	public static ArrayList<Property> getPropertiesDetails(HashMap<String, String> map) throws ConnectionDatabaseException {
+	public static ArrayList<Property> getPropertiesDetails(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		
 		ArrayList<Property> list = new ArrayList<Property>();
 		try {
@@ -82,7 +83,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		}
 	}
 	
-	public static ArrayList<Property> getPropertiesLocation(HashMap<String, String> map) throws ConnectionDatabaseException {
+	public static ArrayList<Property> getPropertiesLocation(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Property> list = new ArrayList<Property>();
 		try {
 			link = new DataBaseManager();
@@ -100,7 +101,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		}
 	}
 	public static ArrayList<Property> getPropertiesOwner(
-			HashMap<String, String> map) throws ConnectionDatabaseException {
+			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Property> list = new ArrayList<Property>();
 		try {
 			link = new DataBaseManager();
@@ -120,7 +121,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		}
 	}
 	public static ArrayList<Property> getPropertiesType(
-			HashMap<String, String> map) throws ConnectionDatabaseException {
+			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		ArrayList<Property> list = new ArrayList<Property>();
 		try {
 			link = new DataBaseManager();

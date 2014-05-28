@@ -2,35 +2,41 @@ package ls.output;
 
 import java.util.ArrayList;
 
+import ls.commands.IType;
+
 public class HTML {
 	
-	public static String htmlify(ArrayList<String> params)
+	public static <E> String htmlify(ArrayList<IType> params)
 	{
+
 		if (params==null || params.size()==0)
 			return "";
-		String [] columnsNames = params.get(0).split("\t");//params first line contains columns names
+		String[]  columnsNames = params.get(0).getColumNames();
+		//String [] columnsNames = params.get(0).split("\t");//params first line contains columns names
 		StringBuilder result = new StringBuilder();
 		int style = 150 * columnsNames.length;
-		if(params.size() >= 2)
-			result.append("<html><body><table style =\"width:"+style+"px\" border =\"1\">");
+		result.append("<html><body><table style =\"width:"+style+"px\" border =\"1\">");
+		
+		result.append("<tr>");
+		for(int j = 0; j<columnsNames.length;j++)
+		{
+				result.append("<th>");
+				result.append(columnsNames[j]);
+				result.append("</th>");
+		}
+		result.append("</tr>");
+		
 		for(int i = 0;i<params.size();i++)
 		{
-			result.append("<tr>");
+			String[] row = params.get(i).toString().split("\t");
 			
-			String[] row = params.get(i).split("\t");
 			for(int j = 0; j<row.length;j++)
 			{
-				if(i == 0){
-					result.append("<th>");
-					result.append(columnsNames[j]);
-					result.append("</th>");
-				}
-				else
-				{
+				
 					result.append("<td>");
 					result.append(row[j]);
 					result.append("</td>");
-				}
+				
 			}
 			result.append("</tr>");
 		
@@ -39,6 +45,8 @@ public class HTML {
 		result.append("</table></body></html>");
 		return result.toString();
 	}
+
+
 
 }
 

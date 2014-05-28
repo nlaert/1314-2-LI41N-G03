@@ -1,6 +1,6 @@
 package ls.commands;
 
-public class User {
+public class User implements IType {
 
 	public String username;
 	public String password;
@@ -16,7 +16,12 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "username=" + username + ", password=" + password
-				+ ", email=" + email + ", fullName=" + fullName;
+		return username + "\t" + password + "\t"+  email + "\t" + fullName;
+	}
+	@Override
+	public String[] getColumNames()
+	{
+		return new String[] {"Username", "Password", "Email", "FullName"};
+		
 	}
 }

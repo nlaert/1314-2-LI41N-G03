@@ -1,6 +1,7 @@
 package ls.http.server;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ls.commands.ICommand;
+import ls.commands.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpStatusCode;
@@ -59,9 +61,10 @@ public class ToDoServlet extends HttpServlet {
         
         HashMap <String,String> map = new HashMap<String, String>(); 
         
-		ICommand cmd = ServerHTTP.getRental().find(command,map);
-		ArrayList result = cmd.execute(map);
-        
+		ICommand<IType> cmd = ServerHTTP.getRental().find(command,map);
+		ArrayList <IType> result = cmd.execute(map);
+		PrintWriter pw = resp.getWriter();
+		pw.write(HTML.htmlify(result));
 		return new HttpResponse(HttpStatusCode.Ok);
         
 //        if(segs.length < 2 || segs.length>3 || !segs[1].equals("todos")) {

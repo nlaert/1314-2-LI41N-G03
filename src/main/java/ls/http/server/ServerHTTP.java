@@ -47,6 +47,7 @@ public class ServerHTTP {
         ServletHandler handler = new ServletHandler();
         server.setHandler(handler);
         handler.addServletWithMapping(ToDoServlet.class, "/users");
+        handler.addServletWithMapping(ToDoServlet.class, "/properties");
         server.start();
         System.out.println("Server is started");
         

@@ -1,6 +1,6 @@
 package ls.commands;
 
-public class Property {
+public class Property implements IType {
 	public int pid;
 	public String type;
 	public String description;
@@ -19,8 +19,12 @@ public class Property {
 
 	@Override
 	public String toString() {
-		return "pid=" + pid + ", type=" + type + ", description="
-				+ description + ", price=" + price + ", location=" + location
-				+ ", owner=" + owner.username;
+		return pid + "\t" + type + "\t" + description + "\t" + price + "\t" + location
+				+ "\t" + owner.username;
+	}
+
+	@Override
+	public String[] getColumNames() {
+		return new String [] {"pid", "type", "description", "price", "location", "owner"};
 	}
 }

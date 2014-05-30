@@ -60,7 +60,7 @@ public class RentalsDB extends CommandsUtils{
 			}
 			if(!checkPending(map))
 			{
-				throw new IllegalCommandException("a rent for the chosen date as confirmed or not exists");
+				throw new IllegalCommandException("a rent for the chosen date is confirmed or not exists");
 			}
 			prep = link.getConnetion().prepareStatement("delete from rental where [property] = ? and [year] = ? and [cw] = ?");
 			prep.setString(1, map.get("pid"));
@@ -139,7 +139,6 @@ public class RentalsDB extends CommandsUtils{
 		} finally
 		{
 			close(rs, prep, link);
-		
 		}
 	}
 
@@ -210,6 +209,24 @@ public class RentalsDB extends CommandsUtils{
 			close(rs, prep, link);
 		}
 		return list;
+	}
+	
+	public static ArrayList<Rental> getPropertiesRentalsByYear(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+		ArrayList<Rental> list = new ArrayList<Rental>();
+		try {
+			link = new DataBaseManager();
+			prep = link.getConnetion().prepareStatement("select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental where property = ? and [year] = ?");
+			prep.setString(1,map.get("pid"));
+			prep.setString(2,map.get("year"));
+			rs = prep.executeQuery();
+			list = resultSetToRentalArrayList();
+			return list;
+		} catch (SQLException e) {
+			throw new ConnectionDatabaseException("Connection error",e);
+		} finally
+		{
+			close(rs, prep, link);
+		}
 	}
 
 

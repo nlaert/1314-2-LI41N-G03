@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import ls.commands.*;
+import ls.commands.db.GetPropertiesRentalsByYear;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
@@ -65,8 +66,8 @@ public class App {
 	private static void executeCommand(String [] command) throws IllegalCommandException, ConnectionDatabaseException, FileException{
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
-		ICommand cmd = gest.find(command,map);
-		ArrayList result = cmd.execute(map);
+		ICommand<IType> cmd = gest.find(command,map);
+		ArrayList<IType> result = cmd.execute(map);
 		Output.Print(result, map);
 	}
 
@@ -82,11 +83,13 @@ public class App {
 		gest.add("GET /users/{username}/properties/owned", new GetPropertiesOwner());
 		gest.add("GET /properties/{pid}/rentals", new GetPropertiesRentals());
 		gest.add("GET /properties/{pid}/rentals/{year}/{cw}", new GetPropertiesRentalsWithDate());
+		gest.add("GET /properties/{pid}/rentals/{year}", new GetPropertiesRentalsByYear());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
 		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
 		gest.add("DELETE /properties/{pid}/rentals/{year}/{cw}", new DeletePropertiesRental());
+		gest.add("DELETE /properties/{pid}", new DeletePropertiesPid());
 	}
 }
 

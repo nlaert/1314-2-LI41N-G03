@@ -15,7 +15,7 @@ public class JSON {
 		StringBuilder result = new StringBuilder();
 		if (params.size()>2)
 			result.append("[");
-		for (int i = 1; i < params.size(); i++){
+		for (int i = 0; i < params.size(); i++){
 			result.append("{");
 			String [] row = params.get(i).toString().split("\t");
 			for (int j = 0; j<row.length; j++){

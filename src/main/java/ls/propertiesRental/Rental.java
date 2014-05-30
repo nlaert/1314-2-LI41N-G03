@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import ls.commands.Commands;
 import ls.commands.ICommand;
+import ls.commands.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.utils.*;

@@ -47,7 +47,7 @@ create table rental(
 
 )
 -- Adicionar todos os tipos
-insert into type values('room'),('apartment'),('villa');
+insert into [type] values('room'),('apartment'),('villa');
 
 -- Adicionar o superAdmin para administrar
 insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Admin');
@@ -63,4 +63,9 @@ insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisbo
 --Arrendar ao nick
  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
+
+--apagar propriedades e respectivos rentals
+select * from properties inner join rental on pid = property
+delete from rental where property=1
+delete from properties where pid = 1
 */

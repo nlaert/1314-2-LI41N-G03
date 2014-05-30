@@ -1,5 +1,7 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.PropertiesRentalsWithDateResult;
 import ls.db.Rental;
 import ls.http.common.Writable;
@@ -8,7 +10,7 @@ import ls.output.html.HtmlPage;
 
 public class PropertiesRentalsWithDateView extends HtmlPage implements ITypeView {
 
-	public PropertiesRentalsWithDateView(PropertiesRentalsWithDateResult result) {
+	public PropertiesRentalsWithDateView(PropertiesRentalsWithDateResult result, HashMap<String, String> map) {
 		super("Rentals",h1(text("Rentals")), 
 				result.getRentals().size() ==0 ? h3(text("No Rentals found")):text(""),
 				rentals(result),

@@ -1,5 +1,7 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.PropertiesRentalsResult;
 import ls.db.Rental;
 import ls.http.common.Writable;
@@ -8,7 +10,7 @@ import ls.output.html.HtmlPage;
 
 public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 
-	public PropertiesRentalsView(PropertiesRentalsResult result) {
+	public PropertiesRentalsView(PropertiesRentalsResult result, HashMap<String, String> map) {
 		super("Property Rentals", h1(text("Rentals")),
 				rentalsItems(result),
 				goInit()

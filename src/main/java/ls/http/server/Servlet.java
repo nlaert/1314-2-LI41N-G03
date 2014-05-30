@@ -78,7 +78,7 @@ public class Servlet extends HttpServlet {
 		}
 		
 		
-		HtmlPage v = View.getView(result);
+		HtmlPage v = View.getView(result,map);
 
 		
 		return new HttpResponse(HttpStatusCode.Ok, v );

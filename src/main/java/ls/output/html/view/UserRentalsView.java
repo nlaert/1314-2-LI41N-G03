@@ -1,8 +1,9 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.UserRentalsResult;
 import ls.db.Rental;
-import ls.db.User;
 import ls.http.common.Writable;
 import ls.output.html.HtmlElem;
 import ls.output.html.HtmlPage;
@@ -11,12 +12,11 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 
 	
 
-	public UserRentalsView(UserRentalsResult result) {
-		super("Rentals",h1(text("Rentals")), 
+	public UserRentalsView(UserRentalsResult result, HashMap<String, String> map) {
+		super("Rentals",h1(text("Rentals of "+map.get("username"))), 
 				result.getRentals().size() ==0 ? h3(text("No Rentals found")):text(""),
 				rentals(result),
-//				usersItems(users),
-//				usersItemsTable(result),
+				goBack(ofUser(map.get("username")),map.get("username")),
 				goInit()
 			);
 	}
@@ -56,6 +56,9 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 
 	private static String ofUser(Rental rental) {
 		return String.format("/users/%s", rental.renter.username);
+	}
+	private static String ofUser(String username) {
+		return String.format("/users/%s", username);
 	}
 
 	

@@ -16,6 +16,6 @@ public class GetUsersRentals extends CommandsUtils implements ICommand<Rental> {
 	
 	@Override
 	public ICommandResult<Rental> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
-		return new UserRentalsResult( RentalsDB.GetUsersRentals(map));
+		return new UserRentalsResult(RentalsDB.GetUsersRentals(map));
 	}
 }

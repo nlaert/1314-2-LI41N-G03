@@ -1,5 +1,7 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.UserUsernameResult;
 import ls.db.Property;
 import ls.db.User;
@@ -11,7 +13,7 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 	
 	
 
-	public UserUsernameView(UserUsernameResult result) {
+	public UserUsernameView(UserUsernameResult result, HashMap<String, String> map) {
 		super("Users", 
 				h1(text("Details of "+result.getUsers().get(0).username)),
 				userItemList(result),

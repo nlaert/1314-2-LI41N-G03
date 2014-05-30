@@ -17,6 +17,7 @@ import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
 import ls.output.html.HtmlPage;
+import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
 import ls.output.html.view.View;
 
@@ -65,21 +66,22 @@ public class Servlet extends HttpServlet {
        
 //        String[] segs = reqUri.getPath().split("/");
         
-        HashMap <String,String> map = new HashMap<String, String>(); 
-        
-		ICommand<IType> cmd = ServerHTTP.getRental().find(command,map);
-		ICommandResult<IType> result;
-		try{
+        HashMap <String,String> map = new HashMap<String, String>();
+        ICommand<IType> cmd;
+        ICommandResult<IType> result;
+        try{
+        	cmd = ServerHTTP.getRental().find(command,map);
 			result = cmd.execute(map);
 		}
 		catch(IllegalCommandException e)
 		{
-			return new HttpResponse(HttpStatusCode.BadRequest);
+			return new HttpResponse(HttpStatusCode.BadRequest, new BadRequestView());
 		}
 		
 		
 		HtmlPage v = View.getView(result,map);
-
+		if(v == null)
+			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
 		
 		return new HttpResponse(HttpStatusCode.Ok, v );
        

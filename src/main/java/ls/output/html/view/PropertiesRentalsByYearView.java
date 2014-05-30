@@ -1,5 +1,7 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.PropertiesRentalsByYearResult;
 import ls.db.Rental;
 import ls.http.common.Writable;
@@ -8,18 +10,16 @@ import ls.output.html.HtmlPage;
 
 public class PropertiesRentalsByYearView extends HtmlPage implements ITypeView{
 
-	public PropertiesRentalsByYearView(PropertiesRentalsByYearResult result) {
+	public PropertiesRentalsByYearView(PropertiesRentalsByYearResult result, HashMap<String, String> map) {
 		super("Property Rentals by Year", h1(text("Rentals")),
 				result.getSize() > 0 ? rentalsItems(result) : ul(text("No Rentals Found")),
-				nextYear(result),
-				previousYear(result),
+				nextYear(result, map),
+				previousYear(result, map),
 				goInit()
 		);
 	}
 	
 	private static Writable rentalsItems(PropertiesRentalsByYearResult result) {
-		if(result.getSize() == 0)
-			return h3(text("No Rentals Found"));
 		int nColunas = 7;
 		int style = 150 * nColunas;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
@@ -44,22 +44,20 @@ public class PropertiesRentalsByYearView extends HtmlPage implements ITypeView{
 		return String.format("/users/%s/rentals", rental.renter.username);
 	}
 
-	private static Writable previousYear(PropertiesRentalsByYearResult result) {
-		if (result.getSize() == 0)
-			return h3(text("no Prop"));
-		Rental rental = result.getArrayList().get(0);
-		String uri = String.format("/properties/%d/rentals/%d", rental.property.pid, rental.year-1);
+	private static Writable previousYear(PropertiesRentalsByYearResult result, HashMap<String, String> map) {
+//		if (result.getSize() == 0)
+//			return h3(text("no Prop"));
+		String uri = String.format("/properties/%d/rentals/%d", Integer.parseInt(map.get("pid")), Integer.parseInt(map.get("year"))-1);
 		HtmlElem h3 = new HtmlElem("h3");
 		h3.withContent(
 				li(a(uri,"Previous Year")));
 		return h3;
 	}
 
-	private static Writable nextYear(PropertiesRentalsByYearResult result) {
-		if (result.getSize() == 0)
-			return h3(text("no Prop"));
-		Rental rental = result.getArrayList().get(0);
-		String uri = String.format("/properties/%d/rentals/%d", rental.property.pid, rental.year+1);
+	private static Writable nextYear(PropertiesRentalsByYearResult result, HashMap<String, String> map) {
+//		if (result.getSize() == 0)
+//			return h3(text("no Prop"));
+		String uri = String.format("/properties/%d/rentals/%d", Integer.parseInt(map.get("pid")), Integer.parseInt(map.get("year"))+1);
 		HtmlElem h3 = new HtmlElem("h3");
 		h3.withContent(
 				li(a(uri,"Next Year")));

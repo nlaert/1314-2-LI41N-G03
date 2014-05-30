@@ -81,7 +81,7 @@ public class View {
 		}
 		if(result instanceof PropertiesRentalsByYearResult)
 		{
-			return new PropertiesRentalsByYearView((PropertiesRentalsByYearResult) result);
+			return new PropertiesRentalsByYearView((PropertiesRentalsByYearResult) result, map);
 		}
 
 		

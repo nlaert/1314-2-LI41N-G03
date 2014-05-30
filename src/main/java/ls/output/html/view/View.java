@@ -1,7 +1,11 @@
 package ls.output.html.view;
 
 import ls.commands.result.ICommandResult;
+<<<<<<< HEAD
 import ls.commands.result.PropertiesRentalsWithDateResult;
+=======
+import ls.commands.result.PropertiesRentalsResult;
+>>>>>>> FETCH_HEAD
 import ls.commands.result.PropertiesResult;
 import ls.commands.result.PropertyDetailsResult;
 import ls.commands.result.RentalsResult;
@@ -64,9 +68,15 @@ public class View{
 		{
 			return new RentalView(((RentalsResult) result));
 		}
+<<<<<<< HEAD
 		if(result instanceof PropertiesRentalsWithDateResult)
 		{
 			return new PropertiesRentalsWithDateView((PropertiesRentalsWithDateResult)result);
+=======
+		if(result instanceof PropertiesRentalsResult)
+		{
+			return new PropertiesRentalsView((PropertiesRentalsResult) result);
+>>>>>>> FETCH_HEAD
 		}
 		return null;
 

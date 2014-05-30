@@ -1,5 +1,7 @@
 package ls.output.html.view;
 
+import java.util.HashMap;
+
 import ls.commands.result.UsersResult;
 import ls.db.User;
 import ls.http.common.Writable;
@@ -10,7 +12,7 @@ public class UsersView  extends HtmlPage implements ITypeView{
 
 	
 	
-	public UsersView(UsersResult result) {
+	public UsersView(UsersResult result, HashMap<String, String> map) {
 		super("Users", 
 				h1(text("All Users")),
 //				usersItems(users),

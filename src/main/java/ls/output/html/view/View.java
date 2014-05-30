@@ -1,6 +1,7 @@
 package ls.output.html.view;
 
 import ls.commands.result.ICommandResult;
+import ls.commands.result.PropertiesRentalsResult;
 import ls.commands.result.PropertiesResult;
 import ls.commands.result.PropertyDetailsResult;
 import ls.commands.result.RentalsResult;
@@ -62,6 +63,10 @@ public class View{
 		if(result instanceof RentalsResult)
 		{
 			return new RentalView(((RentalsResult) result));
+		}
+		if(result instanceof PropertiesRentalsResult)
+		{
+			return new PropertiesRentalsView((PropertiesRentalsResult) result);
 		}
 		return null;
 

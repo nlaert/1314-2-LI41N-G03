@@ -51,6 +51,7 @@ public class ServerHTTP {
     		server.stop();
     		System.out.println("Server is stopped, bye");
     	}
-    	System.out.println("Server is not running");//TODO create ServerException
+    	else
+    		System.out.println("Server is not running");//TODO create ServerException
     }
 }

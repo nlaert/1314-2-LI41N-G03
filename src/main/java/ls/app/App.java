@@ -31,6 +31,7 @@ import ls.exception.IllegalCommandException;
 import ls.http.server.ServerHTTP;
 import ls.output.Output;
 import ls.propertiesRental.Rental;
+import ls.utils.Utils;
 
 public class App {
 	
@@ -57,13 +58,13 @@ public class App {
 		}
 				
 	}
-	private static void startServer(String command) throws Exception
+	private static void startServer(String [] command) throws Exception
 	{
+		HashMap <String,String> map = new HashMap<String, String>(); 
+		map = Utils.mapper(command[2], map);
 		Integer port;
-		if (command == null)
-			throw new IllegalCommandException("");
 		try{
-			port = Integer.parseInt(command);
+			port = Integer.parseInt(map.get("port"));
 		}
 		catch(NumberFormatException e){
 			throw new IllegalCommandException("invalid Port number");
@@ -93,11 +94,11 @@ public class App {
 	}
 	
 
-	private static void executeCommand(String [] command) throws Exception{
+	private static void executeCommand(String [] command) throws Exception{//TODO move to Rental
 		if (command[0].equals("OPTION"))
 			gest.printCommands();
 		else if(command[0].contains("LISTEN"))
-			startServer(command[2]);
+			startServer(command);
 		else{
 			HashMap <String,String> map = new HashMap<String, String>(); 
 	

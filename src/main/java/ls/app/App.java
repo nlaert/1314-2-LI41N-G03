@@ -92,15 +92,7 @@ public class App {
 		
 	}
 	
-<<<<<<< HEAD
-	private static void executeCommand(String [] command) throws IllegalCommandException, ConnectionDatabaseException, FileException{
-		HashMap <String,String> map = new HashMap<String, String>(); 
 
-		ICommand<IType> cmd = gest.find(command,map);
-		ICommandResult<IType> result = cmd.execute(map);
-		
-		Output.Print(result, map);
-=======
 	private static void executeCommand(String [] command) throws Exception{
 		if (command[0].equals("OPTION"))
 			gest.printCommands();
@@ -113,8 +105,8 @@ public class App {
 			ICommandResult<IType> result = cmd.execute(map);
 			Output.Print(result, map);
 		}
->>>>>>> FETCH_HEAD
 	}
+
 
 	private static void addCommands() throws IllegalCommandException{
 		gest.add("GET /users", new GetUsers());

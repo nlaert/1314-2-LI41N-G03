@@ -16,7 +16,7 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 				h1(text("Details of "+result.getUsers().get(0).username)),
 				userItemList(result),
 				h1(text("Properties of "+result.getUsers().get(0).username)),
-				userPropertiesTable(result),
+				result.getProperties().size() > 0 ? userPropertiesTable(result):(ul(text("Nao existe propriedades"))),
 				rentals(result),
 				goBack("/users", "Users"),
 				goInit()
@@ -27,7 +27,7 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 	private static Writable rentals(UserUsernameResult result) {
 		HtmlElem h3 = new HtmlElem("h3");
 		h3.withContent(
-				li(a(ofUserRental(result.getProperties().get(0)),"Rentals")));
+				li(a(ofUserRental(result.getUsers().get(0)),"Rentals")));
 		return h3;
 	}
 
@@ -59,9 +59,9 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 	{
 		return String.format("/properties/details/%s", property.pid);
 	}
-	private static String ofUserRental(Property property)
+	private static String ofUserRental(User user)
 	{
-		return String.format("/properties/%s/rentals", property.owner.username);
+		return String.format("/users/%s/rentals", user.username);
 	}
 	
 }

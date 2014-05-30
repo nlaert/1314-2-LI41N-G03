@@ -1,7 +1,6 @@
 package ls.output.html.view;
 
-import java.util.ArrayList;
-
+import ls.commands.result.RentalsResult;
 import ls.db.Rental;
 import ls.http.common.Writable;
 import ls.output.html.HtmlElem;
@@ -10,15 +9,15 @@ import ls.output.html.HtmlPage;
 
 public class RentalView extends HtmlPage {
 
-	public RentalView(ArrayList<Rental> list) {
+	public RentalView(RentalsResult result) {
 		super("Rentals", 
 				h1(text("Rentals")),
-				rentalsItems(list)
+				rentalsItems(result)
 			);
 	}
-	private static Writable rentalsItems(ArrayList<Rental> list) {
+	private static Writable rentalsItems(RentalsResult result) {
 		HtmlElem ul = new HtmlElem("ul");
-		for(Rental rental : list)
+		for(Rental rental : result.getRentals())
 		{
 			ul.withContent(
 					li(a(of(rental),rental.toString())));

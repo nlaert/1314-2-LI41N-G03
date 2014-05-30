@@ -38,6 +38,7 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
 	private static Rental gest;
+	private static ServerHTTP server;
 //	private static HashMap<ICommandResult,ITypeView> commandsResults;
 	public static void main(String[] args) throws Exception
 	{	
@@ -56,11 +57,19 @@ public class App {
 		}
 				
 	}
-	private static void startServer() throws Exception
+	private static void startServer(String command) throws Exception
 	{
-		System.out.println("Server Started!!!");
-		new ServerHTTP(gest).initServer();
-	
+		Integer port;
+		if (command == null)
+			throw new IllegalCommandException("");
+		try{
+			port = Integer.parseInt(command);
+		}
+		catch(NumberFormatException e){
+			throw new IllegalCommandException("invalid Port number");
+		}
+		server = new ServerHTTP(gest, port);
+		server.initServer();
 	}
 	
 	private static void prompt() throws Exception{
@@ -68,21 +77,22 @@ public class App {
 		System.out.println("Enter a command");
 		String in = "";
 		while (!(in = k.nextLine()).equals("EXIT")){
-			if (in.equals("OPTION /"))
-				gest.printCommands();
-			else if(in.contains("LISTEN /"))
-				startServer();
-			else
-				try {
-					executeCommand(in.split(" "));
-				} catch (AppException e) {
-					e.getMessage();
-				}
+			try {
+				executeCommand(in.split(" "));
+			} 
+			catch (AppException e) {
+				e.getMessage();
+			}
 			System.out.println("Enter a command");
 		}
 		k.close();
+		if (server != null)
+			server.stopServer();
+		System.exit(0);
+		
 	}
 	
+<<<<<<< HEAD
 	private static void executeCommand(String [] command) throws IllegalCommandException, ConnectionDatabaseException, FileException{
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
@@ -90,6 +100,20 @@ public class App {
 		ICommandResult<IType> result = cmd.execute(map);
 		
 		Output.Print(result, map);
+=======
+	private static void executeCommand(String [] command) throws Exception{
+		if (command[0].equals("OPTION"))
+			gest.printCommands();
+		else if(command[0].contains("LISTEN"))
+			startServer(command[2]);
+		else{
+			HashMap <String,String> map = new HashMap<String, String>(); 
+	
+			ICommand<IType> cmd = gest.find(command,map);
+			ICommandResult<IType> result = cmd.execute(map);
+			Output.Print(result, map);
+		}
+>>>>>>> FETCH_HEAD
 	}
 
 	private static void addCommands() throws IllegalCommandException{

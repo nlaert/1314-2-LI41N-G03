@@ -15,10 +15,20 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 		super("Users", 
 				h1(text("Details of "+result.getUsers().get(0).username)),
 				userItemList(result),
+				h1(text("Properties of "+result.getUsers().get(0).username)),
 				userPropertiesTable(result),
+				rentals(result),
+				goBack("/users", "Users"),
 				goInit()
 				
 			);
+	}
+
+	private static Writable rentals(UserUsernameResult result) {
+		HtmlElem h3 = new HtmlElem("h3");
+		h3.withContent(
+				li(a(ofUserRental(result.getProperties().get(0)),"Rentals")));
+		return h3;
 	}
 
 	private static Writable userPropertiesTable(UserUsernameResult result) {
@@ -48,6 +58,10 @@ public class UserUsernameView extends HtmlPage implements ITypeView{
 	private static String of(Property property)
 	{
 		return String.format("/properties/details/%s", property.pid);
+	}
+	private static String ofUserRental(Property property)
+	{
+		return String.format("/properties/%s/rentals", property.owner.username);
 	}
 	
 }

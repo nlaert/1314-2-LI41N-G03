@@ -78,5 +78,11 @@ public class Html implements HttpContent {
 				li(a("/","Menu")));
 		return h3;
 	}
+    protected static Writable goBack(String path, String name) {
+		HtmlElem h3 = new HtmlElem("h3");
+		h3.withContent(
+				li(a(path,name)));
+		return h3;
+	}
     
 }

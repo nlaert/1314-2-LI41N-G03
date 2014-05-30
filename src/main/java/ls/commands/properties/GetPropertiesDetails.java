@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
-import ls.commands.result.PropertiesResult;
+import ls.commands.result.PropertyDetailsResult;
 import ls.db.PropertiesDB;
 import ls.db.Property;
 import ls.exception.ConnectionDatabaseException;
@@ -16,7 +16,7 @@ public class GetPropertiesDetails implements ICommand<Property> {
 	
 	@Override
 	public ICommandResult<Property> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
-		return new PropertiesResult (PropertiesDB.getPropertiesDetails(map));
+		return new PropertyDetailsResult (PropertiesDB.getPropertiesDetails(map));
 	}
 
 }

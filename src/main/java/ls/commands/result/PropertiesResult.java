@@ -14,10 +14,6 @@ public class PropertiesResult implements ICommandResult<Property> {
 	}
 	
 	
-	public void setProperties(ArrayList<Property> properties)
-	{
-		this.properties = properties;
-	}
 	public ArrayList<Property> getProperties()
 	{
 		return properties;

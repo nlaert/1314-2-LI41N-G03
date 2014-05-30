@@ -1,33 +1,33 @@
 package ls.output.html.view;
 
-import java.util.ArrayList;
-
+import ls.commands.result.PropertiesResult;
 import ls.db.Property;
 import ls.http.common.Writable;
 import ls.output.html.HtmlElem;
 import ls.output.html.HtmlPage;
 
-public class PropertiesView extends HtmlPage{
+public class PropertiesView extends HtmlPage implements ITypeView{
 
-	public PropertiesView(ArrayList<Property> list) {
+	public PropertiesView(PropertiesResult result) {
 		super("Properties", 
-				h1(text("Properties")),
-				propertiesItems(list)
+				h1(text("All Properties")),
+				propertiesItems(result),
+				goInit()
 			);
 	}
-	public PropertiesView() {
-		super("Properties", 
-				h1(text("Properties")));
-	}
 	
-	private static Writable propertiesItems(ArrayList<Property> list) {
-		HtmlElem ul = new HtmlElem("ul");
-		for(Property property : list)
+	
+	private static Writable propertiesItems(PropertiesResult result) {
+		int nColunas = 5;
+		int style = 150 * nColunas;
+		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
+		table.withContent(tr(th(text("pid"),th(text("type"),th(text("price"),th(text("location"),th(text("description"))))))));
+		for(Property property : result.getProperties())
 		{
-			ul.withContent(
-					li(a(of(property),property.toString())));
+			table.withContent(tr(
+					td(a(of(property),Integer.toString(property.pid)),td(text(property.type),td(text(Integer.toString(property.price)),td(text(property.location),td(text(property.description))))))));
 		}
-		return ul;
+		return table;
 	
 	}
 	

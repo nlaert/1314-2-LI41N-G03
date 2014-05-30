@@ -64,3 +64,5 @@ insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisbo
  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
 */
+
+select * from properties

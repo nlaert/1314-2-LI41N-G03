@@ -2,7 +2,7 @@ package ls.output;
 
 import java.util.ArrayList;
 
-import ls.commands.IType;
+import ls.db.IType;
 
 //[{"username":"nick", "password":"ls1314", "email":"a35466@alunos.isel.pt", "fullname":"Nick Laert"},
 //{"username":"joao", "password":"ls1314", "email":"a35392@alunos.isel.pt", "fullname":"Joao Rodrigues"}]

@@ -11,12 +11,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import ls.output.HTML;
-
 public class HttpResponse {
 
     private final HttpStatusCode _status;
     private final HttpContent _body;
+//    private final String _outputHTML;
     private final Charset _charset = Charset.forName("UTF-8");
     private final Map<String,String> _headers = new HashMap<String,String>();
 
@@ -28,6 +27,10 @@ public class HttpResponse {
         _status = status;
         _body = body;
     }
+//    public HttpResponse(HttpStatusCode status, String outputHTML) {        
+//        _status = status;
+//        _outputHTML = outputHTML;
+//    }
    
 
 	public HttpResponse withHeader(String name, String value) {
@@ -39,7 +42,10 @@ public class HttpResponse {
     	for(Map.Entry<String, String> entry : _headers.entrySet()){
     		resp.addHeader(entry.getKey(), entry.getValue());
     	}
+    	
+//    	 sendWithoutBody(resp);
         if(_body == null) {
+//        if(_outputHTML == null) {
             sendWithoutBody(resp);
         }else {
             sendWithBufferedBody(resp);
@@ -48,6 +54,7 @@ public class HttpResponse {
         
     private void sendWithoutBody(HttpServletResponse resp) throws IOException {
         resp.setStatus(_status.valueOf());
+    	 
         
     }
     
@@ -56,9 +63,11 @@ public class HttpResponse {
     	ByteArrayOutputStream _os = new ByteArrayOutputStream();
         try(BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(_os, _charset))){
         	_body.writeTo(writer);
+//        	writer.write(_outputHTML);
         }
         byte[] bytes = _os.toByteArray();
         resp.setStatus(_status.valueOf());
+//        String ctype = String.format("%s;charset=%s", "text/html", _charset.name());  
         String ctype = String.format("%s;charset=%s",_body.getMediaType(), _charset.name());                
         resp.setContentType(ctype);
         resp.setContentLength(bytes.length);

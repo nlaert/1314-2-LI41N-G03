@@ -1,11 +1,27 @@
 package ls.app;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import ls.commands.*;
+import ls.commands.ICommand;
+import ls.commands.properties.GetProperties;
+import ls.commands.properties.GetPropertiesDetails;
+import ls.commands.properties.GetPropertiesLocation;
+import ls.commands.properties.GetPropertiesOwner;
+import ls.commands.properties.GetPropertiesType;
+import ls.commands.properties.PostProperties;
+import ls.commands.rentals.DeletePropertiesRental;
+import ls.commands.rentals.GetPropertiesRentals;
+import ls.commands.rentals.GetPropertiesRentalsWithDate;
+import ls.commands.rentals.GetUsersRentals;
+import ls.commands.rentals.PatchPropertiesRentals;
+import ls.commands.rentals.PostPropertiesRentals;
+import ls.commands.result.ICommandResult;
+import ls.commands.users.GetUserUsername;
+import ls.commands.users.GetUsers;
+import ls.commands.users.PostUsers;
+import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
@@ -20,11 +36,14 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
 	private static Rental gest;
+//	private static HashMap<ICommandResult,ITypeView> commandsResults;
 	public static void main(String[] args) throws Exception
 	{	
 		try {
 			gest = new Rental();
+//			commandsResults = new HashMap<ICommandResult,ITypeView>();
 			addCommands();
+//			addViews();
 			
 			if (args.length<1)
 				prompt();
@@ -65,8 +84,8 @@ public class App {
 	private static void executeCommand(String [] command) throws IllegalCommandException, ConnectionDatabaseException, FileException{
 		HashMap <String,String> map = new HashMap<String, String>(); 
 
-		ICommand cmd = gest.find(command,map);
-		ArrayList result = cmd.execute(map);
+		ICommand<IType> cmd = gest.find(command,map);
+		ICommandResult<IType> result = cmd.execute(map);
 		Output.Print(result, map);
 	}
 
@@ -88,6 +107,13 @@ public class App {
 		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
 		gest.add("DELETE /properties/{pid}/rentals/{year}/{cw}", new DeletePropertiesRental());
 	}
+	
+//	private static void addViews()
+//	{
+//		gest.addView(new UsersResult(), new UsersView());
+//		gest.addView(new PropertiesResult(), new PropertiesView());
+//		
+//	}
 }
 
 

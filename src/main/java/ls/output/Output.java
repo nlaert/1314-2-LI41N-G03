@@ -3,10 +3,10 @@ package ls.output;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import ls.commands.IType;
+import ls.commands.result.ICommandResult;
+import ls.db.IType;
 import ls.exception.FileException;
 
 public class Output {
@@ -14,16 +14,16 @@ public class Output {
 	private static String html = "text/html", json = "application/json";
 	
 
-	public static void Print(ArrayList<IType> params, HashMap <String, String> map) throws FileException{
+	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map) throws FileException{
 		String result = "", accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
-		if (accept.equalsIgnoreCase(html))
-			result = HTML.htmlify(params);
-		else if (accept.equalsIgnoreCase(json))
-			result = JSON.jsonify(params);
-		else
-			result = printArrayList(params);
+//		if (accept.equalsIgnoreCase(html))
+//			result = HTMLantigo.htmlify(commandResult);
+//		else if (accept.equalsIgnoreCase(json))
+//			result = JSON.jsonify(commandResult);
+//		else
+			result = printArrayList(commandResult);
 		
 		if (map.containsKey("output-file"))
 			printToFile(map.get("output-file"), result);
@@ -42,10 +42,10 @@ public class Output {
 		}	
 	}
 
-	public static <E> String printArrayList(ArrayList<E> list){
+	public static <E> String printArrayList(ICommandResult<IType> commandResult){
 		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < list.size(); i++)
-			str.append(list.get(i).toString() + "\n");
+		for (int i = 0; i < commandResult.getSize(); i++)
+			str.append(commandResult.getArrayList().get(i).toString() + "\n");
 		return str.toString();
 	}
 

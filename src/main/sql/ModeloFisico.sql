@@ -69,3 +69,5 @@ select * from properties inner join rental on pid = property
 delete from rental where property=1
 delete from properties where pid = 1
 */
+
+select * from properties

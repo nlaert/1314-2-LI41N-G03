@@ -3,6 +3,7 @@ package ls.db;
 
 public class Rental implements IType {
 	
+	
 	public Property property;
 	public User renter;
 	public int year;
@@ -19,7 +20,10 @@ public class Rental implements IType {
 		this.cw = cw;
 		this.status = status;
 		this.reserved_date = reserved_date;
-		this.confirmed_date = confirmed_date;
+		if(confirmed_date==null)
+			this.confirmed_date = "";
+		else
+			this.confirmed_date = confirmed_date;
 	}
 
 	@Override

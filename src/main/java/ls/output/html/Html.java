@@ -28,6 +28,7 @@ public class Html implements HttpContent {
     }
     
     public static Writable text(String s) { return new HtmlText(s);}
+    public static Writable text(int i) { return new HtmlText(Integer.toString(i));}
     public static Writable h1(Writable... c) { return new HtmlElem("h1",c);}
     public static Writable h2(Writable... c) { return new HtmlElem("h2",c);}
     public static Writable h3(Writable... c) { return new HtmlElem("h3",c);}
@@ -68,6 +69,10 @@ public class Html implements HttpContent {
     	return new HtmlElem("td",c);
     }
     public static Writable a(String href, String t) {
+        return new HtmlElem("a", text(t))
+            .withAttr("href", href);
+    }
+    public static Writable a(String href, int t) {
         return new HtmlElem("a", text(t))
             .withAttr("href", href);
     }

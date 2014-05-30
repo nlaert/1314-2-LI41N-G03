@@ -20,16 +20,7 @@ public class UsersView  extends HtmlPage implements ITypeView{
 		
 	}
 	
-//	private static Writable usersItems(ArrayList<User> users) {
-//		HtmlElem ul = new HtmlElem("ul");
-//		for(User user : users)
-//		{
-//			ul.withContent(
-//					li(a(of(user),user.toString())));
-//		}
-//		return ul;
-//	
-//	}
+
 
 	private static Writable usersItemsTable(UsersResult result) {
 		int style = 150 * result.getUsers().get(0).size;

@@ -20,6 +20,6 @@ public class HtmlText implements Writable {
 
     @Override
     public void writeTo(Writer w) throws IOException {
-        w.write(StringEscapeUtils.escapeHtml(_text));        
+        w.write(StringEscapeUtils.escapeHtml(_text)); 
     }
 }

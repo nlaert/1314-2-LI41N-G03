@@ -1,19 +1,21 @@
-package ls.commands.db;
+package ls.commands.rentals;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.ICommand;
-import ls.commands.Rental;
+import ls.commands.result.ICommandResult;
+import ls.commands.result.RentalsResult;
+import ls.db.Rental;
+import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 
 public class GetPropertiesRentalsByYear implements ICommand<Rental> {
 
 	@Override
-	public ArrayList<Rental> execute(HashMap<String, String> map)
+	public ICommandResult<Rental> execute(HashMap<String, String> map)
 			throws IllegalCommandException, ConnectionDatabaseException {
-		return RentalsDB.getPropertiesRentalsByYear(map);
+		return new RentalsResult(RentalsDB.getPropertiesRentalsByYear(map));
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import ls.commands.ICommand;
+import ls.commands.properties.DeletePropertiesPid;
 import ls.commands.properties.GetProperties;
 import ls.commands.properties.GetPropertiesDetails;
 import ls.commands.properties.GetPropertiesLocation;
@@ -13,6 +14,7 @@ import ls.commands.properties.GetPropertiesType;
 import ls.commands.properties.PostProperties;
 import ls.commands.rentals.DeletePropertiesRental;
 import ls.commands.rentals.GetPropertiesRentals;
+import ls.commands.rentals.GetPropertiesRentalsByYear;
 import ls.commands.rentals.GetPropertiesRentalsWithDate;
 import ls.commands.rentals.GetUsersRentals;
 import ls.commands.rentals.PatchPropertiesRentals;
@@ -114,7 +116,6 @@ public class App {
 //	{
 //		gest.addView(new UsersResult(), new UsersView());
 //		gest.addView(new PropertiesResult(), new PropertiesView());
-//		
 //	}
 }
 

@@ -165,7 +165,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		}
 	}
 	
-	public static ArrayList<String >deletePropertiesByPid(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+	public static ArrayList<String> deletePropertiesByPid(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
 		Connection conn = null;
 		ArrayList<String> list = new ArrayList<String>();
 		try{

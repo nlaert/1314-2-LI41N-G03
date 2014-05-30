@@ -30,8 +30,6 @@ public class UsersView  extends HtmlPage implements ITypeView{
 //		return ul;
 //	
 //	}
-	
-	
 
 	private static Writable usersItemsTable(UsersResult result) {
 		int style = 150 * result.getUsers().get(0).size;

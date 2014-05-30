@@ -77,6 +77,7 @@ public class Servlet extends HttpServlet {
 			return new HttpResponse(HttpStatusCode.BadRequest);
 		}
 		
+		
 		HtmlPage v = View.getView(result);
 
 		

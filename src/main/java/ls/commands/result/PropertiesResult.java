@@ -14,6 +14,11 @@ public class PropertiesResult implements ICommandResult<Property> {
 	}
 	
 	
+	public PropertiesResult() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void setProperties(ArrayList<Property> properties)
 	{
 		this.properties = properties;

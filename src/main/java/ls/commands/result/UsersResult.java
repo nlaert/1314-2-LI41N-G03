@@ -13,7 +13,7 @@ public class UsersResult implements ICommandResult<User> {
 		this.users = users;
 		
 	}
-	
+
 	public ArrayList<User> getUsers()
 	{
 		return users;

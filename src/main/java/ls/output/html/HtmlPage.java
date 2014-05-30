@@ -3,7 +3,7 @@ package ls.output.html;
 import ls.http.common.Writable;
 
 public class HtmlPage extends Html {
-    
+	
     public HtmlPage(String title, Writable... c) {
         super(
                 new HtmlElem("html",

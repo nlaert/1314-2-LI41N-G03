@@ -52,7 +52,7 @@ insert into [type] values('room'),('apartment'),('villa');
 -- Adicionar o superAdmin para administrar
 insert into users values('superadmin', 'ls1213','admin@alunos.isel.pt','Super Admin');
 
-/*
+
 --Post de dois utilizadores manualmente
 insert into users values('joao','pass','a35392@alunos.isel.pt','Joao Rodrigues');
 insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
@@ -62,8 +62,10 @@ insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisbo
 
 --Arrendar ao nick
  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
+  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,11,'pending','2014-01-20'); 
+   insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,12,'pending','2014-01-20'); 
 select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
-
+/*
 --apagar propriedades e respectivos rentals
 select * from properties inner join rental on pid = property
 delete from rental where property=1

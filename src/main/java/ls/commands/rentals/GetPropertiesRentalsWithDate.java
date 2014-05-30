@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
-import ls.commands.result.RentalsResult;
+import ls.commands.result.PropertiesRentalsWithDateResult;
 import ls.db.Rental;
 import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;
@@ -15,7 +15,7 @@ public class GetPropertiesRentalsWithDate  implements ICommand<Rental>{
 	
 	@Override
 	public ICommandResult<Rental> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
-		return new RentalsResult(RentalsDB.getPropertiesRentalsWithDate(map));
+		return new PropertiesRentalsWithDateResult(RentalsDB.getPropertiesRentalsWithDate(map));
 		
 		
 	

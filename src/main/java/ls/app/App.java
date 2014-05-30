@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import ls.commands.ICommand;
+import ls.commands.properties.DeletePropertiesPid;
 import ls.commands.properties.GetProperties;
 import ls.commands.properties.GetPropertiesDetails;
 import ls.commands.properties.GetPropertiesLocation;
@@ -13,6 +14,7 @@ import ls.commands.properties.GetPropertiesType;
 import ls.commands.properties.PostProperties;
 import ls.commands.rentals.DeletePropertiesRental;
 import ls.commands.rentals.GetPropertiesRentals;
+import ls.commands.rentals.GetPropertiesRentalsByYear;
 import ls.commands.rentals.GetPropertiesRentalsWithDate;
 import ls.commands.rentals.GetUsersRentals;
 import ls.commands.rentals.PatchPropertiesRentals;
@@ -101,18 +103,19 @@ public class App {
 		gest.add("GET /users/{username}/properties/owned", new GetPropertiesOwner());
 		gest.add("GET /properties/{pid}/rentals", new GetPropertiesRentals());
 		gest.add("GET /properties/{pid}/rentals/{year}/{cw}", new GetPropertiesRentalsWithDate());
+		gest.add("GET /properties/{pid}/rentals/{year}", new GetPropertiesRentalsByYear());
 		gest.add("POST /users", new PostUsers());
 		gest.add("POST /properties", new PostProperties());
 		gest.add("POST /properties/{pid}/rentals", new PostPropertiesRentals());
 		gest.add("PATCH /properties/{pid}/rentals/{year}/{cw}", new PatchPropertiesRentals());
 		gest.add("DELETE /properties/{pid}/rentals/{year}/{cw}", new DeletePropertiesRental());
+		gest.add("DELETE /properties/{pid}", new DeletePropertiesPid());
 	}
 	
 //	private static void addViews()
 //	{
 //		gest.addView(new UsersResult(), new UsersView());
 //		gest.addView(new PropertiesResult(), new PropertiesView());
-//		
 //	}
 }
 

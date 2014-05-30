@@ -1,5 +1,6 @@
 package ls.db;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -161,6 +162,48 @@ public class PropertiesDB  extends CommandsUtils  {
 			throw new ConnectionDatabaseException("Connection error",e);
 		}finally{
 			close(rs, prep, link);
+		}
+	}
+	
+	public static ArrayList<String> deletePropertiesByPid(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+		Connection conn = null;
+		ArrayList<String> list = new ArrayList<String>();
+		try{
+			link = new DataBaseManager();
+			conn = link.getConnetion();
+			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), conn))
+			{
+				throw new ConnectionDatabaseException("Invalid login");	
+			}
+			String checkOwner =  "select pid from properties where pid = ? and owner = ?";
+			if (!checkIfExists(checkOwner, new String [] {map.get("pid"), map.get("auth_username")}, conn))
+			{
+				throw new ConnectionDatabaseException("You are not the owner");
+			}
+			conn.setAutoCommit(false);
+			prep = conn.prepareStatement("delete from rental where property=?");
+			prep.setString(1, map.get("pid"));
+			int rows = prep.executeUpdate();
+			
+			prep = conn.prepareStatement("delete from properties where pid = ?");
+			prep.setString(1, map.get("pid"));
+			rows += prep.executeUpdate();
+			conn.commit();
+			list.add("Rows Updated");
+			list.add(Integer.toString(rows));
+			return list;
+		} catch(SQLException e)
+		{
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				throw new ConnectionDatabaseException("It is not possible to Delete", e1);
+			}
+			throw new ConnectionDatabaseException("it is not possible to Delete", e);
+		} 
+		finally
+		{
+			close(prep,link);
 		}
 	}
 	

@@ -6,14 +6,16 @@ import java.util.HashMap;
 import ls.commands.Commands;
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
+import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.output.html.view.ITypeView;
-import ls.utils.*;
+import ls.output.html.view.View;
+import ls.utils.Utils;
 
 public class Rental {
 
-	
+//	private View views;
 	private ArrayList<Commands> list;
 //	private HashMap<ICommandResult,ITypeView> views;
 	public Rental() throws IllegalCommandException, ConnectionDatabaseException
@@ -28,10 +30,10 @@ public class Rental {
 		//necessario verificar se ja existe ?
 		list.add(new Commands(command, command.split("/").length, e));
 	}
-//	public void addView(ICommandResult commandResult, ITypeView typeView) 
+	
+//	public void addView(ICommandResult<IType> commandResult, ITypeView typeView) 
 //	{
-//		//necessario verificar se ja existe ?
-//		views.put(commandResult, typeView);
+//		views.add(commandResult, typeView);
 //	}
 //	public HashMap<ICommandResult,ITypeView> getViews()
 //	{

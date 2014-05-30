@@ -30,7 +30,7 @@ public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 					td(a(ofProperty(rental), rental.property.pid)),
 					td(text(rental.renter.username)),
 						td(a(ofYear(rental), rental.year)),
-								td(text(rental.cw)),
+								td(a(ofWeek(rental), rental.cw)),
 								td(text(rental.status)),
 								td(text(rental.reserved_date)),
 								td(text(rental.confirmed_date))));
@@ -38,11 +38,15 @@ public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 		return table;
 	}
 
-	private static String ofYear(Rental rental) {
+	public static String ofWeek(Rental rental) {
+		return String.format("/properties/%d/rentals/%d/%d", rental.property.pid, rental.year, rental.cw);
+	}
+
+	public static String ofYear(Rental rental) {
 		return String.format("/properties/%d/rentals/%d", rental.property.pid, rental.year);
 	}
 
-	private static String ofProperty(Rental rental) {
+	public static String ofProperty(Rental rental) {
 		return String.format("/properties/details/%d", rental.property.pid);
 	}
 

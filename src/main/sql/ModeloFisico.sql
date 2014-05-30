@@ -59,13 +59,13 @@ insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 
 --Associar um apartamento ao Joao
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
-
---Arrendar ao nick
- insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
-  insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,11,'pending','2014-01-20'); 
-   insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,12,'pending','2014-01-20'); 
-select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
 /*
+--Arrendar ao nick
+insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 
+insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,11,'pending','2014-01-20'); 
+insert into rental (property,renter,[year],[cw],[status],reserved_date, confirmed_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,12,'confirmed','2014-01-20','2014-01-20'); 
+select property, renter, [year], cw, [status], reserved_date, confirmed_date from rental;
+
 --apagar propriedades e respectivos rentals
 select * from properties inner join rental on pid = property
 delete from rental where property=1

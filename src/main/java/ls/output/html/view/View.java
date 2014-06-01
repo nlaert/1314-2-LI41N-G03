@@ -1,5 +1,6 @@
 package ls.output.html.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
@@ -12,36 +13,42 @@ import ls.commands.result.RentalsResult;
 import ls.commands.result.UserRentalsResult;
 import ls.commands.result.UserUsernameResult;
 import ls.commands.result.UsersResult;
+import ls.db.IType;
 import ls.output.html.HtmlPage;
 
-
-
-//	private ArrayList<ICommandResult<IType>> results;
-//	private ArrayList<ITypeView> views;
-//	
-//	public View(){
-//		results = new ArrayList<ICommandResult<IType>>();
-//		views = new ArrayList<ITypeView>();
-//	}
-//	
-//	public void add(ICommandResult<IType> result, ITypeView view){
-//		results.add(result);
-//		views.add(view);
-//	}
-	
-//	public <E> HtmlPage getView(ICommandResult<IType> result)
-//	{
-//		for (int i = 0; i < results.size(); i++){
-//			ICommandResult<IType> r = results.get(i);
-//			if (result.getClass() == r.getClass())
-//				return (HtmlPage) views.get(i);
-//		}
-//		return null;
-//	}
 public class View {
+	
+	private ArrayList<ICommandResult<IType>> results;
+	private ArrayList<ITypeView> views;
+	private HashMap<Class<ICommandResult<IType>>, Class<ITypeView>> map2;
+	
+	public View(){
+		results = new ArrayList<ICommandResult<IType>>();
+		views = new ArrayList<ITypeView>();
+		map2 = new HashMap<Class<ICommandResult<IType>>, Class<ITypeView>>();
+		
+	}
+	
+	public void add(Class<ICommandResult<IType>> result, Class<ITypeView> view){
+		map2.put(result, view);
+	}
+	
+	public <E> HtmlPage getView(ICommandResult<IType> result)
+	{
+		for (int i = 0; i < results.size(); i++){
+			ICommandResult<IType> r = results.get(i);
+			if (result.getClass() == r.getClass())
+				return (HtmlPage) views.get(i);
+		}
+		return null;
+	}
 
+		
+	
 	public static <E> HtmlPage getView(ICommandResult<E> result, HashMap<String,String>map)
 	{
+		result.getClass().
+		
 		if(result instanceof PropertiesRentalsWithDateResult)
 		{
 			return new PropertiesRentalsWithDateView((PropertiesRentalsWithDateResult)result,map);

@@ -3,12 +3,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.utils.Utils;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 public class DataBaseManager {

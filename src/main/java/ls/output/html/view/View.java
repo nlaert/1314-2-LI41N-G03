@@ -2,20 +2,9 @@ package ls.output.html.view;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
-import ls.commands.result.PropertiesRentalsByYearResult;
-import ls.commands.result.PropertiesRentalsResult;
-import ls.commands.result.PropertiesRentalsWithDateResult;
-import ls.commands.result.PropertiesResult;
-import ls.commands.result.PropertyDetailsResult;
-import ls.commands.result.RentalsResult;
-import ls.commands.result.UserRentalsResult;
-import ls.commands.result.UserUsernameResult;
-import ls.commands.result.UsersResult;
-import ls.db.IType;
 import ls.exception.AppException;
 import ls.output.html.HtmlPage;
 

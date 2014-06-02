@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
-import ls.commands.users.GetUserUsername;
 import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
@@ -21,7 +20,6 @@ import ls.http.response.HttpStatusCode;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
-import ls.output.html.view.ITypeView;
 import ls.output.html.view.View;
 import ls.propertiesRental.Rental;
 

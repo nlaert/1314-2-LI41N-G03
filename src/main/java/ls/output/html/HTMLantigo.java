@@ -1,19 +1,8 @@
 package ls.output.html;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletResponse;
-
-import ls.commands.result.ICommandResult;
 import ls.db.IType;
-import ls.http.common.Writable;
-import ls.http.response.HttpContent;
 
 public class HTMLantigo   {
 	

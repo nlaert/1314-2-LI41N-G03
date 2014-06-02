@@ -3,12 +3,9 @@ package ls.output.html;
 import java.io.IOException;
 import java.io.Writer;
 
-
-
+import ls.http.common.Writable;
 
 import org.apache.commons.lang.StringEscapeUtils;
-
-import ls.http.common.Writable;
 
 public class HtmlText implements Writable {
 

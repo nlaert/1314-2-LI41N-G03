@@ -5,11 +5,8 @@ import java.util.HashMap;
 
 import ls.commands.Commands;
 import ls.commands.ICommand;
-import ls.commands.result.ICommandResult;
-import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
-import ls.output.html.view.ITypeView;
 import ls.output.html.view.View;
 import ls.utils.Utils;
 

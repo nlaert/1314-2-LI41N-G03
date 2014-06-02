@@ -15,7 +15,6 @@ import ls.commands.users.GetUserUsername;
 import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
-import ls.exception.EmptyResultSetException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
@@ -58,10 +57,7 @@ public class Servlet extends HttpServlet {
         {
         	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
         }
-        String [] command = null;        
-        String [] command = null;
-        
-        
+        String [] command = null;         
         
         if(req.getMethod().equals("GET"))
         {
@@ -78,12 +74,10 @@ public class Servlet extends HttpServlet {
         	cmd = gest.find(command,map);
 			result = cmd.execute(map);
         }
- 
 		catch(IllegalCommandException e)
 		{
 			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
-		if(result.getSize() == 0)
 		HtmlPage htmlPage;
 		View view = gest.getView();
 		try {

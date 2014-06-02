@@ -23,83 +23,27 @@ public class View<E> {
 	
 //	private ArrayList<ICommandResult<IType>> results;
 //	private ArrayList<ITypeView> views;
-	private HashMap<Class, Class> map2;
+	private HashMap<Class, Class> resultsViewsMap;
 	
 	public View(){
-//		results = new ArrayList<ICommandResult<IType>>();
-//		views = new ArrayList<ITypeView>();
-		map2 = new HashMap<Class, Class>();
-//		map2.put(PropertiesResult.class, PropertiesView.class);
-		
+		resultsViewsMap = new HashMap<Class, Class>();	
 	}
 	
 	public void add(Class result, Class view){
-		map2.put(result, view);
+		resultsViewsMap.put(result, view);
 	}
 	
 	public HtmlPage getView(ICommandResult<E> result, HashMap<String,String> map) throws AppException
 	{
-		if (map2.containsKey(result.getClass())){
-			Class h = map2.get(result.getClass());
+		if (resultsViewsMap.containsKey(result.getClass())){
+			Class h = resultsViewsMap.get(result.getClass());
 			try {
 				Constructor<?> k = h.getConstructor(result.getClass(), HashMap.class);
 				return (HtmlPage) k.newInstance(result, map);
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new AppException("View not Found!", e);
-
-
 			}
 		}
 		return null;
 	}
-
-		
-	
-//	public static <E> HtmlPage getView(ICommandResult<E> result, HashMap<String,String>map)
-//	{		
-//		if(result instanceof PropertiesRentalsWithDateResult)
-//		{
-//			return new PropertiesRentalsWithDateView((PropertiesRentalsWithDateResult)result,map);
-//		}
-//		if(result instanceof PropertiesRentalsResult)
-//		{
-//			return new PropertiesRentalsView((PropertiesRentalsResult) result,map);
-//
-//		}
-//		if(result instanceof UsersResult)
-//		{
-//			return new UsersView((UsersResult) result,map);
-//		}
-//
-//		if(result instanceof UserUsernameResult)
-//		{
-//			return new UserUsernameView((UserUsernameResult) result,map);
-//		}
-//
-//		if(result instanceof PropertyDetailsResult)
-//		{
-//			return new PropertyDetailsView((PropertyDetailsResult) result,map);
-//		}
-//
-//		if(result instanceof PropertiesResult)
-//		{
-//			return new PropertiesView((PropertiesResult) result,map);
-//		}
-//
-//		if(result instanceof UserRentalsResult)
-//		{
-//			return new UserRentalsView((UserRentalsResult) result,map);
-//		}
-//		if(result instanceof RentalsResult)
-//		{
-//			return new RentalView((RentalsResult) result, map);
-//		}
-//		if(result instanceof PropertiesRentalsByYearResult)
-//		{
-//			return new PropertiesRentalsByYearView((PropertiesRentalsByYearResult) result, map);
-//		}
-//
-//		
-//		return null;
-//	}
 }

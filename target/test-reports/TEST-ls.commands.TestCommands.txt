@@ -1,32 +1,43 @@
 Testsuite: ls.commands.TestCommands
-Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,939 sec
-------------- Standard Output ---------------
-Invalid login
-invalid command
-invalid command
-Invalid command
-Invalid command
-Invalid command
-a rent for the chosen date as confirmed or not exists
-Invalid command
-No parameter list found
-No parameter list found
-a rent for the chosen date as confirmed or not exists
-------------- ---------------- ---------------
+Tests run: 0, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0,474 sec
 
-Testcase: Get_All_Users_And_All_Properties_Test took 0,018 sec
-Testcase: Get_User_With_Username_Test took 0,063 sec
-Testcase: Get_Properties_Location_Test took 0,026 sec
-Testcase: Post_Users_Test took 0,057 sec
-Testcase: Post_Users_Without_Authentication_Test took 0,031 sec
-Testcase: Get_Wrong_Command_Test took 0,013 sec
-Testcase: Get_Wrong_Command2_Test took 0,015 sec
-Testcase: Post_Wrong_Command_Test took 0,012 sec
-Testcase: Post_Wrong_Command2_Test took 0,014 sec
-Testcase: Post_Users_Wrong_Command_Test took 0,013 sec
-Testcase: Get_Users_Wrong_Command_Test took 0,022 sec
-Testcase: Delete_Rental_Pending_Test took 0,04 sec
-Testcase: Delete_Rental_confirmed_Test took 0,041 sec
-Testcase: Patch_Pending_Test took 0,049 sec
-Testcase: Get_User_With_Username_Test took 0,16 sec
-Testcase: Post_Users_Test took 0,129 sec
+Testcase: ls.commands.TestCommands took 0 sec
+	Caused an ERROR
+Unresolved compilation problems: 
+	GetUsers cannot be resolved to a type
+	GetUserUsername cannot be resolved to a type
+	GetProperties cannot be resolved to a type
+	GetPropertiesDetails cannot be resolved to a type
+	GetPropertiesLocation cannot be resolved to a type
+	GetPropertiesOwner cannot be resolved to a type
+	GetPropertiesType cannot be resolved to a type
+	GetUsersRentals cannot be resolved to a type
+	GetUsersPropertiesOwned cannot be resolved to a type
+	GetPropertiesRentals cannot be resolved to a type
+	GetPropertiesRentalsWithDate cannot be resolved to a type
+	PostUsers cannot be resolved to a type
+	PostProperties cannot be resolved to a type
+	PostPropertiesRentals cannot be resolved to a type
+	PatchPropertiesRentals cannot be resolved to a type
+	DeletePropertiesRental cannot be resolved to a type
+
+java.lang.Error: Unresolved compilation problems: 
+	GetUsers cannot be resolved to a type
+	GetUserUsername cannot be resolved to a type
+	GetProperties cannot be resolved to a type
+	GetPropertiesDetails cannot be resolved to a type
+	GetPropertiesLocation cannot be resolved to a type
+	GetPropertiesOwner cannot be resolved to a type
+	GetPropertiesType cannot be resolved to a type
+	GetUsersRentals cannot be resolved to a type
+	GetUsersPropertiesOwned cannot be resolved to a type
+	GetPropertiesRentals cannot be resolved to a type
+	GetPropertiesRentalsWithDate cannot be resolved to a type
+	PostUsers cannot be resolved to a type
+	PostProperties cannot be resolved to a type
+	PostPropertiesRentals cannot be resolved to a type
+	PatchPropertiesRentals cannot be resolved to a type
+	DeletePropertiesRental cannot be resolved to a type
+
+	at ls.commands.TestCommands.setUp(TestCommands.java:38)
+

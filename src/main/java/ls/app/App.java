@@ -54,7 +54,7 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
-	private static Rental gest;
+	public static Rental gest;
 	private static ServerHTTP server;
 //	private static HashMap<ICommandResult,ITypeView> commandsResults;
 	public static void main(String[] args) throws Exception
@@ -125,7 +125,7 @@ public class App {
 	}
 
 
-	private static void addCommands() throws IllegalCommandException{
+	public static void addCommands() throws IllegalCommandException{
 		gest.add("GET /users", new GetUsers());
 		gest.add("GET /users/{username}", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
@@ -146,7 +146,7 @@ public class App {
 		gest.add("DELETE /properties/{pid}", new DeletePropertiesPid());
 	}
 	
-	private static void addViews()
+	public static void addViews()
 	{
 		gest.addView(UsersResult.class, UsersView.class);
 		gest.addView(UserUsernameResult.class, UserUsernameView.class);	

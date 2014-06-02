@@ -47,11 +47,8 @@ public class View {
 	
 	public static <E> HtmlPage getView(ICommandResult<E> result, HashMap<String,String>map)
 	{
-<<<<<<< HEAD
-	
-=======
-		result.getClass().
->>>>>>> FETCH_HEAD
+
+
 		
 		if(result instanceof PropertiesRentalsWithDateResult)
 		{

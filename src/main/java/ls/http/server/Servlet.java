@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
+import ls.commands.users.GetUserUsername;
 import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.EmptyResultSetException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
@@ -56,6 +58,7 @@ public class Servlet extends HttpServlet {
         {
         	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
         }
+        String [] command = null;        
         String [] command = null;
         
         
@@ -66,21 +69,21 @@ public class Servlet extends HttpServlet {
              command[0] = req.getMethod();
              command[1] = reqUri.getPath();
         }
-       
-//        String[] segs = reqUri.getPath().split("/");
+        
         Rental gest = ServerHTTP.getRental();
         HashMap <String,String> map = new HashMap<String, String>();
-        ICommand<IType> cmd;
-        ICommandResult<IType> result;
+        ICommand<IType> cmd = null;
+        ICommandResult<IType> result = null;
         try{
         	cmd = gest.find(command,map);
 			result = cmd.execute(map);
-		}
+        }
+ 
 		catch(IllegalCommandException e)
 		{
-			return new HttpResponse(HttpStatusCode.BadRequest, new BadRequestView());
+			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
-		
+		if(result.getSize() == 0)
 		HtmlPage htmlPage;
 		View view = gest.getView();
 		try {

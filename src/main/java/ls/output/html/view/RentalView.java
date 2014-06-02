@@ -19,7 +19,7 @@ public class RentalView extends HtmlPage {
 	}
 	private static Writable rentalsItems(RentalsResult result) {
 		HtmlElem ul = new HtmlElem("ul");
-		for(Rental rental : result.getRentals())
+		for(Rental rental : result.getArrayList())
 		{
 			ul.withContent(
 					li(a(of(rental),rental.toString())));

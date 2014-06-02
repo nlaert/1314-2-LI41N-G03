@@ -24,7 +24,7 @@ public class PropertiesView extends HtmlPage implements ITypeView{
 		int style = 150 * nColunas;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
 		table.withContent(tr(th(text("pid"),th(text("type"),th(text("price"),th(text("location"),th(text("description"))))))));
-		for(Property property : result.getProperties())
+		for(Property property : result.getArrayList())
 		{
 			table.withContent(tr(
 					td(a(of(property),Integer.toString(property.pid)),td(text(property.type),td(text(Integer.toString(property.price)),td(text(property.location),td(text(property.description))))))));

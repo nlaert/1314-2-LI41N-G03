@@ -46,6 +46,8 @@ public class View<E> {
 				return (HtmlPage) k.newInstance(result, map);
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new AppException("View not Found!", e);
+
+
 			}
 		}
 		return null;

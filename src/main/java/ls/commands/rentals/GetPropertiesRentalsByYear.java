@@ -5,7 +5,6 @@ import java.util.HashMap;
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.commands.result.PropertiesRentalsByYearResult;
-import ls.commands.result.RentalsResult;
 import ls.db.Rental;
 import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;

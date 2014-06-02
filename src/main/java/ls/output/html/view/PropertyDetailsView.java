@@ -13,7 +13,7 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 
 	public PropertyDetailsView(PropertyDetailsResult result, HashMap<String, String> map) {
 		super("Property", 
-				h1(text("Properties of pid: "+Integer.toString(result.getProperties().get(0).pid ))),
+				h1(text("Properties of pid: "+Integer.toString(result.getArrayList().get(0).pid ))),
 				propertiesItems(result),
 				rentals(result),
 				goBack("/properties", "Propriedades"),
@@ -28,7 +28,7 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 	private static Writable rentals(PropertyDetailsResult result) {
 		HtmlElem h3 = new HtmlElem("h3");
 		h3.withContent(
-				li(a(ofPidRental(result.getProperties().get(0)),"Rentals")));
+				li(a(ofPidRental(result.getArrayList().get(0)),"Rentals")));
 		return h3;
 	}
 
@@ -38,7 +38,7 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 		int style = 150 * nColunas;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
 		table.withContent(tr(th(text("pid"),th(text("type"),th(text("price"),th(text("location"),th(text("description"),th(text("Owner")))))))));
-		for(Property property : result.getProperties())
+		for(Property property : result.getArrayList())
 		{
 			table.withContent(tr(
 					td(text(Integer.toString(property.pid)),td(text(property.type),

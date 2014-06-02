@@ -15,10 +15,7 @@ public class RentalsResult implements ICommandResult<Rental> {
 		this.rentals =  rentals;
 	}
 	
-	public ArrayList<Rental> getRentals()
-	{
-		return rentals;
-	}
+
 
 	@Override
 	public int getSize() {

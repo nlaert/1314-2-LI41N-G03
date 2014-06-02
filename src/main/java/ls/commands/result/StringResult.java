@@ -10,10 +10,7 @@ public class StringResult implements ICommandResult<String> {
 		this.result = result;
 	}
 	
-	public ArrayList<String> getStringResult()
-	{
-		return result;
-	}
+
 
 	@Override
 	public int getSize() {

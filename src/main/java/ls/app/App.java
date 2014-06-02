@@ -121,7 +121,7 @@ public class App {
 	
 			ICommand<IType> cmd = gest.find(command,map);
 			ICommandResult<IType> result = cmd.execute(map);
-			Output.Print(result, map);
+			Output.Print(result, map, gest);
 		}
 	}
 

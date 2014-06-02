@@ -10,29 +10,38 @@ import com.sun.net.httpserver.HttpServer;
 
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
+import ls.exception.AppException;
 import ls.exception.FileException;
 import ls.http.response.HttpContent;
 import ls.http.server.ServerHTTP;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.View;
+import ls.propertiesRental.Rental;
 
 public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
 
-	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map) throws FileException, IOException{
-		View v;
-		HtmlPage hp;
+	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, Rental gest) throws FileException, IOException{
+		
 		String accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			v = ServerHTTP.getRental().getView();
-			hp = v.getView(commandResult, map);
-			sendHTML(hp, map);
+			View v;
+			HtmlPage hp;
+			v = gest.getView();
+			try {
+				hp = v.getView(commandResult, map);
+				sendHTML(hp, map);
+			} catch (AppException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		else if (accept.equalsIgnoreCase(json))
 		{
@@ -64,12 +73,18 @@ public class Output {
         	else
         		writer = new BufferedWriter(new OutputStreamWriter(System.out));
         	content.writeTo(writer);
+        	writer.newLine();
         }
         catch(IOException e){
         	throw new FileException("Could not write to the file");
         }
         finally{
-        	writer.close();
+//        	if(map.containsKey("output-file"))
+//        		writer.close();
+//        	else
+        		writer.flush();
+//        	System.setOut(System.out);
+        
         }
       
            

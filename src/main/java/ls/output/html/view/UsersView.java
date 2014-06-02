@@ -25,10 +25,10 @@ public class UsersView  extends HtmlPage implements ITypeView{
 
 
 	private static Writable usersItemsTable(UsersResult result) {
-		int style = 150 * result.getUsers().get(0).size;
+		int style = 150 * result.getArrayList().get(0).size;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
 		table.withContent(tr(th(text("Username"),th(text("email"),th(text("Fullname"))))));
-		for(User user : result.getUsers())
+		for(User user : result.getArrayList())
 		{
 			table.withContent(tr(
 					td(a(of(user),user.username),td(text(user.email),td(text(user.fullName))))));

@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
+import ls.commands.users.GetUserUsername;
 import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.EmptyResultSetException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
@@ -50,38 +52,34 @@ public class Servlet extends HttpServlet {
         URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
         {
-        	
         	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
         }
-        String [] command = null;
-        
-        
-        
+        String [] command = null;        
         if(req.getMethod().equals("GET"))
         {
         	 command = new String[2];
              command[0] = req.getMethod();
              command[1] = reqUri.getPath();
         }
-       
-//        String[] segs = reqUri.getPath().split("/");
         
         HashMap <String,String> map = new HashMap<String, String>();
-        ICommand<IType> cmd;
-        ICommandResult<IType> result;
+        ICommand<IType> cmd = null;
+        ICommandResult<IType> result = null;
         try{
         	cmd = ServerHTTP.getRental().find(command,map);
 			result = cmd.execute(map);
-		}
+        }
+ 
 		catch(IllegalCommandException e)
 		{
-			return new HttpResponse(HttpStatusCode.BadRequest, new BadRequestView());
+			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
-		
+		if(result.getSize() == 0)
+			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		
 		HtmlPage v = View.getView(result,map);
 		if(v == null)
-			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+			return new HttpResponse(HttpStatusCode.NotFound,new BadRequestView());
 		
 		return new HttpResponse(HttpStatusCode.Ok, v );
        

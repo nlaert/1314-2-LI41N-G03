@@ -3,44 +3,50 @@ package ls.output;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
+
+import com.sun.net.httpserver.HttpServer;
 
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.exception.FileException;
+import ls.http.response.HttpContent;
+import ls.http.server.ServerHTTP;
+import ls.output.html.HtmlPage;
+import ls.output.html.view.View;
 
 public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
 
-	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map) throws FileException{
-		String result = "", accept = "";
+	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map) throws FileException, IOException{
+		View v;
+		HtmlPage hp;
+		String accept = "";
 		if (map.containsKey("accept"))
 			accept = map.get("accept");
-//		if (accept.equalsIgnoreCase(html))
-//			result = HTMLantigo.htmlify(commandResult);
-//		else if (accept.equalsIgnoreCase(json))
-//			result = JSON.jsonify(commandResult);
-//		else
-			result = printArrayList(commandResult);
 		
-		if (map.containsKey("output-file"))
-			printToFile(map.get("output-file"), result);
+		if (accept.equalsIgnoreCase(html))
+		{
+			v = ServerHTTP.getRental().getView();
+			hp = v.getView(commandResult, map);
+			sendHTML(hp, map);
+		}
+		else if (accept.equalsIgnoreCase(json))
+		{
+			JSON.jsonify(commandResult, map);
+		}
 		else
-			System.out.println(result);			
+		{
+			System.out.println(printArrayList(commandResult));
+		}
 	}
 	
-	private static void printToFile(String filename, String result) throws FileException {
-		BufferedWriter bw;
-		try {
-			bw = new BufferedWriter(new FileWriter(filename));
-			bw.write(result);
-			bw.close();
-		} catch (IOException e) {
-			throw new FileException("Could not write to the file", e);
-		}	
-	}
+	
+
+	
 
 	public static <E> String printArrayList(ICommandResult<IType> commandResult){
 		StringBuilder str = new StringBuilder();
@@ -48,5 +54,25 @@ public class Output {
 			str.append(commandResult.getArrayList().get(i).toString() + "\n");
 		return str.toString();
 	}
+	
+	public static void sendHTML(HttpContent content,HashMap <String, String> map) throws IOException, FileException {
+    	
+		BufferedWriter writer = null;
+        try{
+        	if(map.containsKey("output-file"))
+        		writer = new BufferedWriter(new FileWriter(map.get("output-file")));
+        	else
+        		writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        	content.writeTo(writer);
+        }
+        catch(IOException e){
+        	throw new FileException("Could not write to the file");
+        }
+        finally{
+        	writer.close();
+        }
+      
+           
+    }
 
 }

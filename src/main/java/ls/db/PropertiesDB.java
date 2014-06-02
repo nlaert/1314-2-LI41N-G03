@@ -55,13 +55,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		return new Property(pid, type, description, price, location, owner);
 	}
 
-	private static ArrayList<Property> resultSetToPropertyArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
-		ArrayList<Property> list = new ArrayList<Property>();
-		while(rs.next()){
-			list.add(resultSetToProperty());
-		}
-		return list;
-	}
+	
 	public static ArrayList<Property> getPropertiesDetails(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
 		
 		ArrayList<Property> list = new ArrayList<Property>();
@@ -206,7 +200,13 @@ public class PropertiesDB  extends CommandsUtils  {
 			close(prep,link);
 		}
 	}
-	
+	private static ArrayList<Property> resultSetToPropertyArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
+		ArrayList<Property> list = new ArrayList<Property>();
+		while(rs.next()){
+			list.add(resultSetToProperty());
+		}
+		return list;
+	}
 	
 
 }

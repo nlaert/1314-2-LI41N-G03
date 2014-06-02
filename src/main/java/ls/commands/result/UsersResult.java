@@ -14,18 +14,16 @@ public class UsersResult implements ICommandResult<User> {
 		
 	}
 
-	public ArrayList<User> getUsers()
-	{
+	@Override
+	public int getSize() {
+		return users.size();
+	}
+
+	@Override
+	public ArrayList<User> getArrayList() {
 		return users;
 	}
 
-	public ArrayList<User> getArrayList()
-	{
-		return users;
-	}
+
 	
-	public int getSize()
-	{
-		return users.size();
-	}
 }

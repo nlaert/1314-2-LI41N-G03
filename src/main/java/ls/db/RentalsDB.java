@@ -20,7 +20,7 @@ public class RentalsDB extends CommandsUtils{
 	
 	
 	
-	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException {
+	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException{
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		while(rs.next()){
 			list.add(resultSetToRental());
@@ -140,7 +140,7 @@ public class RentalsDB extends CommandsUtils{
 	}
 
 	public static ArrayList<Rental> postPropertiesRentals(
-			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
+			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try{
 			link = new DataBaseManager();

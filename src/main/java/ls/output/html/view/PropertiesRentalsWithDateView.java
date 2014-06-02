@@ -12,34 +12,32 @@ public class PropertiesRentalsWithDateView extends HtmlPage implements ITypeView
 
 	public PropertiesRentalsWithDateView(PropertiesRentalsWithDateResult result, HashMap<String, String> map) {
 		super("Rentals",h1(text("Rentals")), 
-				result.getRentals().size() ==0 ? h3(text("No Rentals found")):text(""),
+				result.getArrayList().size() ==0 ? h3(text("No Rentals found")):text(""),
 				rentals(result),
 				goInit()
 			);		
 	}
 	
+	
 	private static Writable rentals(PropertiesRentalsWithDateResult result) {
-		if(result.getRentals().size() == 0)
+		if(result.getArrayList().size() == 0)
 			return text("");
-		int style = 150 * 7;
-		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
-		table.withContent(tr(th(text("Property"),th(text("Renter"),
-				th(text("Year")),th(text("Cw")),th(text("Status")),
-				th(text("Reserved Date")),th(text("Confirmed Date"))))));
-		for(Rental rental : result.getRentals())
-		{
-			table.withContent(
-				tr(
-					td(a(ofPid(rental),rental.property.pid)),
-						td(a(ofUser(rental), rental.renter.username)),
-							td(a(ofYear(rental), rental.year)),
-								td(text(rental.cw)),
-									td(text(rental.status)),
-									td(text(rental.reserved_date)),
-									td(text(rental.confirmed_date))));
-		}
-		return table;
+		
+		
+		HtmlElem ul = new HtmlElem("ul");
+		Rental rental = result.getArrayList().get(0);
+		ul.withContent(
+				li(text("Property: "),a(ofPid(rental),rental.property.pid),
+				li(text("Renter: "),a(ofUser(rental),rental.renter.username),
+				li(text("Year: ")),a(ofYear(rental), rental.year),
+				li(text("Cw: "+rental.cw)),
+				li(text("Status: " + rental.status)),
+				li(text("Reserved Date: "+ rental.reserved_date)),
+				li(text("Confirmed Date: "+rental.confirmed_date)))));
+
+		return ul;
 	}
+	
 	
 	private static String ofPid(Rental rental) {
 		return String.format("/properties/%d/rentals", rental.property.pid);

@@ -1,23 +1,29 @@
 package ls.output;
 
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
 
+import ls.commands.result.ICommandResult;
 import ls.db.IType;
+import ls.exception.FileException;
 
 //[{"username":"nick", "password":"ls1314", "email":"a35466@alunos.isel.pt", "fullname":"Nick Laert"},
 //{"username":"joao", "password":"ls1314", "email":"a35392@alunos.isel.pt", "fullname":"Joao Rodrigues"}]
 
 public class JSON {
-	public static String jsonify(ArrayList<IType> params){
-		if (params==null || params.size()==0)
-			return "{}";
-		String [] columnsNames = params.get(0).getColumNames();
+	public static void jsonify(ICommandResult<IType> commandResult, HashMap<String, String> map) throws FileException{
+		
+		if (commandResult==null || commandResult.getSize()==0)
+			System.out.println("{}"); 
+		String [] columnsNames = commandResult.getArrayList().get(0).getColumNames();
 		StringBuilder result = new StringBuilder();
-		if (params.size()>2)
+		if (commandResult.getSize()>2)
 			result.append("[");
-		for (int i = 0; i < params.size(); i++){
+		for (int i = 0; i < commandResult.getSize(); i++){
 			result.append("{");
-			String [] row = params.get(i).toString().split("\t");
+			String [] row = commandResult.getArrayList().get(i).toString().split("\t");
 			for (int j = 0; j<row.length; j++){
 				result.append("\"" + columnsNames[j] + "\":");
 				if(isNumeric(row[j]))
@@ -27,14 +33,23 @@ public class JSON {
 				if(j!=row.length-1)
 					result.append(",");
 			}
-			if(i!=params.size()-1)
+			if(i!=commandResult.getSize()-1)
 				result.append("},");
 		}
 		
 		result.append("}");
-		if (params.size()>2)
+		if (commandResult.getSize()>2)
 			result.append("]");
-		return result.toString();
+		if(map.containsKey("output-file")){
+			printToFile(map.get("output-file"), result.toString());
+		}
+		else
+		{
+			System.out.println(result.toString());
+		}
+			
+			
+		
 	}
 
 	
@@ -45,5 +60,16 @@ public class JSON {
 	        if (!Character.isDigit(c)) return false;
 	    }
 	    return true;
+	}
+	
+	private static void printToFile(String filename, String result) throws FileException {
+		BufferedWriter bw;
+		try {
+			bw = new BufferedWriter(new FileWriter(filename));
+			bw.write(result);
+			bw.close();
+		} catch (IOException e) {
+			throw new FileException("Could not write to the file", e);
+		}	
 	}
 }

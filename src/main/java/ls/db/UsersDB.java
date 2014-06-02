@@ -95,8 +95,7 @@ public class UsersDB extends CommandsUtils {
 	}
 
 	private static ArrayList<User> resultSetToUserArrayList() throws SQLException, IllegalCommandException {
-
-		
+	
 		ArrayList<User> list = new ArrayList<User>();
 		while(rs.next()){
 			list.add(resultSetToUser());

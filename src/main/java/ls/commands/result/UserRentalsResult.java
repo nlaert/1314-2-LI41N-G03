@@ -16,8 +16,7 @@ public class UserRentalsResult implements ICommandResult<Rental> {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return rentals.size();
 	}
 
 	@Override
@@ -25,10 +24,6 @@ public class UserRentalsResult implements ICommandResult<Rental> {
 		return rentals;
 	}
 	
-	public ArrayList<Rental> getRentals()
-	{
-		return rentals;
-	}
-	
+		
 
 }

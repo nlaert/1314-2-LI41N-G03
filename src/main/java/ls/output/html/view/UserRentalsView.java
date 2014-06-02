@@ -14,7 +14,7 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 
 	public UserRentalsView(UserRentalsResult result, HashMap<String, String> map) {
 		super("Rentals",h1(text("Rentals of "+map.get("username"))), 
-				result.getRentals().size() ==0 ? h3(text("No Rentals found")):text(""),
+				result.getArrayList().size() ==0 ? h3(text("No Rentals found")):text(""),
 				rentals(result),
 				goBack(ofUser(map.get("username")),map.get("username")),
 				goInit()
@@ -22,24 +22,23 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 	}
 
 	private static Writable rentals(UserRentalsResult result) {
-		if(result.getRentals().size() == 0)
+		if(result.getArrayList().size() == 0)
 			return text("");
-		int style = 150 * 7;
+		int style = 150 * 4;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
-		table.withContent(tr(th(text("Property"),th(text("Renter"),
-				th(text("Year")),th(text("Cw")),th(text("Status")),
-				th(text("Reserved Date")),th(text("Confirmed Date"))))));
-		for(Rental rental : result.getRentals())
+		table.withContent(tr(th(text("Property"),
+				th(text("Year")),th(text("Cw")),th(text("Status")))));
+
+		for(Rental rental : result.getArrayList())
 		{
 			table.withContent(
-				tr(
-					td(text(rental.property.pid)),
-						td(a(ofUser(rental), rental.renter.username)),
+					tr(
+							td(text(rental.property.pid)),
+
 							td(a(ofYear(rental), rental.year)),
-								td(a(ofCw(rental),rental.cw)),
-									td(text(rental.status)),
-									td(text(rental.reserved_date)),
-									td(text(rental.confirmed_date))));
+							td(a(ofCw(rental),rental.cw)),
+							td(text(rental.status))
+							));
 		}
 		return table;
 	}
@@ -54,9 +53,7 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 		return String.format("/properties/%d/rentals/%d", rental.property.pid,rental.year);
 	}
 
-	private static String ofUser(Rental rental) {
-		return String.format("/users/%s", rental.renter.username);
-	}
+	
 	private static String ofUser(String username) {
 		return String.format("/users/%s", username);
 	}

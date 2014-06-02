@@ -42,6 +42,8 @@ public class View {
 
 	public static <E> HtmlPage getView(ICommandResult<E> result, HashMap<String,String>map)
 	{
+	
+		
 		if(result instanceof PropertiesRentalsWithDateResult)
 		{
 			return new PropertiesRentalsWithDateView((PropertiesRentalsWithDateResult)result,map);

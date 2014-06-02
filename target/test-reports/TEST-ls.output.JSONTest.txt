@@ -1,7 +1,4 @@
 Testsuite: ls.output.JSONTest
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,018 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,017 sec
 
-Testcase: multiple_Rows_Test took 0,005 sec
-Testcase: empty_params took 0 sec
-Testcase: one_Row_Test took 0 sec
-Testcase: number_values_Test took 0 sec
+Testcase: multiple_Rows_Test took 0,006 sec

@@ -1,6 +1,6 @@
 <project name="LS" default="test" basedir=".">
 
-  <description> 
+  <description>
     Ant build file for LS
   </description>
 
@@ -19,7 +19,7 @@
       <include name="**/*.jar" />
     </fileset>
   </path>
-  
+
   <path id="test.extlibs.class.path">
     <path refid="main.extlibs.class.path" />
     <fileset dir="vendor/test/lib">
@@ -88,23 +88,29 @@
 
       <batchtest fork="yes" todir="${target-test-reports}" >
         <fileset dir="${src-test}">
-          <include name="**/*Test*.java"/>          
-        </fileset>        
+          <include name="**/*Test*.java"/>
+        </fileset>
         <formatter type="plain"/>
       </batchtest>
     </junit>
   </target>
-  
+
   <target name="package" depends="test" description="Packages the main classes into a jar">
-   
-   
+
+
    <manifestclasspath property="mf.classpath" jarfile="${target}/1314-2-LS-LI41N-G03.jar">
         <classpath>
             <fileset dir="vendor/main/lib/" includes="sqljdbc4.jar"/>
+            <fileset dir="vendor/main/lib/" includes="javax.servlet-3.0.0.v201112011016.jar"/>
+            <fileset dir="vendor/main/lib/" includes="jetty-all-9.0.2.v20130417.jar"/>
+            <fileset dir="vendor/main/lib/" includes="commons-lang-2.6.jar"/>
+
+
+
         </classpath><!--end tag-->
    </manifestclasspath>
-    
-    
+
+
     <echo message="TODO: Replace GROUPID with your group identifier (.e.g LI41D-G00)"/>
     <jar 	jarfile="${target}/1314-2-LS-LI41N-G03.jar" basedir="${target-classes}" >
     	<manifest>

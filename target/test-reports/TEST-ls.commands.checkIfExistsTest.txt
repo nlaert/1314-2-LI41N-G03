@@ -1,5 +1,5 @@
 Testsuite: ls.commands.checkIfExistsTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,47 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,504 sec
 
-Testcase: new_User_Exists_Test took 0,431 sec
-Testcase: user_Not_Found_Test took 0,028 sec
+Testcase: user_Not_Found_Test took 0,445 sec
+Testcase: new_User_Exists_Test took 0,045 sec

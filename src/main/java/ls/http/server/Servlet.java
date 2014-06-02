@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
+import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
@@ -19,7 +20,9 @@ import ls.http.response.HttpStatusCode;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
+import ls.output.html.view.ITypeView;
 import ls.output.html.view.View;
+import ls.propertiesRental.Rental;
 
 @SuppressWarnings("serial")
 public class Servlet extends HttpServlet {
@@ -46,11 +49,11 @@ public class Servlet extends HttpServlet {
         }
     }       
    	    
-    private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException {
+    @SuppressWarnings("unchecked")
+	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException {
         URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
         {
-        	
         	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
         }
         String [] command = null;
@@ -65,12 +68,12 @@ public class Servlet extends HttpServlet {
         }
        
 //        String[] segs = reqUri.getPath().split("/");
-        
+        Rental gest = ServerHTTP.getRental();
         HashMap <String,String> map = new HashMap<String, String>();
         ICommand<IType> cmd;
         ICommandResult<IType> result;
         try{
-        	cmd = ServerHTTP.getRental().find(command,map);
+        	cmd = gest.find(command,map);
 			result = cmd.execute(map);
 		}
 		catch(IllegalCommandException e)
@@ -78,12 +81,17 @@ public class Servlet extends HttpServlet {
 			return new HttpResponse(HttpStatusCode.BadRequest, new BadRequestView());
 		}
 		
-		
-		HtmlPage v = View.getView(result,map);
-		if(v == null)
+		HtmlPage htmlPage;
+		View view = gest.getView();
+		try {
+			htmlPage = view.getView(result, map);
+		} catch (AppException e) {
+			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+		}
+		if(htmlPage == null)
 			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
 		
-		return new HttpResponse(HttpStatusCode.Ok, v );
+		return new HttpResponse(HttpStatusCode.Ok, htmlPage);
        
     }
 

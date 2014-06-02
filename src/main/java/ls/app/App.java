@@ -20,16 +20,33 @@ import ls.commands.rentals.GetUsersRentals;
 import ls.commands.rentals.PatchPropertiesRentals;
 import ls.commands.rentals.PostPropertiesRentals;
 import ls.commands.result.ICommandResult;
+import ls.commands.result.PropertiesRentalsByYearResult;
+import ls.commands.result.PropertiesRentalsResult;
+import ls.commands.result.PropertiesRentalsWithDateResult;
+import ls.commands.result.PropertiesResult;
+import ls.commands.result.PropertyDetailsResult;
+import ls.commands.result.RentalsResult;
+import ls.commands.result.StringResult;
+import ls.commands.result.UserRentalsResult;
+import ls.commands.result.UserUsernameResult;
+import ls.commands.result.UsersResult;
 import ls.commands.users.GetUserUsername;
 import ls.commands.users.GetUsers;
 import ls.commands.users.PostUsers;
 import ls.db.IType;
 import ls.exception.AppException;
-import ls.exception.ConnectionDatabaseException;
-import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.http.server.ServerHTTP;
 import ls.output.Output;
+import ls.output.html.view.PropertiesRentalsByYearView;
+import ls.output.html.view.PropertiesRentalsView;
+import ls.output.html.view.PropertiesRentalsWithDateView;
+import ls.output.html.view.PropertiesView;
+import ls.output.html.view.PropertyDetailsView;
+import ls.output.html.view.RentalView;
+import ls.output.html.view.UserRentalsView;
+import ls.output.html.view.UserUsernameView;
+import ls.output.html.view.UsersView;
 import ls.propertiesRental.Rental;
 import ls.utils.Utils;
 
@@ -47,7 +64,7 @@ public class App {
 			gest = new Rental();
 //			commandsResults = new HashMap<ICommandResult,ITypeView>();
 			addCommands();
-//			addViews();
+			addViews();
 			
 			if (args.length<1)
 				prompt();
@@ -130,11 +147,20 @@ public class App {
 		gest.add("DELETE /properties/{pid}", new DeletePropertiesPid());
 	}
 	
-//	private static void addViews()
-//	{
-//		gest.addView(new UsersResult(), new UsersView());
-//		gest.addView(new PropertiesResult(), new PropertiesView());
-//	}
+	private static void addViews()
+	{
+		gest.addView(UsersResult.class, UsersView.class);
+		gest.addView(UserUsernameResult.class, UserUsernameView.class);	
+		
+		gest.addView(PropertiesResult.class, PropertiesView.class);
+		gest.addView(PropertyDetailsResult.class, PropertyDetailsView.class);
+		
+		gest.addView(RentalsResult.class, RentalView.class);
+		gest.addView(PropertiesRentalsByYearResult.class, PropertiesRentalsByYearView.class);
+		gest.addView(PropertiesRentalsResult.class, PropertiesRentalsView.class);
+		gest.addView(PropertiesRentalsWithDateResult.class, PropertiesRentalsWithDateView.class);
+		gest.addView(UserRentalsResult.class, UserRentalsView.class);
+	}
 }
 
 

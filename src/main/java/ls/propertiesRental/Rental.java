@@ -15,13 +15,13 @@ import ls.utils.Utils;
 
 public class Rental {
 
-//	private View views;
+	private View views;
 	private ArrayList<Commands> list;
 //	private HashMap<ICommandResult,ITypeView> views;
 	public Rental() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		list = new ArrayList<Commands>();
-//		views = new HashMap<ICommandResult,ITypeView>();
+		views = new View();
 		
 	}
 
@@ -31,14 +31,14 @@ public class Rental {
 		list.add(new Commands(command, command.split("/").length, e));
 	}
 	
-//	public void addView(ICommandResult<IType> commandResult, ITypeView typeView) 
-//	{
-//		views.add(commandResult, typeView);
-//	}
-//	public HashMap<ICommandResult,ITypeView> getViews()
-//	{
-//		return views;
-//	}
+	public void addView(Class commandResult, Class typeView) 
+	{
+		views.add(commandResult, typeView);
+	}
+	public View getView()
+	{
+		return views;
+	}
 
 	public ICommand find(String[] command, HashMap<String, String> map) throws IllegalCommandException
 	{

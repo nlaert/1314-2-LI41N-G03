@@ -59,6 +59,9 @@ insert into users values('nick','pass','a35466@alunos.isel.pt','Nick Laert');
 
 --Associar um apartamento ao Joao
 insert into properties values ('apartment','apartamento nos Olivais',1000,'Lisboa, Olivais','joao');
+--Associar uma villa ao Nick
+insert into properties values ('villa','Villa na Ericeira',2655,'Mafra, Ericeira','nick');
+
 /*
 --Arrendar ao nick
 insert into rental (property,renter,[year],[cw],[status],reserved_date) values((select [pid] from properties where [owner] = 'joao'),'nick',2014,10,'pending','2014-01-20'); 

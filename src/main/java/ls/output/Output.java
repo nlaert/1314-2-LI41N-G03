@@ -79,12 +79,7 @@ public class Output {
         	throw new FileException("Could not write to the file");
         }
         finally{
-//        	if(map.containsKey("output-file"))
-//        		writer.close();
-//        	else
         		writer.flush();
-//        	System.setOut(System.out);
-        
         }
       
            

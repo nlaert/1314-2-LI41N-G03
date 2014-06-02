@@ -7,6 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ls.commands.properties.GetProperties;
+import ls.commands.properties.GetPropertiesDetails;
+import ls.commands.properties.GetPropertiesLocation;
+import ls.commands.properties.GetPropertiesOwner;
+import ls.commands.properties.GetPropertiesType;
+import ls.commands.properties.PostProperties;
+import ls.commands.rentals.DeletePropertiesRental;
+import ls.commands.rentals.GetPropertiesRentals;
+import ls.commands.rentals.GetPropertiesRentalsWithDate;
+import ls.commands.rentals.GetUsersRentals;
+import ls.commands.rentals.PatchPropertiesRentals;
+import ls.commands.rentals.PostPropertiesRentals;
+import ls.commands.result.ICommandResult;
+import ls.commands.users.GetUserUsername;
+import ls.commands.users.GetUsers;
+import ls.commands.users.PostUsers;
+import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.CRUD;
@@ -43,7 +60,6 @@ public class TestCommands {
 		gest.add("GET /properties/owner/{owner}", new GetPropertiesOwner());
 		gest.add("GET /properties/type/{type}", new GetPropertiesType());
 		gest.add("GET /users/{username}/rentals", new GetUsersRentals());
-		gest.add("GET /users/{username}/properties/owned", new GetUsersPropertiesOwned());
 		gest.add("GET /properties/{pid}/rentals", new GetPropertiesRentals());
 		gest.add("GET /properties/{pid}/rentals/{year}/{cw}", new GetPropertiesRentalsWithDate());
 		gest.add("POST /users", new PostUsers());
@@ -87,9 +103,9 @@ public class TestCommands {
 	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException
 	{
 		String [] user = {"GET", "/users/testeJUNIT1"};
-		ICommand ex1 = gest.find(user, map);
-		ArrayList<String> list = CRUD.executeQuery("select password, email, fullname from users where username = 'testeJUNIT1'");
-		assertEquals(ex1.execute(map), list);
+		ICommand<IType> ex1 = gest.find(user, map);
+		ICommandResult<IType> list = ex1.execute(map);
+		assertTrue(list.getSize()==1);
 	}
 	
 	
@@ -99,8 +115,8 @@ public class TestCommands {
 		String [] properties = {"GET", "/properties/location/Peniche|Peniche"};
 		ICommand ex1 = gest.find(properties, map);
 		assertTrue(ex1 instanceof GetPropertiesLocation);
-		ArrayList<String> list =ex1.execute(map); 
-		assertTrue(list.size()>1);
+		ICommandResult<IType> list =ex1.execute(map); 
+		assertTrue(list.getSize()>=1);
 	}	
 	
 	@Test
@@ -196,12 +212,12 @@ public class TestCommands {
 		CRUD.executeNonQuery(insertRentalOnClient2);
 //		Eliminar aluguer do cliente 2
 		String [] delete = {"DELETE", "/properties/"+pid+"/rentals/"+2100+"/"+12,"auth_username=testeJUNIT2&auth_password=junit2"};
-		ArrayList<String> list = new ArrayList<String>();
+		ICommandResult<IType> list = null;
 		ICommand ex1 = gest.find(delete, map);
 		if(ex1!= null){
 			list=ex1.execute(map);
 		}
-		assertEquals(list.get(1),"1");
+		assertEquals(list.getArrayList().get(1),"1");
 
 			
 		
@@ -231,12 +247,12 @@ public class TestCommands {
 		CRUD.executeNonQuery(insertRentalOnClient2);
 		//	Eliminar aluguer do cliente 2
 		String [] patch = {"PATCH", "/properties/"+pid+"/rentals/2100/12","auth_username=testeJUNIT1&auth_password=junit1"};
-		ArrayList<String> list = new ArrayList<String>();
+		ICommandResult<IType> list = null;
 		ICommand ex1 = gest.find(patch, map);
 		if(ex1!= null){
 			list=ex1.execute(map);
 		}
-		assertEquals(list.get(1),"1");
+		assertEquals(list.getArrayList().get(1),"1");
 
 
 	}

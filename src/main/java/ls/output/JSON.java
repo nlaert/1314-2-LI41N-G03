@@ -19,7 +19,7 @@ public class JSON {
 			System.out.println("{}"); 
 		String [] columnsNames = commandResult.getArrayList().get(0).getColumNames();
 		StringBuilder result = new StringBuilder();
-		if (commandResult.getSize()>2)
+		if (commandResult.getSize()>=2)
 			result.append("[");
 		for (int i = 0; i < commandResult.getSize(); i++){
 			result.append("{");
@@ -38,14 +38,14 @@ public class JSON {
 		}
 		
 		result.append("}");
-		if (commandResult.getSize()>2)
+		if (commandResult.getSize()>=2)
 			result.append("]");
 		if(map.containsKey("output-file")){
 			printToFile(map.get("output-file"), result.toString());
 		}
 		else
 		{
-			System.out.println(result.toString());
+			System.out.print(result.toString());
 		}
 			
 			

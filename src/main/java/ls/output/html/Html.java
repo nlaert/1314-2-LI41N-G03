@@ -46,9 +46,9 @@ public class Html implements HttpContent {
             .withAttr("type", "text")
             .withAttr("name", name);            
     }
-    public static Writable submitInput(String name) {
+    public static Writable input(String name,String type) {
         return new HtmlElem("input")
-            .withAttr("type", "submit")
+            .withAttr("type", type)
             .withAttr("name", name);            
     }
     

@@ -15,10 +15,12 @@ public class UsersView  extends HtmlPage implements ITypeView{
 	public UsersView(UsersResult result, HashMap<String, String> map) {
 		super("Users", 
 				h1(text("All Users")),
+				br(),
 				usersItemsTable(result),
+				br(),
 				h1(text("Post Users")),
 				tablePostUser(),
-				//postUser(),
+				br(),
 				goInit()
 			);
 		
@@ -26,50 +28,32 @@ public class UsersView  extends HtmlPage implements ITypeView{
 	
 
 
-	private static Writable postUser() {
-		
-		return form("POST","/users",
-				label("username","username: "),
-				textInput("username"),
-				br(),
-				label("password","password: "),
-				textInput("password"),
-				br(),
-				label("email","email:    \t "),
-				textInput("email"),
-				br(),
-				label("fullname","fullname: "),
-				textInput("fullname"),
-				br(),
-				submitInput("submit")
-				);
-		
-	}
-private static Writable tablePostUser() {
+
+	private static Writable tablePostUser() {
 		HtmlElem table = new HtmlElem("table");
 		table.withContent(
-				
+
 				form("POST","/users",
-				tr(
-				td(label("username","username: ")),
-				td(textInput("username"))),
-				tr(
-				td(label("password","password: ")),
-				td(textInput("password"))),
-				
-				tr(
-				td(label("email","email:    \t ")),
-				td(textInput("email"))),
-	
-				tr(
-				td(label("fullname","fullname: ")),
-				td(textInput("fullname"))),
-			
-				tr(
-				td(submitInput("submit")))
-				));
+						tr(
+								td(label("username","username: ")),
+								td(textInput("username"))),
+								tr(
+										td(label("password","password: ")),
+										td(input("password","password"))),
+
+										tr(
+												td(label("email","email:    \t ")),
+												td(textInput("email"))),
+
+												tr(
+														td(label("fullname","fullname: ")),
+														td(textInput("fullname"))),
+
+														tr(
+																td(input("submit","submit")))
+						));
 		return table;
-		
+
 	}
 
 

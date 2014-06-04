@@ -63,6 +63,13 @@ public class Servlet extends HttpServlet {
              command[0] = req.getMethod();
              command[1] = reqUri.getPath();
         }
+        if(req.getMethod().equals("POST"))
+        {
+        	 command = new String[2];
+             command[0] = req.getMethod();
+             command[1] = reqUri.getPath();
+        }
+        
         
         Rental gest = ServerHTTP.getRental();
         HashMap <String,String> map = new HashMap<String, String>();

@@ -46,6 +46,12 @@ public class Html implements HttpContent {
             .withAttr("type", "text")
             .withAttr("name", name);            
     }
+    public static Writable submitInput(String name) {
+        return new HtmlElem("input")
+            .withAttr("type", "submit")
+            .withAttr("name", name);            
+    }
+    
     public static Writable ul(Writable... c) {
         return new HtmlElem("ul",c);
     }
@@ -89,5 +95,11 @@ public class Html implements HttpContent {
 				li(a(path,name)));
 		return h3;
 	}
+    
+    public static Writable br()
+    {
+    	HtmlElem br = new HtmlElem("br");
+    	return br;
+    }
     
 }

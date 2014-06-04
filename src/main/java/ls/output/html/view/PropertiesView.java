@@ -14,11 +14,41 @@ public class PropertiesView extends HtmlPage implements ITypeView{
 		super("Properties", 
 				h1(text("All Properties")),
 				propertiesItems(result),
+				h1(text("New Property")),
+				postProperty(),
 				goInit()
 			);
 	}
 	
 	
+	private static Writable postProperty() {
+		HtmlElem table = new HtmlElem("table");
+		table.withContent(
+				
+				form("POST","/properties",
+				tr(
+				td(label("type","type:")),
+				td(textInput("type"))),
+				tr(
+				td(label("price","price:")),
+				td(textInput("price"))),
+				
+				tr(
+				td(label("location","location:")),
+				td(textInput("location"))),
+	
+				tr(
+				td(label("description","description:")),
+				td(textInput("description"))),
+			
+				tr(
+				td(input("submit", "submit")))
+				));
+		return table;
+				
+	}
+
+
 	private static Writable propertiesItems(PropertiesResult result) {
 		int nColunas = 5;
 		int style = 150 * nColunas;

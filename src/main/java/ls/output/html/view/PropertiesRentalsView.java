@@ -13,8 +13,27 @@ public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 	public PropertiesRentalsView(PropertiesRentalsResult result, HashMap<String, String> map) {
 		super("Property Rentals", h1(text("Rentals")),
 				rentalsItems(result),
+				h1(text("Rent this Property")),
+				postRental(),
 				goInit()
 		);
+	}
+	
+	private static Writable postRental() {
+		HtmlElem table = new HtmlElem("table");
+		table.withContent(
+				
+				form("POST","/properties/{pid}/rentals",
+				tr(
+				td(label("year","year:")),
+				td(textInput("year"))),
+				tr(
+				td(label("week","week:")),
+				td(textInput("week"))),			
+				tr(
+				td(input("submit", "submit")))
+				));
+		return table;
 	}
 
 	private static Writable rentalsItems(PropertiesRentalsResult result) {

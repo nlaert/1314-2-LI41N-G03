@@ -17,6 +17,7 @@ public class RentalView extends HtmlPage {
 				rentalsItems(result)
 			);
 	}
+	
 	private static Writable rentalsItems(RentalsResult result) {
 		HtmlElem ul = new HtmlElem("ul");
 		for(Rental rental : result.getArrayList())

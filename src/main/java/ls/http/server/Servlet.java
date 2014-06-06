@@ -13,6 +13,7 @@ import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.exception.AppException;
+import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
@@ -49,7 +50,7 @@ public class Servlet extends HttpServlet {
     }       
    	    
     @SuppressWarnings("unchecked")
-	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException {
+	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException, AuthenticationException {
         URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
         {
@@ -63,22 +64,32 @@ public class Servlet extends HttpServlet {
              command[0] = req.getMethod();
              command[1] = reqUri.getPath();
         }
+        HashMap <String,String> htmlParameters=null;
+        HashMap <String,String> commandParameters = new HashMap<String, String>();
+        
         if(req.getMethod().equals("POST"))
         {
-        	 command = new String[2];
-             command[0] = req.getMethod();
-             command[1] = reqUri.getPath();
+        	htmlParameters = (HashMap<String, String>) FormUrlEncoded.retrieveFrom(req);
+        	commandParameters.putAll(htmlParameters);
+        	command = new String[2];
+            command[0] = req.getMethod();
+            command[1] = reqUri.getPath();
         }
-        
+       
+       
         
         Rental gest = ServerHTTP.getRental();
-        HashMap <String,String> map = new HashMap<String, String>();
+        
         ICommand<IType> cmd = null;
         ICommandResult<IType> result = null;
         try{
-        	cmd = gest.find(command,map);
-			result = cmd.execute(map);
+        	cmd = gest.find(command,commandParameters);
+			result = cmd.execute(commandParameters);
         }
+        catch(AuthenticationException e)
+		{
+			return new HttpResponse(HttpStatusCode.NotAuthorized);
+		}
 		catch(IllegalCommandException e)
 		{
 			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
@@ -86,7 +97,7 @@ public class Servlet extends HttpServlet {
 		HtmlPage htmlPage;
 		View view = gest.getView();
 		try {
-			htmlPage = view.getView(result, map);
+			htmlPage = view.getView(result, commandParameters);
 		} catch (AppException e) {
 			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
 		}

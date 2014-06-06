@@ -43,9 +43,8 @@ public class HttpResponse {
     		resp.addHeader(entry.getKey(), entry.getValue());
     	}
     	
-//    	 sendWithoutBody(resp);
+
         if(_body == null) {
-//        if(_outputHTML == null) {
             sendWithoutBody(resp);
         }else {
             sendWithBufferedBody(resp);
@@ -54,6 +53,8 @@ public class HttpResponse {
         
     private void sendWithoutBody(HttpServletResponse resp) throws IOException {
         resp.setStatus(_status.valueOf());
+        
+        resp.setHeader("WWW-Authenticate: Basic realm", "Rental");
     	 
         
     }

@@ -5,6 +5,7 @@ public enum HttpStatusCode {
     Created(201),
     SeeOther(303),
     BadRequest(400),
+    NotAuthorized(401),
     NotFound(404),
     MethodNotAllowed(405), 
     InternalServerError(500),

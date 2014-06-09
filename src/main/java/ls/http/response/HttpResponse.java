@@ -54,7 +54,7 @@ public class HttpResponse {
     private void sendWithoutBody(HttpServletResponse resp) throws IOException {
         resp.setStatus(_status.valueOf());
         
-        resp.setHeader("WWW-Authenticate: Basic realm", "Rental");
+        resp.setHeader("WWW-Authenticate", "BASIC realm=\"Rental\"");
     	 
         
     }

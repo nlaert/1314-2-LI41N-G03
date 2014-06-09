@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.CommandsUtils;
+import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
@@ -130,12 +131,12 @@ public class PropertiesDB  extends CommandsUtils  {
 		
 		}
 	}
-	public static ArrayList<String> postProperties(HashMap<String, String> map) throws ConnectionDatabaseException {
+	public static ArrayList<String> postProperties(HashMap<String, String> map) throws ConnectionDatabaseException, AuthenticationException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
 			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
-				throw new ConnectionDatabaseException("Invalid login");		
+				throw new AuthenticationException("Invalid login");		
 			}
 			prep = link.getConnetion().prepareStatement("insert into properties values (?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 			prep.setString(1, map.get("type"));

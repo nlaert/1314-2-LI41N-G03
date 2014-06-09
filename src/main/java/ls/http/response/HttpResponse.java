@@ -27,10 +27,7 @@ public class HttpResponse {
         _status = status;
         _body = body;
     }
-//    public HttpResponse(HttpStatusCode status, String outputHTML) {        
-//        _status = status;
-//        _outputHTML = outputHTML;
-//    }
+
    
 
 	public HttpResponse withHeader(String name, String value) {
@@ -52,11 +49,12 @@ public class HttpResponse {
     }
         
     private void sendWithoutBody(HttpServletResponse resp) throws IOException {
-        resp.setStatus(_status.valueOf());
-        
-        resp.setHeader("WWW-Authenticate", "BASIC realm=\"Rental\"");
-    	 
-        
+    	
+    
+        	 resp.setStatus(_status.valueOf());
+        	 if(_status.equals(HttpStatusCode.NotAuthorized))
+        		 resp.addHeader("WWW-Authenticate", "Basic realm=\" Credencials \"");
+         
     }
     
     private void sendWithBufferedBody(HttpServletResponse resp) throws IOException {

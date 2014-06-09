@@ -26,6 +26,7 @@ import ls.commands.result.PropertiesRentalsWithDateResult;
 import ls.commands.result.PropertiesResult;
 import ls.commands.result.PropertyDetailsResult;
 import ls.commands.result.RentalsResult;
+import ls.commands.result.StringResult;
 import ls.commands.result.UserRentalsResult;
 import ls.commands.result.UserUsernameResult;
 import ls.commands.result.UsersResult;
@@ -159,6 +160,7 @@ public class App {
 		gest.addView(PropertiesRentalsResult.class, PropertiesRentalsView.class);
 		gest.addView(PropertiesRentalsWithDateResult.class, PropertiesRentalsWithDateView.class);
 		gest.addView(UserRentalsResult.class, UserRentalsView.class);
+		gest.addView(StringResult.class, StringView.class);
 	}
 }
 

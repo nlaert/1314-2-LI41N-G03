@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.xml.internal.messaging.saaj.util.Base64;
+
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
@@ -56,7 +58,11 @@ public class Servlet extends HttpServlet {
         {
         	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
         }
-        String [] command = null;         
+        String [] command = null;
+        HashMap <String,String> commandParameters = new HashMap<String, String>();
+        
+        
+        
         
         if(req.getMethod().equals("GET"))
         {
@@ -64,13 +70,11 @@ public class Servlet extends HttpServlet {
              command[0] = req.getMethod();
              command[1] = reqUri.getPath();
         }
-        HashMap <String,String> htmlParameters=null;
-        HashMap <String,String> commandParameters = new HashMap<String, String>();
-        
+       
         if(req.getMethod().equals("POST"))
         {
-        	htmlParameters = (HashMap<String, String>) FormUrlEncoded.retrieveFrom(req);
-        	commandParameters.putAll(htmlParameters);
+        	;
+        	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
         	command = new String[2];
             command[0] = req.getMethod();
             command[1] = reqUri.getPath();
@@ -83,6 +87,8 @@ public class Servlet extends HttpServlet {
         ICommand<IType> cmd = null;
         ICommandResult<IType> result = null;
         try{
+        	if(command[0].equals("POST"))
+        		tryRestoreCurrentUser(req, commandParameters);
         	cmd = gest.find(command,commandParameters);
 			result = cmd.execute(commandParameters);
         }
@@ -96,6 +102,7 @@ public class Servlet extends HttpServlet {
 		}
 		HtmlPage htmlPage;
 		View view = gest.getView();
+		
 		try {
 			htmlPage = view.getView(result, commandParameters);
 		} catch (AppException e) {
@@ -107,6 +114,23 @@ public class Servlet extends HttpServlet {
 		return new HttpResponse(HttpStatusCode.Ok, htmlPage);
        
     }
+
+	private void tryRestoreCurrentUser(HttpServletRequest req,
+			HashMap<String, String> commandParameters) throws AuthenticationException {
+		String auth = req.getHeader("Authorization");
+		if(auth == null)
+			throw new AuthenticationException("Invalid Login");
+		
+		auth = auth.split(" ")[1];
+		
+		auth = Base64.base64Decode(auth);
+		String [] parametersAuthentication = auth.split(":");
+		commandParameters.put("auth_username", parametersAuthentication[0]);
+		commandParameters.put("auth_password", parametersAuthentication[1]);
+
+		
+		 
+	}
 
 
 }

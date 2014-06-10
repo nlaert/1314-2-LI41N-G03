@@ -44,6 +44,7 @@ import ls.output.html.view.PropertiesRentalsWithDateView;
 import ls.output.html.view.PropertiesView;
 import ls.output.html.view.PropertyDetailsView;
 import ls.output.html.view.RentalView;
+import ls.output.html.view.StringView;
 import ls.output.html.view.UserRentalsView;
 import ls.output.html.view.UserUsernameView;
 import ls.output.html.view.UsersView;

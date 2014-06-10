@@ -1,17 +1,20 @@
 package ls.output.html.view;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import ls.http.common.Writable;
 import ls.output.html.HtmlElem;
 import ls.output.html.HtmlPage;
 
 public class HomePageView extends HtmlPage implements ITypeView{
 
-	public HomePageView()
+	public HomePageView() throws UnsupportedEncodingException
 	{
 		super("Home Page Rentals",
 				h1(text("Home Page Rentals")),
 				homePageItems(),
-				text("Projecto de Jo√£o e Nick")
+				text(URLDecoder.decode("Projecto de Jo„o e Nick", "UTF-8"))
 				);
 				
 	}

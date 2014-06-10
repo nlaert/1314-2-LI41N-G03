@@ -102,7 +102,8 @@ public class Servlet extends HttpServlet {
 		}
 		HtmlPage htmlPage;
 		View view = gest.getView();
-		
+		if (command[0].equals("POST"))
+			resp.setHeader("location", "/users/" + commandParameters.get("username"));
 		try {
 			htmlPage = view.getView(result, commandParameters);
 		} catch (AppException e) {

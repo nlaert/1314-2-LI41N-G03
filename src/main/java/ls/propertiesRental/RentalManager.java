@@ -10,12 +10,12 @@ import ls.exception.IllegalCommandException;
 import ls.output.html.view.View;
 import ls.utils.Utils;
 
-public class Rental {
+public class RentalManager {
 
 	private View views;
 	private ArrayList<Commands> list;
 //	private HashMap<ICommandResult,ITypeView> views;
-	public Rental() throws IllegalCommandException, ConnectionDatabaseException
+	public RentalManager() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		list = new ArrayList<Commands>();
 		views = new View();

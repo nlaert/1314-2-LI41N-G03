@@ -131,7 +131,7 @@ public class PropertiesDB  extends CommandsUtils  {
 		
 		}
 	}
-	public static ArrayList<String> postProperties(HashMap<String, String> map) throws ConnectionDatabaseException, AuthenticationException {
+	public static ArrayList<Property> postProperties(HashMap<String, String> map) throws ConnectionDatabaseException, AuthenticationException, IllegalCommandException {
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
@@ -151,16 +151,18 @@ public class PropertiesDB  extends CommandsUtils  {
 			rs = prep.getGeneratedKeys();  
 			if(rs.next())
 			{
-				list.add("pid");
-				list.add(Integer.toString(rs.getInt(1))); //duvida
+				
+				map.put("pid",Integer.toString(rs.getInt(1)));
 			}
+			return getPropertiesDetails(map); 
+			
 		
-			return list;	
 		}catch (SQLException e){
 			throw new ConnectionDatabaseException("Connection error",e);
 		}finally{
 			close(rs, prep, link);
 		}
+
 	}
 	
 	public static ArrayList<String> deletePropertiesByPid(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{

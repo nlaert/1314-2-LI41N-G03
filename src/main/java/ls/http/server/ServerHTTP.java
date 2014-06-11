@@ -1,6 +1,6 @@
 package ls.http.server;
 
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -14,16 +14,16 @@ public class ServerHTTP {
      * TCP port where to listen. Standard port for HTTP is 80 but might be
      * already in use
      */
-	private static Rental gest;
+	private static RentalManager gest;
     private int listenPort;
     private Server server;
-    public ServerHTTP(Rental gest, Integer port)
+    public ServerHTTP(RentalManager gest, Integer port)
     {
     	this.listenPort = port;
     	this.gest = gest;
     }
     
-    public static  Rental getRental()
+    public static  RentalManager getRental()
     {
     	return gest;
     }

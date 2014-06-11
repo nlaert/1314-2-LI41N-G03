@@ -16,14 +16,14 @@ import ls.http.response.HttpContent;
 import ls.http.server.ServerHTTP;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.View;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 
 public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
 
-	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, Rental gest) throws FileException, IOException{
+	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, RentalManager gest) throws FileException, IOException{
 		
 		String accept = "";
 		if (map.containsKey("accept"))

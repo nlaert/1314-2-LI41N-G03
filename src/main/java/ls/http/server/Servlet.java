@@ -15,6 +15,8 @@ import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.commands.result.StringResult;
 import ls.db.IType;
+import ls.db.Property;
+import ls.db.Rental;
 import ls.exception.AppException;
 import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
@@ -25,7 +27,8 @@ import ls.output.html.HtmlPage;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
 import ls.output.html.view.View;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
+
 
 @SuppressWarnings("serial")
 public class Servlet extends HttpServlet {
@@ -82,11 +85,12 @@ public class Servlet extends HttpServlet {
        
        
         
-        Rental gest = ServerHTTP.getRental();
+        RentalManager gest = ServerHTTP.getRental();
         
         ICommand<IType> cmd = null;
         ICommandResult<IType> result = null;
         try{
+
         	if(command[0].equals("POST"))
         		tryRestoreCurrentUser(req, commandParameters);
         	cmd = gest.find(command,commandParameters);
@@ -103,7 +107,7 @@ public class Servlet extends HttpServlet {
 		HtmlPage htmlPage;
 		View view = gest.getView();
 		if (command[0].equals("POST")){
-			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command, commandParameters, result));
+			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command,commandParameters,result));
 		}
 		try {
 			htmlPage = view.getView(result, commandParameters);
@@ -122,11 +126,13 @@ public class Servlet extends HttpServlet {
 		if(command[1].equals("/users"))
 			return String.format("/users/%s", commandParameters.get("username"));
 		if(command[1].equals("/properties")){
-			StringBuilder b = new StringBuilder();
-			IType f = result.getArrayList().get(1);
-			b.append(f.toString());
-			String pid = b.toString(); //TODO Isto vai ser alterado no PostProperties
-			return String.format("/properties/%s", pid);
+			Property p = (Property) result.getArrayList().get(0);
+			return String.format("/properties/details/%d", p.pid);
+		}
+		if(command[1].equals("/properties/{pid}/rentals"))
+		{
+			Rental r = (Rental) result.getArrayList().get(0);
+			return String.format("/properties/%d/rentals/%d/%d", r.property.pid, r.year, r.cw);
 		}
 		
 		

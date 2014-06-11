@@ -48,7 +48,7 @@ import ls.output.html.view.StringView;
 import ls.output.html.view.UserRentalsView;
 import ls.output.html.view.UserUsernameView;
 import ls.output.html.view.UsersView;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 import ls.utils.Utils;
 
 public class App {
@@ -56,13 +56,13 @@ public class App {
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
-	public static Rental gest;
+	public static RentalManager gest;
 	private static ServerHTTP server;
 //	private static HashMap<ICommandResult,ITypeView> commandsResults;
 	public static void main(String[] args) throws Exception
 	{	
 		try {
-			gest = new Rental();
+			gest = new RentalManager();
 //			commandsResults = new HashMap<ICommandResult,ITypeView>();
 			addCommands();
 			addViews();

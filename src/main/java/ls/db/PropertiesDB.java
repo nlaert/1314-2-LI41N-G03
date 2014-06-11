@@ -143,7 +143,10 @@ public class PropertiesDB  extends CommandsUtils  {
 			prep.setString(2, map.get("description"));
 			prep.setString(3, map.get("price"));
 			prep.setString(4, map.get("location"));
-			prep.setString(5, map.get("owner"));
+			if (map.containsKey("owner"))
+				prep.setString(5, map.get("owner"));
+			else
+				prep.setString(5, map.get("auth_username"));
 			prep.executeUpdate();
 			rs = prep.getGeneratedKeys();  
 			if(rs.next())

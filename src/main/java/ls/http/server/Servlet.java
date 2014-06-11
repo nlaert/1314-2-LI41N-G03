@@ -13,6 +13,7 @@ import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
+import ls.commands.result.StringResult;
 import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.AuthenticationException;
@@ -101,8 +102,9 @@ public class Servlet extends HttpServlet {
 		}
 		HtmlPage htmlPage;
 		View view = gest.getView();
-		if (command[0].equals("POST"))
-			resp.setHeader("location", "/users/" + commandParameters.get("username"));
+		if (command[0].equals("POST")){
+			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command, commandParameters, result));
+		}
 		try {
 			htmlPage = view.getView(result, commandParameters);
 		} catch (AppException e) {
@@ -114,6 +116,22 @@ public class Servlet extends HttpServlet {
 		return new HttpResponse(HttpStatusCode.Ok, htmlPage);
        
     }
+
+	private String makeLocation(String[] command,
+			HashMap<String, String> commandParameters, ICommandResult<IType> result) {
+		if(command[1].equals("/users"))
+			return String.format("/users/%s", commandParameters.get("username"));
+		if(command[1].equals("/properties")){
+			StringBuilder b = new StringBuilder();
+			IType f = result.getArrayList().get(1);
+			b.append(f.toString());
+			String pid = b.toString(); //TODO Isto vai ser alterado no PostProperties
+			return String.format("/properties/%s", pid);
+		}
+		
+		
+		return null;
+	}
 
 	private void tryRestoreCurrentUser(HttpServletRequest req,
 			HashMap<String, String> commandParameters) throws AuthenticationException {

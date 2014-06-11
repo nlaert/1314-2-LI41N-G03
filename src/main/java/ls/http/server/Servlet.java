@@ -73,7 +73,6 @@ public class Servlet extends HttpServlet {
        
         if(req.getMethod().equals("POST"))
         {
-        	;
         	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
         	command = new String[2];
             command[0] = req.getMethod();

@@ -27,8 +27,8 @@ public class FormUrlEncoded {
         String[] pairs = content.split("&");
         for(String pair : pairs) {
             String[] kvp = pair.split("=");
-            map.put(URLDecoder.decode(kvp[0], charset),
-                    URLDecoder.decode(kvp[1], charset));
+            map.put(URLDecoder.decode(kvp[0], "UTF-8"),
+                    URLDecoder.decode(kvp[1], "UTF-8"));
         }
         return map;
     }

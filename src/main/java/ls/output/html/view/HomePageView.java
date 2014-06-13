@@ -14,7 +14,7 @@ public class HomePageView extends HtmlPage implements ITypeView{
 		super("Home Page Rentals",
 				h1(text("Home Page Rentals")),
 				homePageItems(),
-				text(URLDecoder.decode("Projecto de Jo„o e Nick", "UTF-8"))
+				text(URLDecoder.decode("Projecto de Jo√£o e Nick", "UTF-8"))
 				);
 				
 	}

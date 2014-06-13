@@ -15,7 +15,8 @@ import ls.exception.FileException;
 import ls.http.response.HttpContent;
 import ls.http.server.ServerHTTP;
 import ls.output.html.HtmlPage;
-import ls.output.html.view.View;
+import ls.output.html.view.ViewHtml;
+import ls.output.json.view.JsonView;
 import ls.propertiesRental.RentalManager;
 
 public class Output {
@@ -31,12 +32,12 @@ public class Output {
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			View v;
-			HtmlPage hp;
+			ViewHtml v;
+			Page hp;
 			v = gest.getView();
 			try {
 				hp = v.getView(commandResult, map);
-				sendHTML(hp, map);
+				send(hp, map);
 			} catch (AppException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,7 +46,8 @@ public class Output {
 		}
 		else if (accept.equalsIgnoreCase(json))
 		{
-			JSON.jsonify(commandResult, map);
+			send(new JsonView(commandResult,map),map);
+			//JSON.jsonify(commandResult, map);
 		}
 		else
 		{
@@ -64,7 +66,7 @@ public class Output {
 		return str.toString();
 	}
 	
-	public static void sendHTML(HttpContent content,HashMap <String, String> map) throws IOException, FileException {
+	public static void send(HttpContent content,HashMap <String, String> map) throws IOException, FileException {
     	
 		BufferedWriter writer = null;
         try{
@@ -81,8 +83,6 @@ public class Output {
         finally{
         		writer.flush();
         }
-      
-           
+       
     }
-
 }

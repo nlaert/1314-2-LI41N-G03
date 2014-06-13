@@ -5,11 +5,11 @@ import java.io.Writer;
 
 import ls.http.common.CompositeWritable;
 import ls.http.common.Writable;
-import ls.http.response.HttpContent;
+import ls.output.Page;
 
 
 
-public class Html implements HttpContent {
+public class Html implements Page {
 
     private Writable _content;
     

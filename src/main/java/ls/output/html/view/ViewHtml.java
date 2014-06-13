@@ -8,13 +8,13 @@ import ls.commands.result.ICommandResult;
 import ls.exception.AppException;
 import ls.output.html.HtmlPage;
 
-public class View<E> {
+public class ViewHtml<E> {
 	
 //	private ArrayList<ICommandResult<IType>> results;
 //	private ArrayList<ITypeView> views;
 	private HashMap<Class, Class> resultsViewsMap;
 	
-	public View(){
+	public ViewHtml(){
 		resultsViewsMap = new HashMap<Class, Class>();	
 	}
 	

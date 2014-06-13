@@ -23,10 +23,12 @@ import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
+import ls.output.Page;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
-import ls.output.html.view.View;
+import ls.output.html.view.ViewHtml;
+import ls.output.json.view.JsonView;
 import ls.propertiesRental.RentalManager;
 
 
@@ -104,20 +106,32 @@ public class Servlet extends HttpServlet {
 		{
 			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
-		HtmlPage htmlPage;
-		View view = gest.getView();
-		if (command[0].equals("POST")){
+        
+        String type = req.getHeader("accept");
+        Page page = null;
+        if(type.contains("text/html")){
+        	
+        	ViewHtml view = gest.getView();
+        	try {
+    			page = view.getView(result, commandParameters);
+    		} catch (AppException e) {
+    			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+    		}
+        }
+        else if(type.contains("application/json"))
+        {
+        	page = new JsonView(result, commandParameters);
+        }
+        else 
+        	return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+		
+        
+        if (command[0].equals("POST")){
 			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command,commandParameters,result));
 		}
-		try {
-			htmlPage = view.getView(result, commandParameters);
-		} catch (AppException e) {
-			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
-		}
-		if(htmlPage == null)
-			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
 		
-		return new HttpResponse(HttpStatusCode.Ok, htmlPage);
+		
+		return new HttpResponse(HttpStatusCode.Ok, page);
        
     }
 

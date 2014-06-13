@@ -67,22 +67,23 @@ public class Servlet extends HttpServlet {
         String [] command = null;
         HashMap <String,String> commandParameters = new HashMap<String, String>();
         
+        command = new String[2];
+        command[0] = req.getMethod();
+        command[1] = reqUri.getPath();
         
+//        if(req.getMethod().equals("GET"))
+//        {
+//        	 command = new String[2];
+//             command[0] = req.getMethod();
+//             command[1] = reqUri.getPath();
+//        }
         
-        
-        if(req.getMethod().equals("GET"))
-        {
-        	 command = new String[2];
-             command[0] = req.getMethod();
-             command[1] = reqUri.getPath();
-        }
-       
         if(req.getMethod().equals("POST"))
         {
+        	
+        	if(command[1].contains("rentals"))
+        		getProperty(req.getHeader("referer"), commandParameters);
         	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
-        	command = new String[2];
-            command[0] = req.getMethod();
-            command[1] = reqUri.getPath();
         }
        
        
@@ -134,6 +135,13 @@ public class Servlet extends HttpServlet {
 		return new HttpResponse(HttpStatusCode.Ok, page);
        
     }
+
+	private void getProperty(String parameter,
+			HashMap<String, String> commandParameters) {
+		String[] pid = parameter.split("/");
+		commandParameters.put("pid", pid[4]);
+		
+	}
 
 	private String makeLocation(String[] command,
 			HashMap<String, String> commandParameters, ICommandResult<IType> result) {

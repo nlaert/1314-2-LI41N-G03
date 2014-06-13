@@ -28,8 +28,8 @@ public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 				td(label("year","year:")),
 				td(textInput("year"))),
 				tr(
-				td(label("week","week:")),
-				td(textInput("week"))),			
+				td(label("cw","week:")),
+				td(textInput("cw"))),			
 				tr(
 				td(input("submit", "submit")))
 				));

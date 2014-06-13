@@ -21,4 +21,9 @@ public class StringResult implements ICommandResult<String> {
 	public ArrayList<String> getArrayList() {
 		return result;
 	}
+	
+	@Override
+	public String toString(){
+		return result.toString();
+	}
 }

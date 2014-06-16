@@ -1,17 +1,20 @@
-package ls.output;
+package ls.output.json.view;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
-import ls.exception.FileException;
+import ls.output.json.JsonPage;
+import ls.output.json.JsonText;
 
+public class JsonView extends JsonPage{
 
-public class JSON {
-	public static void jsonify(ICommandResult<IType> commandResult, HashMap<String, String> map) throws FileException{
+	public JsonView(ICommandResult<IType> result, HashMap<String, String> map)  {
+		super(new JsonText(jsonify(result,map)));
+		
+	}
+
+	public static String jsonify(ICommandResult<IType> commandResult, HashMap<String, String> map) {
 		
 		if (commandResult==null || commandResult.getSize()==0)
 			System.out.println("{}"); 
@@ -38,16 +41,8 @@ public class JSON {
 		result.append("}");
 		if (commandResult.getSize()>=2)
 			result.append("]");
-		if(map.containsKey("output-file")){
-			printToFile(map.get("output-file"), result.toString());
-		}
-		else
-		{
-			System.out.print(result.toString());
-		}
+		return result.toString();
 	}
-
-	
 	public static boolean isNumeric(String str)
 	{
 	    for (char c : str.toCharArray())
@@ -55,16 +50,5 @@ public class JSON {
 	        if (!Character.isDigit(c)) return false;
 	    }
 	    return true;
-	}
-	
-	private static void printToFile(String filename, String result) throws FileException {
-		BufferedWriter bw;
-		try {
-			bw = new BufferedWriter(new FileWriter(filename));
-			bw.write(result);
-			bw.close();
-		} catch (IOException e) {
-			throw new FileException("Could not write to the file", e);
-		}	
 	}
 }

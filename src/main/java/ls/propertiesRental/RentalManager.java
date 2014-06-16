@@ -8,18 +8,17 @@ import ls.commands.ICommand;
 import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
-import ls.output.html.view.ITypeView;
-import ls.output.html.view.View;
+import ls.output.html.view.ViewHtml;
 import ls.utils.Utils;
 
 public class RentalManager {
 
-	private View<IType> views;
+	private ViewHtml views;
 	private ArrayList<Commands> list;
 	public RentalManager() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		list = new ArrayList<Commands>();
-		views = new View<IType>();
+		views = new ViewHtml();
 	}
 
 	public void add(String command, ICommand e) 
@@ -32,7 +31,7 @@ public class RentalManager {
 	{
 		views.add(commandResult, typeView);
 	}
-	public View<IType> getView()
+	public ViewHtml getView()
 	{
 		return views;
 	}

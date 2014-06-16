@@ -24,10 +24,11 @@ import ls.commands.users.GetUserUsername;
 import ls.commands.users.GetUsers;
 import ls.commands.users.PostUsers;
 import ls.db.IType;
+import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.CRUD;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -47,11 +48,11 @@ public class TestCommands {
 	
 	HashMap<String, String> map;
 	
-	static Rental gest;
+	static RentalManager gest;
 	@BeforeClass
 	public static void setUp() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		gest = new Rental();
+		gest = new RentalManager();
 		gest.add("GET /users", new GetUsers());
 		gest.add("GET /users/{username}", new GetUserUsername());
 		gest.add("GET /properties", new GetProperties());
@@ -91,7 +92,7 @@ public class TestCommands {
 		String [] users = {"GET", "/users"};
 		String [] properties = {"GET", "/properties"};
 
-		ICommand ex1 = gest.find(users, map);
+		ICommand<?> ex1 = gest.find(users, map);
 		assertTrue(ex1 instanceof GetUsers);
 		ex1 = gest.find(properties, map);
 		assertTrue(ex1 instanceof GetProperties);
@@ -100,7 +101,7 @@ public class TestCommands {
 	
 	//get de um especifico user
 	@Test
-	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException
+	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException, AuthenticationException
 	{
 		String [] user = {"GET", "/users/testeJUNIT1"};
 		ICommand<IType> ex1 = gest.find(user, map);
@@ -110,21 +111,20 @@ public class TestCommands {
 	
 	
 	@Test
-	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException
+	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
 	{
 		String [] properties = {"GET", "/properties/location/Peniche|Peniche"};
-		ICommand ex1 = gest.find(properties, map);
-		assertTrue(ex1 instanceof GetPropertiesLocation);
+		ICommand<IType> ex1 = gest.find(properties, map);
 		ICommandResult<IType> list =ex1.execute(map); 
 		assertTrue(list.getSize()>=1);
 	}	
 	
 	@Test
-	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException
+	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
 	{
 		String username = "testeJUNIT3";
 		String [] command = {"POST", "/users", "auth_username=superadmin&auth_password=ls1213&username=" + username + "&password=testeJUNIT&email=testeJUNIT10@teste.pt&fullname=teste+JUNIT"};
-		ICommand ex1 = gest.find(command, map);
+		ICommand<?> ex1 = gest.find(command, map);
 		ex1.execute(map);
 		String cmd = "Select username from users where username = ?";
 		ArrayList<String> list = CRUD.executeQuery(cmd, new String [] {username});
@@ -133,97 +133,92 @@ public class TestCommands {
 		CRUD.executeNonQuery("delete from users where username = ?", new String [] {username});
 	}
 	
-	@Test(expected = ConnectionDatabaseException.class)
-	public void Post_Users_Without_Authentication_Test() throws IllegalCommandException, ConnectionDatabaseException
+	@Test(expected = AuthenticationException.class)
+	public void Post_Users_Without_Authentication_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
 	{
 		String [] command = {"POST", "/users", "username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT"};
-		ICommand ex1 = gest.find(command, map);
+		ICommand<?> ex1 = gest.find(command, map);
 		if(ex1!=null)
 			ex1.execute(map);
 	}
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
-		ICommand ex1 = gest.find(null, null);
+		ICommand<?> ex1 = gest.find(null, null);
 		if(ex1!= null)
 			ex1.execute(null);	
 	}
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] get = {"GET", ""};
-		ICommand ex1 = gest.find(get, map);
+		ICommand<?> ex1 = gest.find(get, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] get = {"GET", "/"};
-		ICommand ex1 = gest.find(get, map);
+		ICommand<?> ex1 = gest.find(get, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] post = {"POST", ""};
-		ICommand ex1 = gest.find(post, map);
+		ICommand<?> ex1 = gest.find(post, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] post = {"POST", "/"};
-		ICommand ex1 = gest.find(post, map);
+		ICommand<?> ex1 = gest.find(post, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] post = {"POST", "/users", ""};
-		ICommand ex1 = gest.find(post, map);
+		ICommand<IType> ex1 = gest.find(post, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException 
+	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
 	{
 		String [] get = {"GET", "/users", ""};
-		ICommand ex1 = gest.find(get, map);
+		ICommand<IType> ex1 = gest.find(get, map);
 		if(ex1!= null)
 			ex1.execute(null);
 	}
 	
 	@Test
-	public void Delete_Rental_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException
+	public void Delete_Rental_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
 	{
-		
-		
-
 //		Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
 		CRUD.executeNonQuery(insertRentalOnClient2);
 //		Eliminar aluguer do cliente 2
 		String [] delete = {"DELETE", "/properties/"+pid+"/rentals/"+2100+"/"+12,"auth_username=testeJUNIT2&auth_password=junit2"};
 		ICommandResult<IType> list = null;
-		ICommand ex1 = gest.find(delete, map);
+		ICommand<IType> ex1 = gest.find(delete, map);
 		if(ex1!= null){
 			list=ex1.execute(map);
 		}
 		assertEquals(list.getArrayList().get(1),"1");
-
-			
-		
 	}
+	
 	@Test(expected= IllegalCommandException.class)
-	public void Delete_Rental_confirmed_Test() throws ConnectionDatabaseException, IllegalCommandException
+	public void Delete_Rental_confirmed_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
 	{
 
 //		Inserir um rental do cliente 2 
@@ -231,7 +226,7 @@ public class TestCommands {
 		CRUD.executeNonQuery(insertRentalOnClient2);
 //		Eliminar aluguer do cliente 2
 		String [] delete = {"DELETE", "/properties/"+pid+"/rentals/"+2100+"/"+12,"auth_username=testeJUNIT2&auth_password=junit2"};
-		ICommand ex1 = gest.find(delete, map);
+		ICommand<IType> ex1 = gest.find(delete, map);
 		if(ex1!= null){
 			ex1.execute(map);
 		}
@@ -239,33 +234,26 @@ public class TestCommands {
 		
 	}
 	@Test
-	public void Patch_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException
+	public void Patch_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
 	{
-
 		//	Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
 		CRUD.executeNonQuery(insertRentalOnClient2);
 		//	Eliminar aluguer do cliente 2
 		String [] patch = {"PATCH", "/properties/"+pid+"/rentals/2100/12","auth_username=testeJUNIT1&auth_password=junit1"};
 		ICommandResult<IType> list = null;
-		ICommand ex1 = gest.find(patch, map);
+		ICommand<IType> ex1 = gest.find(patch, map);
 		if(ex1!= null){
 			list=ex1.execute(map);
 		}
 		assertEquals(list.getArrayList().get(1),"1");
-
-
 	}
-
-	
 	
 	@After
 	public void clean() throws ConnectionDatabaseException
 	{
-		
 		String deleteRentalClient2 = "delete from rental where [renter] = 'testeJUNIT2'";
 		CRUD.executeNonQuery(deleteRentalClient2);
-		
 	}
 	
 	@AfterClass

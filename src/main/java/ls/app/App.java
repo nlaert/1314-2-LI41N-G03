@@ -58,12 +58,10 @@ public class App {
 
 	public static RentalManager gest;
 	private static ServerHTTP server;
-//	private static HashMap<ICommandResult,ITypeView> commandsResults;
 	public static void main(String[] args) throws Exception
 	{	
 		try {
 			gest = new RentalManager();
-//			commandsResults = new HashMap<ICommandResult,ITypeView>();
 			addCommands();
 			addViews();
 			
@@ -108,11 +106,10 @@ public class App {
 		if (server != null)
 			server.stopServer();
 		System.exit(0);
-		
 	}
 	
 
-	private static void executeCommand(String [] command) throws Exception{//TODO move to Rental
+	private static void executeCommand(String [] command) throws Exception{
 		if (command[0].equals("OPTION"))
 			gest.printCommands();
 		else if(command[0].contains("LISTEN"))

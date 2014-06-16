@@ -15,7 +15,7 @@ import ls.exception.AppException;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.UsersView;
 import ls.output.html.view.View;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ import org.junit.Test;
 
 public class HTMLTest {
 	
-	static Rental gest;
+	static RentalManager gest;
 	
 	
 	public static void addViews()
@@ -35,7 +35,7 @@ public class HTMLTest {
 	@Test
 	public void multiple_Rows_Test() throws AppException, IOException{
 		String resultOutput="";
-		gest = new Rental();
+		gest = new RentalManager();
 		addViews();
 
 		User u1 = new User("nick", "pass", "a35466@alunos.isel.pt", "Laert");
@@ -58,7 +58,7 @@ public class HTMLTest {
 
 		
 		String result = "<html><head><Title>Users</Title></head><body><h1>All Users</h1><table style=\"width:600px\" border=\"1\"><tr><th>Username<th>email<th>Fullname</th></th></th></tr><tr><td><a href='/users/nick'>nick</a><td>a35466@alunos.isel.pt<td>Laert</td></td></td></tr><tr><td><a href='/users/joao'>joao</a><td>a35392@alunos.isel.pt<td>Joao Rodrigues</td></td></td></tr></table style=\"width:600px\" border=\"1\"><h3><li><a href='/'>Menu</a></li></h3></body></html>";
-		assertEquals(resultOutput, result);
+		assertEquals(result, resultOutput);
 		
 		
 	}

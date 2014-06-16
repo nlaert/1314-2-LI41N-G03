@@ -22,7 +22,6 @@ public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
-
 	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, RentalManager gest) throws FileException, IOException{
 		
 		String accept = "";
@@ -31,11 +30,11 @@ public class Output {
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			View v;
+			View<IType> view;
 			HtmlPage hp;
-			v = gest.getView();
+			view = gest.getView();
 			try {
-				hp = v.getView(commandResult, map);
+				hp = view.getView(commandResult, map);
 				sendHTML(hp, map);
 			} catch (AppException e) {
 				// TODO Auto-generated catch block
@@ -52,10 +51,6 @@ public class Output {
 			System.out.println(printArrayList(commandResult));
 		}
 	}
-	
-	
-
-	
 
 	public static <E> String printArrayList(ICommandResult<IType> commandResult){
 		StringBuilder str = new StringBuilder();
@@ -65,7 +60,6 @@ public class Output {
 	}
 	
 	public static void sendHTML(HttpContent content,HashMap <String, String> map) throws IOException, FileException {
-    	
 		BufferedWriter writer = null;
         try{
         	if(map.containsKey("output-file"))
@@ -80,9 +74,7 @@ public class Output {
         }
         finally{
         		writer.flush();
-        }
-      
-           
+        }   
     }
 
 }

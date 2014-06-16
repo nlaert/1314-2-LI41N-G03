@@ -2,7 +2,6 @@ package ls.output.html.view;
 
 import java.util.HashMap;
 
-import ls.commands.result.PropertiesResult;
 import ls.commands.result.PropertyDetailsResult;
 import ls.db.Property;
 import ls.http.common.Writable;
@@ -41,24 +40,6 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 				li(a(ofPidRental(result.getArrayList().get(0)),"Rentals")));
 		return h3;
 	}
-
-
-	private static Writable propertiesItems(PropertiesResult result) {
-		int nColunas = 5;
-		int style = 150 * nColunas;
-		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
-		table.withContent(tr(th(text("pid"),th(text("type"),th(text("price"),th(text("location"),th(text("description"),th(text("Owner")))))))));
-		for(Property property : result.getArrayList())
-		{
-			table.withContent(tr(
-					td(text(Integer.toString(property.pid)),td(text(property.type),
-							td(text(Integer.toString(property.price)),td(text(property.location),
-									td(text(property.description),
-											td(a(ofOwner(property),property.owner.username)))))))));
-		}
-		return table;
-	
-	}
 	
 	private static String ofOwner(Property property)
 	{
@@ -69,7 +50,4 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 	{
 		return String.format("/properties/%s/rentals", property.pid);
 	}
-	
-	
-
 }

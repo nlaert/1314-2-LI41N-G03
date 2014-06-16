@@ -4,31 +4,22 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.commands.result.UsersResult;
-import ls.commands.users.GetUserUsername;
-import ls.commands.users.GetUsers;
 import ls.db.IType;
 import ls.db.User;
-import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
-import ls.exception.IllegalCommandException;
-import ls.jdbc.CRUD;
-import ls.propertiesRental.Rental;
+import ls.propertiesRental.RentalManager;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class JSONTest {
-	Rental gest;
+	RentalManager gest;
 	HashMap<String, String> map;
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 	

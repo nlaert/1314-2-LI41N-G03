@@ -9,8 +9,6 @@ import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.exception.FileException;
 
-//[{"username":"nick", "password":"ls1314", "email":"a35466@alunos.isel.pt", "fullname":"Nick Laert"},
-//{"username":"joao", "password":"ls1314", "email":"a35392@alunos.isel.pt", "fullname":"Joao Rodrigues"}]
 
 public class JSON {
 	public static void jsonify(ICommandResult<IType> commandResult, HashMap<String, String> map) throws FileException{
@@ -47,9 +45,6 @@ public class JSON {
 		{
 			System.out.print(result.toString());
 		}
-			
-			
-		
 	}
 
 	

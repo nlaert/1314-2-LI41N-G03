@@ -5,15 +5,8 @@ import ls.propertiesRental.RentalManager;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 
-
-
-
 public class ServerHTTP {
 
-    /*
-     * TCP port where to listen. Standard port for HTTP is 80 but might be
-     * already in use
-     */
 	private static RentalManager gest;
     private int listenPort;
     private Server server;
@@ -23,14 +16,11 @@ public class ServerHTTP {
     	this.gest = gest;
     }
     
-    public static  RentalManager getRental()
+    public static RentalManager getRental()
     {
     	return gest;
     }
-//    public static HashMap<ICommandResult,ITypeView> getCommandsResults()
-//    {
-//    	return commandsResults;
-//    }
+
     public static void trace(String msg) {
         System.out.println(msg);
     }
@@ -52,6 +42,6 @@ public class ServerHTTP {
     		System.out.println("Server is stopped, bye");
     	}
     	else
-    		System.out.println("Server is not running");//TODO create ServerException
+    		System.out.println("Server is not running");
     }
 }

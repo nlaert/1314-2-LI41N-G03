@@ -10,8 +10,6 @@ import ls.output.html.HtmlPage;
 
 public class View<E> {
 	
-//	private ArrayList<ICommandResult<IType>> results;
-//	private ArrayList<ITypeView> views;
 	private HashMap<Class, Class> resultsViewsMap;
 	
 	public View(){
@@ -25,7 +23,7 @@ public class View<E> {
 	public HtmlPage getView(ICommandResult<E> result, HashMap<String,String> map) throws AppException
 	{
 		if (resultsViewsMap.containsKey(result.getClass())){
-			Class h = resultsViewsMap.get(result.getClass());
+			Class<?> h = resultsViewsMap.get(result.getClass());
 			try {
 				Constructor<?> k = h.getConstructor(result.getClass(), HashMap.class);
 				return (HtmlPage) k.newInstance(result, map);

@@ -5,21 +5,21 @@ import java.util.HashMap;
 
 import ls.commands.Commands;
 import ls.commands.ICommand;
+import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
+import ls.output.html.view.ITypeView;
 import ls.output.html.view.View;
 import ls.utils.Utils;
 
 public class RentalManager {
 
-	private View views;
+	private View<IType> views;
 	private ArrayList<Commands> list;
-//	private HashMap<ICommandResult,ITypeView> views;
 	public RentalManager() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		list = new ArrayList<Commands>();
-		views = new View();
-		
+		views = new View<IType>();
 	}
 
 	public void add(String command, ICommand e) 
@@ -32,12 +32,12 @@ public class RentalManager {
 	{
 		views.add(commandResult, typeView);
 	}
-	public View getView()
+	public View<IType> getView()
 	{
 		return views;
 	}
 
-	public ICommand find(String[] command, HashMap<String, String> map) throws IllegalCommandException
+	public ICommand<IType> find(String[] command, HashMap<String, String> map) throws IllegalCommandException
 	{
 		if(command == null || command.length<2)
 			throw new IllegalCommandException("invalid command");
@@ -45,11 +45,10 @@ public class RentalManager {
 		String [] commandPath = command[1].split("/");  //path recebida
 		for(int i = 0; i< list.size(); i++)
 		{
-			
 			if(commandPath.length == list.get(i).size) // avaliar o tamanho
 			{
 				String aux = list.get(i).path.substring(0,list.get(i).path.indexOf(" "));
-				if(aux.equals(command[0])) // avaliar se é GET ou POST
+				if(aux.equals(command[0])) // avaliar tipo de comando
 				{
 					String[] listPath = list.get(i).path.split(" ");
 					if(comparePath(listPath[1].split("/"),commandPath,map))
@@ -62,14 +61,12 @@ public class RentalManager {
 			}
 		}
 		throw new IllegalCommandException("Invalid command");
-
 	}
 
 	public boolean comparePath(String [] listPath, String [] commandPath, HashMap<String,String> map) throws IllegalCommandException
 	{
 		if(listPath.length != commandPath.length)
-			return false;
-		
+			return false;	
 		for(int i = 0; i<listPath.length; i++)
 		{
 			if(!listPath[i].equals(commandPath[i]))
@@ -92,9 +89,6 @@ public class RentalManager {
 	public void printCommands() {
 		for (int i = 0; i < list.size(); i++){
 			System.out.println(list.get(i).path);
-		}
-		
-	}
-	
-	
+		}	
+	}	
 }

@@ -9,11 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.xml.internal.messaging.saaj.util.Base64;
-
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
-import ls.commands.result.StringResult;
 import ls.db.IType;
 import ls.db.Property;
 import ls.db.Rental;
@@ -29,8 +26,9 @@ import ls.output.html.view.HomePageView;
 import ls.output.html.view.View;
 import ls.propertiesRental.RentalManager;
 
+import com.sun.xml.internal.messaging.saaj.util.Base64;
 
-@SuppressWarnings("serial")
+
 public class Servlet extends HttpServlet {
     
     @Override
@@ -55,7 +53,6 @@ public class Servlet extends HttpServlet {
         }
     }       
    	    
-    @SuppressWarnings("unchecked")
 	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException, AuthenticationException {
         URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
@@ -69,29 +66,18 @@ public class Servlet extends HttpServlet {
         command[0] = req.getMethod();
         command[1] = reqUri.getPath();
         
-//        if(req.getMethod().equals("GET"))
-//        {
-//        	 command = new String[2];
-//             command[0] = req.getMethod();
-//             command[1] = reqUri.getPath();
-//        }
-        
         if(req.getMethod().equals("POST"))
         {
-        	
         	if(command[1].contains("rentals"))
         		getProperty(req.getHeader("referer"), commandParameters);
         	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
         }
        
-       
-        
         RentalManager gest = ServerHTTP.getRental();
         
         ICommand<IType> cmd = null;
         ICommandResult<IType> result = null;
         try{
-
         	if(command[0].equals("POST"))
         		tryRestoreCurrentUser(req, commandParameters);
         	cmd = gest.find(command,commandParameters);
@@ -106,9 +92,9 @@ public class Servlet extends HttpServlet {
 			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
 		HtmlPage htmlPage;
-		View view = gest.getView();
+		View<IType> view = gest.getView();
 		if (command[0].equals("POST")){
-			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command,commandParameters,result));
+			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", seeOtherLocation(command,commandParameters,result));
 		}
 		try {
 			htmlPage = view.getView(result, commandParameters);
@@ -126,10 +112,9 @@ public class Servlet extends HttpServlet {
 			HashMap<String, String> commandParameters) {
 		String[] pid = parameter.split("/");
 		commandParameters.put("pid", pid[4]);
-		
 	}
 
-	private String makeLocation(String[] command,
+	private String seeOtherLocation(String[] command,
 			HashMap<String, String> commandParameters, ICommandResult<IType> result) {
 		if(command[1].equals("/users"))
 			return String.format("/users/%s", commandParameters.get("username"));
@@ -142,9 +127,7 @@ public class Servlet extends HttpServlet {
 			Rental r = (Rental) result.getArrayList().get(0);
 			return String.format("/properties/%d/rentals/%d/%d", r.property.pid, r.year, r.cw);
 		}
-		
-		
-		return null;
+		return "";
 	}
 
 	private void tryRestoreCurrentUser(HttpServletRequest req,
@@ -159,11 +142,6 @@ public class Servlet extends HttpServlet {
 		String [] parametersAuthentication = auth.split(":");
 		commandParameters.put("auth_username", parametersAuthentication[0]);
 		commandParameters.put("auth_password", parametersAuthentication[1]);
-
-		
-		 
 	}
-
-
 }
 

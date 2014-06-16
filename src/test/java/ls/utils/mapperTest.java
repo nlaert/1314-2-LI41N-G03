@@ -13,8 +13,9 @@ public class mapperTest {
 	
 	@Test(expected = IllegalCommandException.class)
 	public void mapper_invalid_string_Test() throws IllegalCommandException{
-		assertEquals(null, Utils.mapper("", map));
-		assertEquals(null, Utils.mapper(null, null));
+		map = new HashMap<String, String>();
+		assertEquals(map, Utils.mapper("", map));
+		assertEquals(map, Utils.mapper(null, map));
 	}
 	
 	@Test

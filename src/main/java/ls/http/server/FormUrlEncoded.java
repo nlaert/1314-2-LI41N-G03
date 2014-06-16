@@ -22,7 +22,6 @@ public class FormUrlEncoded {
         Map<String, String> map = new HashMap<String,String>();
         byte[] bytes = new byte[req.getContentLength()];
         req.getInputStream().read(bytes);
-        String charset = req.getCharacterEncoding();
         String content = new String(bytes);
         String[] pairs = content.split("&");
         for(String pair : pairs) {

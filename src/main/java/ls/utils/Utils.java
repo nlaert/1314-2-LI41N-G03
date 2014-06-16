@@ -1,27 +1,12 @@
 package ls.utils;
 
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.exception.IllegalCommandException;
-import ls.jdbc.DataBaseManager;
 
 public class Utils {
-	
-	/**
-	 * 
-	 * @param command
-	 * @return String[] with 2 positions, the first and second part of String command divided by "/"
-	 * @throws IllegalCommandException 
-	 */
-	Statement stmt;
-	ResultSet rs;
-	DataBaseManager link;
-	
-
 	
 	public static String removeParameterList(String command) throws IllegalCommandException 
 	{
@@ -46,8 +31,6 @@ public class Utils {
 		return command.substring(lastIndex+1);
 	}
 	
-	
-	
 	public static String locationTransformer(String command) throws IllegalCommandException{
 		if (command == null || command == "" || command.contains(", "))
 			throw new IllegalCommandException("invalid command");
@@ -60,6 +43,8 @@ public class Utils {
 			throw new IllegalCommandException("No parameter list found");
 		if (parameters.equals(""))
 			throw new IllegalCommandException("No parameter list found");
+		if (map == null)
+			throw new IllegalCommandException("Invalid HashMap");
 		if (parameters.contains("location"))
 			parameters = locationTransformer(parameters);
 		String [] aux = parameters.split("&");
@@ -90,7 +75,4 @@ public class Utils {
 		}
 		return  list.toArray(new String[] {});
 	}
-	
-
-	
 }

@@ -29,7 +29,7 @@ public class PropertyDetailsView extends HtmlPage implements ITypeView{
 					li(text("price: " + property.price), 
 					li(text("location: " + property.location),
 					li(text("description: " + property.description), 
-					li(a(ofOwner(property),property.owner.username))))))));
+					li(text("owner: "), a(ofOwner(property),property.owner.username))))))));
 		}
 		return ul;
 	}

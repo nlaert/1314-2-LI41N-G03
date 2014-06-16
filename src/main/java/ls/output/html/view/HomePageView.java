@@ -11,11 +11,16 @@ public class HomePageView extends HtmlPage implements ITypeView{
 
 	public HomePageView() throws UnsupportedEncodingException
 	{
-		super("Home Page Rentals",
-				h1(text("Home Page Rentals")),
+		super("Rental Manager",
+				h1(text("Rental Manager")),
 				homePageItems(),
-				text(URLDecoder.decode("Projecto de João e Nick", "UTF-8"))
-				);
+				text(URLDecoder.decode("Projecto para a UC Laboratório de Software do curso LEIC - ISEL 2013/2014 SV", "UTF-8")),
+				br(),
+				text("Realizado por:"),
+				br(),
+				text("35466 - Nick Laert"),
+				br(),
+				text(URLDecoder.decode("35392 - João Rodrigues", "UTF-8")));
 				
 	}
 	

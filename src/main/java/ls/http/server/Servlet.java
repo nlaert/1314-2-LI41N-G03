@@ -98,7 +98,7 @@ public class Servlet extends HttpServlet {
         Page page = null;
         if(type.contains("text/html")){
         	
-        	ViewHtml view = gest.getView();
+        	ViewHtml<IType> view = gest.getView();
         	try {
     			page = view.getView(result, commandParameters);
     		} catch (AppException e) {
@@ -114,7 +114,7 @@ public class Servlet extends HttpServlet {
 		
         
         if (command[0].equals("POST")){
-			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", makeLocation(command,commandParameters,result));
+			return new HttpResponse(HttpStatusCode.SeeOther).withHeader("location", seeOtherLocation(command,commandParameters,result));
 		}
 		
 		

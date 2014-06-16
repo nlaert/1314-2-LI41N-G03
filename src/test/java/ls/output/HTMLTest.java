@@ -15,6 +15,7 @@ import ls.exception.AppException;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.UsersView;
 import ls.output.html.view.View;
+import ls.output.html.view.ViewHtml;
 import ls.propertiesRental.RentalManager;
 
 import org.junit.Test;
@@ -47,12 +48,12 @@ public class HTMLTest {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("output-file", "HTMLTest");
 		int style = 150 * 4;
-		View v;
+		ViewHtml v;
 		HtmlPage hp;
 		v = gest.getView();
 		
 			hp = v.getView(commandResult, map);
-			Output.sendHTML(hp, map);
+			Output.send(hp, map);
 			resultOutput = OutputReadBuffer(map);
 			
 

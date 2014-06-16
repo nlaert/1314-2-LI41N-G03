@@ -38,7 +38,7 @@ public class PropertiesRentalsView extends HtmlPage implements ITypeView{
 
 	private static Writable rentalsItems(PropertiesRentalsResult result) {
 		if(result.getSize() == 0)
-			return text("");
+			return text("No rentals found");
 		int nColunas = 7;
 		int style = 150 * nColunas;
 		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");

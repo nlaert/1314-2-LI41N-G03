@@ -31,12 +31,12 @@ public class Output {
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			ViewHtml v;
-			Page hp;
+			ViewHtml view;
+			Page page;
 			view = gest.getView();
 			try {
-				hp = view.getView(commandResult, map);
-				send(hp, map);
+				page = view.getView(commandResult, map);
+				send(page, map);
 			} catch (AppException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

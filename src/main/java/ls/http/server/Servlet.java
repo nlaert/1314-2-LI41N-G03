@@ -21,37 +21,45 @@ import ls.exception.IllegalCommandException;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
 import ls.output.Page;
-import ls.output.html.HtmlPage;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
 import ls.output.html.view.ViewHtml;
 import ls.output.json.view.JsonView;
-import ls.propertiesRental.RentalManager;
+import ls.rentalManager.RentalManager;
 
 import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 
 public class Servlet extends HttpServlet {
     
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException{
     	doMethod(req, resp);
     }
     
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-    	doMethod(req, resp);
+    	
+		doMethod(req, resp);
+	
+
     }
     
     private void doMethod(HttpServletRequest req, HttpServletResponse resp) throws IOException{
     	try {
         	System.out.println(
-        			String.format("Received %s request for %s", req.getMethod(), req.getRequestURI()));
+        			String.format("SERVER: Received %s request for %s", req.getMethod(), req.getRequestURI()));
             resolveHttpHandler(req, resp).send(resp);
-        }catch(Throwable th) {
+        }
+    	catch(Throwable th) {
             // No exception should go unnoticed!
             new HttpResponse(HttpStatusCode.InternalServerError).send(resp);
-            ServerHTTP.trace(th.getMessage());
+            //ServerHTTP.trace(th.getMessage());
         }
     }       
    	    

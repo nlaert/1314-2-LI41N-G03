@@ -11,16 +11,23 @@ public class HomePageView extends HtmlPage implements ITypeView{
 
 	public HomePageView() throws UnsupportedEncodingException
 	{
-		super("Rental Manager",
-				h1(text("Rental Manager")),
+		super("NJ Rentals",
+				h1(text("NJ Rentals, Lda")),
 				homePageItems(),
-				text(URLDecoder.decode("Projecto para a UC Laboratório de Software do curso LEIC - ISEL 2013/2014 SV", "UTF-8")),
+				h3(text("Realizado por:")),
+				a("http://www.linkedin.com/pub/nick-laert/51/29a/547","35466 - Nick Laert"),
 				br(),
-				text("Realizado por:"),
+				a("http://www.linkedin.com/pub/joao-rodrigues/71/1a7/869",URLDecoder.decode("35392 - João Rodrigues", "UTF-8")),
 				br(),
-				text("35466 - Nick Laert"),
+				h3(text("Orientadores:")),
+				a("https://www.linkedin.com/in/cguedes/pt","Eng. Carlos Guedes"),
 				br(),
-				text(URLDecoder.decode("35392 - João Rodrigues", "UTF-8")));
+				a("https://github.com/fbfreitas","Eng. Filipe Freitas"),
+				br(),
+				br(),
+				b(text(URLDecoder.decode("Projecto para a UC Laboratório de Software do curso LEIC - ISEL 2013/2014 SV", "UTF-8")))
+				
+				);
 				
 	}
 	

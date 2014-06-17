@@ -1,15 +1,16 @@
 package ls.commands;
 
 
-public class Commands<E> {
+
+public class Commands<IType> {
 
 	public String path;
 	public int size;
-	public ICommand<E> command;
+	public ICommand<IType> command;
 
 	
 
-	public  Commands(String path, int size, ICommand<E> command)
+	public  Commands(String path, int size, ICommand<IType> command)
 	{
 		this.path = path;
 		this.size = size;

@@ -1,37 +1,41 @@
-package ls.propertiesRental;
+package ls.rentalManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import ls.commands.Commands;
 import ls.commands.ICommand;
+import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
+import ls.http.server.ServerHTTP;
+import ls.output.Output;
 import ls.output.html.view.ViewHtml;
 import ls.utils.Utils;
 
 public class RentalManager {
 
-	private ViewHtml views;
-	private ArrayList<Commands> list;
+	private ViewHtml<IType> views;
+	public ServerHTTP server;
+	private ArrayList<Commands<IType>> list;
+	private boolean activeServer;
 	public RentalManager() throws IllegalCommandException, ConnectionDatabaseException
 	{
-		list = new ArrayList<Commands>();
-		views = new ViewHtml();
+		list = new ArrayList<Commands<IType>>();
+		views = new ViewHtml<IType>();
 	}
-
-	public void add(String command, ICommand e) 
+	public void add(String command, ICommand<?> e) 
 	{
 		//necessario verificar se ja existe ?
 		list.add(new Commands(command, command.split("/").length, e));
 	}
 	
-	public void addView(Class commandResult, Class typeView) 
+	public void addView(Class<?> commandResult, Class<?> typeView) 
 	{
 		views.add(commandResult, typeView);
 	}
-	public ViewHtml getView()
+	public ViewHtml<IType> getView()
 	{
 		return views;
 	}
@@ -89,5 +93,43 @@ public class RentalManager {
 		for (int i = 0; i < list.size(); i++){
 			System.out.println(list.get(i).path);
 		}	
-	}	
+	}
+	public  void executeCommand(String [] command) throws Exception{
+		if (command[0].equals("OPTION"))
+			printCommands();
+		else if(command[0].contains("LISTEN"))
+			startServer(command);
+		else if(command[0].contains("EXIT")){
+			if(activeServer)
+				server.stopServer();
+			System.exit(0);
+		}
+		else{
+			HashMap <String,String> map = new HashMap<String, String>(); 
+	
+			ICommand<IType> cmd = find(command,map);
+			ICommandResult<IType> result = cmd.execute(map);
+			Output.Print(result, map, this);
+		}
+	}
+	
+	private  void startServer(String [] command) throws Exception
+	{
+		if(!activeServer){
+			HashMap <String,String> map = new HashMap<String, String>(); 
+			map = Utils.mapper(command[2], map);
+			Integer port;
+			try{
+				port = Integer.parseInt(map.get("port"));
+			}
+			catch(NumberFormatException e){
+				throw new IllegalCommandException("invalid Port number");
+			}
+			server = new ServerHTTP(this, port);
+			server.initServer();
+			activeServer = true;
+		}
+		else
+			System.out.println("There is already an instance of Http server");
+	}
 }

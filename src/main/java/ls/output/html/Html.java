@@ -86,7 +86,7 @@ public class Html implements Page {
     protected static Writable goInit() {
 		HtmlElem h3 = new HtmlElem("h3");
 		h3.withContent(
-				li(a("/","Menu")));
+				li(a("/","NJ Rentals")));
 		return h3;
 	}
     protected static Writable goBack(String path, String name) {
@@ -100,6 +100,11 @@ public class Html implements Page {
     {
     	HtmlElem br = new HtmlElem("br");
     	return br;
+    }
+    public static Writable b(Writable...c)
+    {
+    	HtmlElem b = new HtmlElem("b", c);
+    	return b;
     }
     
 }

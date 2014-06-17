@@ -6,18 +6,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
-import com.sun.net.httpserver.HttpServer;
-
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.FileException;
 import ls.http.response.HttpContent;
-import ls.http.server.ServerHTTP;
-import ls.output.html.HtmlPage;
 import ls.output.html.view.ViewHtml;
 import ls.output.json.view.JsonView;
-import ls.propertiesRental.RentalManager;
+import ls.rentalManager.RentalManager;
 
 public class Output {
 	
@@ -31,7 +27,7 @@ public class Output {
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			ViewHtml view;
+			ViewHtml<IType> view;
 			Page page;
 			view = gest.getView();
 			try {

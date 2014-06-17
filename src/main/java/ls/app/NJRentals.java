@@ -1,10 +1,8 @@
 package ls.app;
 
 
-import java.util.HashMap;
 import java.util.Scanner;
 
-import ls.commands.ICommand;
 import ls.commands.properties.DeletePropertiesPid;
 import ls.commands.properties.GetProperties;
 import ls.commands.properties.GetPropertiesDetails;
@@ -19,7 +17,6 @@ import ls.commands.rentals.GetPropertiesRentalsWithDate;
 import ls.commands.rentals.GetUsersRentals;
 import ls.commands.rentals.PatchPropertiesRentals;
 import ls.commands.rentals.PostPropertiesRentals;
-import ls.commands.result.ICommandResult;
 import ls.commands.result.PropertiesRentalsByYearResult;
 import ls.commands.result.PropertiesRentalsResult;
 import ls.commands.result.PropertiesRentalsWithDateResult;
@@ -33,11 +30,8 @@ import ls.commands.result.UsersResult;
 import ls.commands.users.GetUserUsername;
 import ls.commands.users.GetUsers;
 import ls.commands.users.PostUsers;
-import ls.db.IType;
 import ls.exception.AppException;
 import ls.exception.IllegalCommandException;
-import ls.http.server.ServerHTTP;
-import ls.output.Output;
 import ls.output.html.view.PropertiesRentalsByYearView;
 import ls.output.html.view.PropertiesRentalsView;
 import ls.output.html.view.PropertiesRentalsWithDateView;
@@ -48,81 +42,45 @@ import ls.output.html.view.StringView;
 import ls.output.html.view.UserRentalsView;
 import ls.output.html.view.UserUsernameView;
 import ls.output.html.view.UsersView;
-import ls.propertiesRental.RentalManager;
-import ls.utils.Utils;
+import ls.rentalManager.RentalManager;
 
-public class App {
+public class NJRentals {
 	
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users
 //	java -cp target/classes:vendor/main/lib/sqljdbc4.jar ls.app.App GET /users/joao
 
 	public static RentalManager gest;
-	private static ServerHTTP server;
 	public static void main(String[] args) throws Exception
 	{	
 		try {
 			gest = new RentalManager();
 			addCommands();
 			addViews();
-			
 			if (args.length<1)
 				prompt();
 			else
-				executeCommand(args);
+				gest.executeCommand(args);
 		} catch (AppException e) {
 			e.getMessage();
 		}
 				
 	}
-	private static void startServer(String [] command) throws Exception
-	{
-		HashMap <String,String> map = new HashMap<String, String>(); 
-		map = Utils.mapper(command[2], map);
-		Integer port;
-		try{
-			port = Integer.parseInt(map.get("port"));
-		}
-		catch(NumberFormatException e){
-			throw new IllegalCommandException("invalid Port number");
-		}
-		server = new ServerHTTP(gest, port);
-		server.initServer();
-	}
+	
 	
 	private static void prompt() throws Exception{
 		Scanner k = new Scanner(System.in);
-		System.out.println("Enter a command");
 		String in = "";
-		while (!(in = k.nextLine()).equals("EXIT")){
+		while (true){
+			System.out.println("Enter a command");
+			in = k.nextLine();
 			try {
-				executeCommand(in.split(" "));
+				gest.executeCommand(in.split(" "));
 			} 
 			catch (AppException e) {
 				e.getMessage();
 			}
-			System.out.println("Enter a command");
-		}
-		k.close();
-		if (server != null)
-			server.stopServer();
-		System.exit(0);
-	}
-	
-
-	private static void executeCommand(String [] command) throws Exception{
-		if (command[0].equals("OPTION"))
-			gest.printCommands();
-		else if(command[0].contains("LISTEN"))
-			startServer(command);
-		else{
-			HashMap <String,String> map = new HashMap<String, String>(); 
-	
-			ICommand<IType> cmd = gest.find(command,map);
-			ICommandResult<IType> result = cmd.execute(map);
-			Output.Print(result, map, gest);
 		}
 	}
-
 
 	public static void addCommands() throws IllegalCommandException{
 		gest.add("GET /users", new GetUsers());

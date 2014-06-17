@@ -8,10 +8,10 @@ import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 
 
-public interface ICommand<E> {
+public interface ICommand<IType> {
 	
 
-	public ICommandResult<E> execute(HashMap<String, String> map) 
+	public ICommandResult<IType> execute(HashMap<String, String> map) 
 			throws  IllegalCommandException, ConnectionDatabaseException, AuthenticationException ;
 	
 }

@@ -10,13 +10,15 @@ import ls.output.html.HtmlPage;
 
 public class ViewHtml<E> {
 	
-	private HashMap<Class, Class> resultsViewsMap;
+
+	private HashMap<Class<?>, Class<?>> resultsViewsMap;
 	
+
 	public ViewHtml(){
-		resultsViewsMap = new HashMap<Class, Class>();	
+		resultsViewsMap = new HashMap<Class<?>, Class<?>>();	
 	}
 	
-	public void add(Class result, Class view){
+	public void add(Class<?> result, Class<?> view){
 		resultsViewsMap.put(result, view);
 	}
 	

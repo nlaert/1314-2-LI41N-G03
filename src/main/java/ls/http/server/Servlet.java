@@ -17,13 +17,17 @@ import ls.db.Rental;
 import ls.exception.AppException;
 import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
+import ls.http.response.HttpContent;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
 import ls.output.Page;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
+import ls.output.html.view.InternalServerError;
 import ls.output.html.view.ViewHtml;
+import ls.output.json.view.JsonErrorView;
 import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
 
@@ -58,16 +62,19 @@ public class Servlet extends HttpServlet {
         }
     	catch(Throwable th) {
             // No exception should go unnoticed!
-            new HttpResponse(HttpStatusCode.InternalServerError).send(resp);
-            //ServerHTTP.trace(th.getMessage());
+            //new HttpResponse(HttpStatusCode.InternalServerError).send(resp);
+    		new HttpResponse(HttpStatusCode.InternalServerError, new InternalServerError(th.getMessage()));
+            
         }
     }       
    	    
-	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException, AuthenticationException {
-        URI reqUri = new URI(req.getRequestURI());
+	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException {
+		String type = req.getHeader("accept");
+		
+		URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
         {
-        	return new HttpResponse(HttpStatusCode.Ok, new HomePageView());
+        	return new HttpResponse(HttpStatusCode.Ok, modelView(new HomePageView(), new JsonView(null,null),type));
         }
         String [] command = null;
         HashMap <String,String> commandParameters = new HashMap<String, String>();
@@ -82,7 +89,7 @@ public class Servlet extends HttpServlet {
         		getProperty(req.getHeader("referer"), commandParameters);
         	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
         }
-       
+        
         RentalManager gest = ServerHTTP.getRental();
         
         ICommand<IType> cmd = null;
@@ -99,13 +106,14 @@ public class Servlet extends HttpServlet {
 		}
 		catch(IllegalCommandException e)
 		{
-			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
+			//return exceptionView(e,HttpStatusCode.NotFound, new BadRequestView(e.getMessage()),type);
+			return new HttpResponse(HttpStatusCode.NotFound, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
 		}
-//        catch(ConnectionDatabaseException e){
-//        	return new HttpResponse(HttpStatusCode.InternalServerError);
-//        }
+        catch(ConnectionDatabaseException e){
+        	return new HttpResponse(HttpStatusCode.InternalServerError, modelView(new InternalServerError(e.getMessage()),new JsonErrorView(e.getMessage()),type));
+        }
         
-        String type = req.getHeader("accept");
+        
         Page page = null;
         if(type.contains("text/html")){
         	
@@ -113,7 +121,7 @@ public class Servlet extends HttpServlet {
         	try {
     			page = view.getView(result, commandParameters);
     		} catch (AppException e) {
-    			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+    			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView(e.getMessage()));
     		}
         }
         else if(type.contains("application/json"))
@@ -121,7 +129,7 @@ public class Servlet extends HttpServlet {
         	page = new JsonView(result, commandParameters);
         }
         else 
-        	return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView());
+        	return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView("Invalid Header(accept)"));
 		
         
         if (command[0].equals("POST")){
@@ -167,6 +175,16 @@ public class Servlet extends HttpServlet {
 		String [] parametersAuthentication = auth.split(":");
 		commandParameters.put("auth_username", parametersAuthentication[0]);
 		commandParameters.put("auth_password", parametersAuthentication[1]);
+	}
+	
+	private HttpContent modelView(HttpContent html,HttpContent json, String type)
+	{
+		if(type.contains("text/html"))
+		{
+			return html;
+		}
+		else 
+			return json;
 	}
 }
 

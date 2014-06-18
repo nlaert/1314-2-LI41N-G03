@@ -5,10 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 
@@ -20,7 +22,7 @@ public class RentalsDB extends CommandsUtils{
 	
 	
 	
-	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException{
+	private static ArrayList<Rental> resultSetToRentalArrayList() throws SQLException, ConnectionDatabaseException, IllegalCommandException, FileException{
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		while(rs.next()){
 			list.add(resultSetToRental());
@@ -28,7 +30,7 @@ public class RentalsDB extends CommandsUtils{
 		return list;
 	}
 	
-	public static Rental resultSetToRental() throws SQLException, ConnectionDatabaseException, IllegalCommandException{
+	public static Rental resultSetToRental() throws SQLException, ConnectionDatabaseException, IllegalCommandException, FileException{
 		String status, reserved_date, confirmed_date;
 		int year, cw;
 		HashMap <String, String> map = new HashMap<String, String>();
@@ -47,7 +49,7 @@ public class RentalsDB extends CommandsUtils{
 		return new Rental(property, renter, year, cw, status, reserved_date, confirmed_date);
 	}
 
-	public static ArrayList<String> deletePropertiesRental(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+	public static ArrayList<String> deletePropertiesRental(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException{
 		ArrayList<String> list = new ArrayList<String>();
 		try{
 			link = new DataBaseManager();
@@ -99,7 +101,7 @@ public class RentalsDB extends CommandsUtils{
 		}
 	}
 
-	public static ArrayList<Rental> getPropertiesRentals(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
+	public static ArrayList<Rental> getPropertiesRentals(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException {
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try{
 			link = new DataBaseManager();
@@ -118,7 +120,7 @@ public class RentalsDB extends CommandsUtils{
 		}
 	}
 
-	public static ArrayList<Rental> getPropertiesRentalsWithDate(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
+	public static ArrayList<Rental> getPropertiesRentalsWithDate(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException {
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try {
 			link = new DataBaseManager();
@@ -140,14 +142,20 @@ public class RentalsDB extends CommandsUtils{
 	}
 
 	public static ArrayList<Rental> postPropertiesRentals(
-			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException{
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try{
 			link = new DataBaseManager();
+			int yearActual = Calendar.getInstance().get(Calendar.YEAR);
+			if(Integer.parseInt(map.get("year")) < yearActual || Integer.parseInt(map.get("cw")) > 52 || Integer.parseInt(map.get("cw")) < 1)
+			{
+				throw new IllegalCommandException("Invalid Date");
+			}
 			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion()))
 			{
 				throw new ConnectionDatabaseException("Invalid login");	
 			}
+			
 			if(checkIfExists("select [year],[cw] from rental where [year] = ? and [cw] = ? and [property] = ?",new String[] {map.get("year"),map.get("cw"),map.get("pid")}, link.getConnetion()))
 			{
 				throw new IllegalCommandException("a rent for the chosen date already exists");
@@ -179,7 +187,7 @@ public class RentalsDB extends CommandsUtils{
 	}
 
 	public static ArrayList<String> patchPropertiesRentals(
-			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException {
+			HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			link = new DataBaseManager();
@@ -208,7 +216,7 @@ public class RentalsDB extends CommandsUtils{
 		return list;
 	}
 	
-	public static ArrayList<Rental> getPropertiesRentalsByYear(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException{
+	public static ArrayList<Rental> getPropertiesRentalsByYear(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException{
 		ArrayList<Rental> list = new ArrayList<Rental>();
 		try {
 			link = new DataBaseManager();
@@ -226,7 +234,7 @@ public class RentalsDB extends CommandsUtils{
 		}
 	}
 
-	public static ArrayList<Rental> GetUsersRentals(HashMap<String,String>map) throws ConnectionDatabaseException, IllegalCommandException
+	public static ArrayList<Rental> GetUsersRentals(HashMap<String,String>map) throws ConnectionDatabaseException, IllegalCommandException, FileException
 	{
 		try{
 			link = new DataBaseManager();

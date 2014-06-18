@@ -4,9 +4,10 @@ import ls.output.html.HtmlPage;
 
 public class BadRequestView extends HtmlPage implements ITypeView{
 
-	public BadRequestView() {
+	public BadRequestView(String message) {
 		super("NJ Rentals",
-				h1(text("Page not found")),
+				h1(text("Bad Request")),
+				b(text("Error Message: "+ message)),
 				goInit()
 				);
 	}

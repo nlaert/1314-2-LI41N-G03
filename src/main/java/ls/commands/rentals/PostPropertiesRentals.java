@@ -8,6 +8,7 @@ import ls.commands.result.RentalsResult;
 import ls.db.Rental;
 import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 
 public class PostPropertiesRentals  implements ICommand<Rental> {
@@ -15,7 +16,7 @@ public class PostPropertiesRentals  implements ICommand<Rental> {
 	
 	@Override
 	public ICommandResult<Rental> execute(HashMap<String, String> map)
-			throws IllegalCommandException, ConnectionDatabaseException {
+			throws IllegalCommandException, ConnectionDatabaseException, FileException {
 		return new RentalsResult( RentalsDB.postPropertiesRentals(map));
 		
 		

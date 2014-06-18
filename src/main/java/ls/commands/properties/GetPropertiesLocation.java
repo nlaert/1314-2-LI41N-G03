@@ -8,6 +8,7 @@ import ls.commands.result.PropertiesResult;
 import ls.db.PropertiesDB;
 import ls.db.Property;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 
 public class GetPropertiesLocation  implements ICommand<Property>{
@@ -16,7 +17,7 @@ public class GetPropertiesLocation  implements ICommand<Property>{
 	
 	@Override
 	public ICommandResult<Property> execute(HashMap<String, String> map)
-			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException {
+			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException, FileException {
 		return new PropertiesResult(PropertiesDB.getPropertiesLocation(map));
 		
 	}

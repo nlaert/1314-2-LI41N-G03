@@ -10,6 +10,7 @@ import java.util.HashMap;
 import ls.commands.CommandsUtils;
 import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 
@@ -19,7 +20,7 @@ public class UsersDB extends CommandsUtils {
 	static DataBaseManager link;
 	private static PreparedStatement prep;
 	
-	public static ArrayList<User> getAll() throws ConnectionDatabaseException, IllegalCommandException
+	public static ArrayList<User> getAll() throws ConnectionDatabaseException, IllegalCommandException, FileException
 	{
 		try {
 			
@@ -36,12 +37,12 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 	
-	public static User getUser(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException
+	public static User getUser(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException
 	{
 		return getUserByUsername(map).get(0);
 	}
 	
-	public static ArrayList<User> getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException
+	public static ArrayList<User> getUserByUsername(HashMap<String, String> map) throws ConnectionDatabaseException, IllegalCommandException, FileException
 	{
 		try {
 			link = new DataBaseManager();
@@ -59,7 +60,7 @@ public class UsersDB extends CommandsUtils {
 		}
 	}
 	
-	public static ArrayList<String> PostUser(HashMap<String, String> map) throws ConnectionDatabaseException, AuthenticationException
+	public static ArrayList<String> PostUser(HashMap<String, String> map) throws ConnectionDatabaseException, AuthenticationException, IllegalCommandException, FileException
 	{
 		ArrayList<String> list = new ArrayList<String>();
 		try{
@@ -68,6 +69,10 @@ public class UsersDB extends CommandsUtils {
 			if (!checkAuth(map.get("auth_username"), map.get("auth_password"), link.getConnetion())){
 				throw new AuthenticationException("Invalid login");		
 			}
+			
+			if(getUserByUsername(map).size()== 1)
+				throw new IllegalCommandException("Username already exists");
+				
 			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
 			prep.setString(1, map.get("username"));
 			prep.setString(2, map.get("password"));

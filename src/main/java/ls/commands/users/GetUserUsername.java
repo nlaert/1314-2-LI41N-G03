@@ -9,13 +9,14 @@ import ls.db.PropertiesDB;
 import ls.db.User;
 import ls.db.UsersDB;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 
 public class GetUserUsername  implements ICommand<User> {
 
 
 	@Override
-	public ICommandResult<User> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException {
+	public ICommandResult<User> execute(HashMap<String, String> map) throws IllegalCommandException, ConnectionDatabaseException, FileException {
 		return new UserUsernameResult( UsersDB.getUserByUsername(map),PropertiesDB.getPropertiesOwner(map));
 		
 		

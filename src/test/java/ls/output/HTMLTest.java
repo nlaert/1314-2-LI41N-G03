@@ -14,9 +14,8 @@ import ls.db.User;
 import ls.exception.AppException;
 import ls.output.html.HtmlPage;
 import ls.output.html.view.UsersView;
-import ls.output.html.view.View;
 import ls.output.html.view.ViewHtml;
-import ls.propertiesRental.RentalManager;
+import ls.rentalManager.RentalManager;
 
 import org.junit.Test;
 

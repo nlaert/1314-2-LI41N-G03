@@ -28,7 +28,7 @@ import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.CRUD;
-import ls.propertiesRental.RentalManager;
+import ls.rentalManager.RentalManager;
 
 import org.junit.After;
 import org.junit.AfterClass;

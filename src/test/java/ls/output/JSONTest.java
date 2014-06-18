@@ -9,10 +9,10 @@ import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
 import ls.commands.result.UsersResult;
-import ls.db.IType;
 import ls.db.User;
 import ls.exception.FileException;
-import ls.propertiesRental.RentalManager;
+import ls.output.json.view.JsonView;
+import ls.rentalManager.RentalManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class JSONTest {
 		HashMap<String,String> map = new HashMap<String,String>();
 		String result = "[{\"Username\":\"nick\",\"Password\":\"pass\",\"Email\":\"a35466@alunos.isel.pt\",\"FullName\":\"Nick Laert\"},"
 				+ "{\"Username\":\"joao\",\"Password\":\"pass\",\"Email\":\"a35392@alunos.isel.pt\",\"FullName\":\"Joao Rodrigues\"}]";
-		JSON.jsonify(commandResult, map);
+		JsonView.jsonify(commandResult, map);
 		assertEquals(result, outContent.toString());
 	}
 	

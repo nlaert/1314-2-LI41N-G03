@@ -101,6 +101,9 @@ public class Servlet extends HttpServlet {
 		{
 			return new HttpResponse(HttpStatusCode.NotFound, new BadRequestView());
 		}
+//        catch(ConnectionDatabaseException e){
+//        	return new HttpResponse(HttpStatusCode.InternalServerError);
+//        }
         
         String type = req.getHeader("accept");
         Page page = null;

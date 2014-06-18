@@ -24,6 +24,7 @@ public class RentalManager {
 	{
 		list = new ArrayList<Commands<IType>>();
 		views = new ViewHtml<IType>();
+		activeServer = false;
 	}
 	public void add(String command, ICommand<?> e) 
 	{

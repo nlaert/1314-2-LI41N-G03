@@ -17,7 +17,7 @@ public class JsonView extends JsonPage{
 	public static String jsonify(ICommandResult<IType> commandResult, HashMap<String, String> map) {
 		
 		if (commandResult==null || commandResult.getSize()==0)
-			System.out.println("{}"); 
+			return("{}"); 
 		String [] columnsNames = commandResult.getArrayList().get(0).getColumNames();
 		StringBuilder result = new StringBuilder();
 		if (commandResult.getSize()>=2)

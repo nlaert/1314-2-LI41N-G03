@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.utils.Utils;
 
@@ -18,7 +19,7 @@ public class DataBaseManager {
 	private static Connection connection;
 	private static SQLServerDataSource ds = new SQLServerDataSource();
 	
-	public DataBaseManager() 
+	public DataBaseManager() throws FileException, ConnectionDatabaseException 
 	{
 		
 		try{
@@ -28,9 +29,9 @@ public class DataBaseManager {
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Nao e possivel abrir uma nova ligacao.");
+			throw new ConnectionDatabaseException("Connection error");
 		} catch (IOException e) {
-			System.out.println("Connection file error");
+			throw new FileException("config.txt file not found");
 		}
 
 	}
@@ -39,7 +40,7 @@ public class DataBaseManager {
 		try {
 			connection.close();
 		} catch (SQLException  | NullPointerException e) {
-			throw new ConnectionDatabaseException("Erro ao fechar a Ligacao",e);
+			throw new ConnectionDatabaseException("Connection error");
 		}
 
 	}

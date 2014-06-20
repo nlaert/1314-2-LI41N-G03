@@ -8,13 +8,14 @@ import ls.commands.result.PropertiesRentalsByYearResult;
 import ls.db.Rental;
 import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 
 public class GetPropertiesRentalsByYear implements ICommand<Rental> {
 
 	@Override
 	public ICommandResult<Rental> execute(HashMap<String, String> map)
-			throws IllegalCommandException, ConnectionDatabaseException {
+			throws IllegalCommandException, ConnectionDatabaseException, FileException {
 		return new PropertiesRentalsByYearResult(RentalsDB.getPropertiesRentalsByYear(map));
 	}
 

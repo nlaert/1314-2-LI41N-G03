@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 
 public class CRUD {
@@ -17,7 +18,7 @@ public class CRUD {
 	private static PreparedStatement prep;
 	
 	
-	public static ArrayList<String> executeQuery(String cmdSel) throws  ConnectionDatabaseException, IllegalCommandException
+	public static ArrayList<String> executeQuery(String cmdSel) throws  ConnectionDatabaseException, IllegalCommandException, FileException
 	{
 		try{
 			link = new DataBaseManager();
@@ -48,7 +49,7 @@ public class CRUD {
 		}
 	}
 
-	public static int executeNonQuery(String cmd) throws ConnectionDatabaseException
+	public static int executeNonQuery(String cmd) throws ConnectionDatabaseException, FileException
 	{
 		int rows = 0;
 		link = new DataBaseManager();
@@ -78,7 +79,7 @@ public class CRUD {
 		return rows;
 	}
 	
-	public static ArrayList<String> executeQuery(String cmd, String [] params) throws IllegalCommandException, ConnectionDatabaseException{
+	public static ArrayList<String> executeQuery(String cmd, String [] params) throws IllegalCommandException, ConnectionDatabaseException, FileException{
 		try{
 			link = new DataBaseManager();
 			prep = link.getConnetion().prepareStatement(cmd);
@@ -112,7 +113,7 @@ public class CRUD {
 		}
 	}
 	
-	public static int executeNonQuery(String cmd, String [] params) throws ConnectionDatabaseException{
+	public static int executeNonQuery(String cmd, String [] params) throws ConnectionDatabaseException, FileException{
 		int rows = 0;
 		link = new DataBaseManager();
 		try {

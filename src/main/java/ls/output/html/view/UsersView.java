@@ -65,7 +65,7 @@ public class UsersView  extends HtmlPage implements ITypeView{
 		for(User user : result.getArrayList())
 		{
 			table.withContent(tr(
-					td(a(of(user),user.username),td(text(user.email),td(text(user.fullName))))));
+					td(a(of(user),user.username)),td(text(user.email)),td(text(user.fullName))));
 		}
 		return table;
 	

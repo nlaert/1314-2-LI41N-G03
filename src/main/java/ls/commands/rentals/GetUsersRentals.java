@@ -2,7 +2,6 @@ package ls.commands.rentals;
 
 import java.util.HashMap;
 
-import ls.commands.CommandsUtils;
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.commands.result.UserRentalsResult;
@@ -11,7 +10,7 @@ import ls.db.RentalsDB;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 
-public class GetUsersRentals extends CommandsUtils implements ICommand<Rental> {
+public class GetUsersRentals implements ICommand<Rental> {
 
 	
 	@Override

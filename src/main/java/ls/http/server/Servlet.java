@@ -14,7 +14,6 @@ import ls.commands.result.ICommandResult;
 import ls.db.IType;
 import ls.db.Property;
 import ls.db.Rental;
-import ls.exception.AppException;
 import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
@@ -22,11 +21,10 @@ import ls.exception.IllegalCommandException;
 import ls.http.response.HttpContent;
 import ls.http.response.HttpResponse;
 import ls.http.response.HttpStatusCode;
-import ls.output.Page;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
+import ls.output.html.view.HtmlView;
 import ls.output.html.view.InternalServerError;
-import ls.output.html.view.ViewHtml;
 import ls.output.json.view.JsonErrorView;
 import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
@@ -106,7 +104,7 @@ public class Servlet extends HttpServlet {
 		}
 		catch(IllegalCommandException e)
 		{
-			//return exceptionView(e,HttpStatusCode.NotFound, new BadRequestView(e.getMessage()),type);
+			
 			return new HttpResponse(HttpStatusCode.NotFound, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
 		}
         catch(ConnectionDatabaseException e){
@@ -114,13 +112,13 @@ public class Servlet extends HttpServlet {
         }
         
         
-        Page page = null;
+        HttpContent page = null;
         if(type.contains("text/html")){
         	
-        	ViewHtml<IType> view = gest.getView();
+        	HtmlView<IType> view = gest.getView();
         	try {
     			page = view.getView(result, commandParameters);
-    		} catch (AppException e) {
+    		} catch (IllegalCommandException e) {
     			return new HttpResponse(HttpStatusCode.BadRequest,new BadRequestView(e.getMessage()));
     		}
         }

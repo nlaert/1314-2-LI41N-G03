@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
-import ls.exception.AppException;
 import ls.exception.FileException;
+import ls.exception.IllegalCommandException;
 import ls.http.response.HttpContent;
-import ls.output.html.view.ViewHtml;
+import ls.output.html.view.HtmlView;
 import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
 
@@ -19,7 +19,7 @@ public class Output {
 	
 	private static String html = "text/html", json = "application/json";
 	
-	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, RentalManager gest) throws FileException, IOException{
+	public static void Print(ICommandResult<IType> commandResult, HashMap <String, String> map, RentalManager gest) throws FileException, IOException, IllegalCommandException{
 		
 		String accept = "";
 		if (map.containsKey("accept"))
@@ -27,22 +27,18 @@ public class Output {
 		
 		if (accept.equalsIgnoreCase(html))
 		{
-			ViewHtml<IType> view;
-			Page page;
+			HtmlView<IType> view;
+			HttpContent page;
 			view = gest.getView();
-			try {
-				page = view.getView(commandResult, map);
-				send(page, map);
-			} catch (AppException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+
+			page = view.getView(commandResult, map);
+			send(page, map);
+
+
 		}
 		else if (accept.equalsIgnoreCase(json))
 		{
 			send(new JsonView(commandResult,map),map);
-			//JSON.jsonify(commandResult, map);
 		}
 		else
 		{

@@ -11,19 +11,19 @@ import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
 import ls.http.server.ServerHTTP;
 import ls.output.Output;
-import ls.output.html.view.ViewHtml;
+import ls.output.html.view.HtmlView;
 import ls.utils.Utils;
 
 public class RentalManager {
 
-	private ViewHtml<IType> views;
+	private HtmlView<IType> views;
 	public ServerHTTP server;
 	private ArrayList<Commands<IType>> list;
 	private boolean activeServer;
 	public RentalManager() throws IllegalCommandException, ConnectionDatabaseException
 	{
 		list = new ArrayList<Commands<IType>>();
-		views = new ViewHtml<IType>();
+		views = new HtmlView<IType>();
 		activeServer = false;
 	}
 	public void add(String command, ICommand<?> e) 
@@ -36,7 +36,7 @@ public class RentalManager {
 	{
 		views.add(commandResult, typeView);
 	}
-	public ViewHtml<IType> getView()
+	public HtmlView<IType> getView()
 	{
 		return views;
 	}

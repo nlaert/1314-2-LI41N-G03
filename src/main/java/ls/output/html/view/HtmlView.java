@@ -5,16 +5,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
-import ls.exception.AppException;
+import ls.exception.IllegalCommandException;
 import ls.output.html.HtmlPage;
 
-public class ViewHtml<E> {
+public class HtmlView<E> {
 	
 
 	private HashMap<Class<?>, Class<?>> resultsViewsMap;
 	
 
-	public ViewHtml(){
+	public HtmlView(){
 		resultsViewsMap = new HashMap<Class<?>, Class<?>>();	
 	}
 	
@@ -22,7 +22,7 @@ public class ViewHtml<E> {
 		resultsViewsMap.put(result, view);
 	}
 	
-	public HtmlPage getView(ICommandResult<E> result, HashMap<String,String> map) throws AppException
+	public HtmlPage getView(ICommandResult<E> result, HashMap<String,String> map) throws IllegalCommandException
 	{
 		if (resultsViewsMap.containsKey(result.getClass())){
 			Class<?> h = resultsViewsMap.get(result.getClass());
@@ -30,7 +30,7 @@ public class ViewHtml<E> {
 				Constructor<?> k = h.getConstructor(result.getClass(), HashMap.class);
 				return (HtmlPage) k.newInstance(result, map);
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				throw new AppException("View not Found!", e);
+				throw new IllegalCommandException("View HTML not Found!");
 			}
 		}
 		return null;

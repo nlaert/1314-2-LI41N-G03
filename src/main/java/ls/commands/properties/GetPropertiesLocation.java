@@ -17,7 +17,7 @@ public class GetPropertiesLocation  implements ICommand<Property>{
 	
 	@Override
 	public ICommandResult<Property> execute(HashMap<String, String> map)
-			throws ConnectionDatabaseException, IllegalCommandException, ConnectionDatabaseException, FileException {
+			throws IllegalCommandException, ConnectionDatabaseException, FileException {
 		return new PropertiesResult(PropertiesDB.getPropertiesLocation(map));
 		
 	}

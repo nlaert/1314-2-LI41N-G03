@@ -1,15 +1,15 @@
 use LS
 
-if object_id('rental') is not null
+if object_id('Rental') is not null
 	drop table rental
-if object_id('properties') is not null
+if object_id('Properties') is not null
 	drop table properties
 if object_id('Type') is not null
 	drop table [Type]
-if object_id('users') is not null
+if object_id('Users') is not null
 	drop table users
 
-create table users(
+create table Users(
 	[username] varchar(15) primary key,
 	[password] varchar(20) not null,
 	[email] varchar(30) unique not null,
@@ -20,7 +20,7 @@ create table [type](
 	[type] varchar(15) primary key
 )
 
-create table properties(
+create table Properties(
 	[pid] int identity(1,1) primary key,
 	[type] varchar(15) not null,
 	[description] varchar(200) not null,
@@ -31,7 +31,7 @@ create table properties(
 	Constraint FK_type Foreign key ([type]) references Type([type]),
 )
 
-create table rental(
+create table Rental(
 	[property] int,
 	[renter] varchar(15),
 	[year] int,

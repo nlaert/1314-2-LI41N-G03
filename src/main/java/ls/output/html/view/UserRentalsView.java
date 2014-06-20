@@ -25,7 +25,7 @@ public class UserRentalsView extends HtmlPage implements ITypeView {
 		if(result.getArrayList().size() == 0)
 			return text("");
 		int style = 150 * 4;
-		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
+		HtmlElem table = new HtmlElem("table").withAttr("style","width:"+style+"px").withAttr("border", "1");
 		table.withContent(tr(th(text("Property"),
 				th(text("Year")),th(text("Cw")),th(text("Status")))));
 

@@ -22,7 +22,7 @@ public class PropertiesRentalsByYearView extends HtmlPage implements ITypeView{
 	private static Writable rentalsItems(PropertiesRentalsByYearResult result) {
 		int nColunas = 7;
 		int style = 150 * nColunas;
-		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
+		HtmlElem table = new HtmlElem("table").withAttr("style","width:"+style+"px").withAttr("border", "1");
 		table.withContent(tr(th(text("Property"),th(text("Renter"),
 				th(text("Year")),th(text("Cw")),th(text("Status")),
 				th(text("Reserved Date")),th(text("Confirmed Date"))))));

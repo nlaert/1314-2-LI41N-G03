@@ -52,7 +52,7 @@ public class PropertiesView extends HtmlPage implements ITypeView{
 	private static Writable propertiesItems(PropertiesResult result) {
 		int nColunas = 5;
 		int style = 150 * nColunas;
-		HtmlElem table = new HtmlElem("table style=\"width:"+style+"px\" border=\"1\"");
+		HtmlElem table = new HtmlElem("table").withAttr("style","width:"+style+"px").withAttr("border", "1");
 		table.withContent(tr(th(text("pid"),th(text("type"),th(text("price"),th(text("location"),th(text("description"))))))));
 		for(Property property : result.getArrayList())
 		{

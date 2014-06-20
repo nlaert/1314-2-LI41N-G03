@@ -8,7 +8,7 @@ public class Property implements IType {
 	public int price;
 	public String location;
 	public User owner;
-	public int size;
+	
 	
 	public Property(int pid, String type, String description, int price, String location, User owner){
 		this.pid = pid;
@@ -18,7 +18,7 @@ public class Property implements IType {
 		this.location = location;
 		this.owner = owner;
 		
-		this.size = 7;
+		
 	}
 
 	@Override

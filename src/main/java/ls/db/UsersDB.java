@@ -15,9 +15,9 @@ import ls.exception.IllegalCommandException;
 import ls.jdbc.DataBaseManager;
 
 public class UsersDB extends CommandsUtils {
-	static Statement stmt;
-	static ResultSet rs;
-	static DataBaseManager link;
+	private static Statement stmt;
+	private static ResultSet rs;
+	private static DataBaseManager link;
 	private static PreparedStatement prep;
 	
 	public static ArrayList<User> getAll() throws ConnectionDatabaseException, IllegalCommandException, FileException
@@ -72,8 +72,9 @@ public class UsersDB extends CommandsUtils {
 			
 			if(getUserByUsername(map).size()== 1)
 				throw new IllegalCommandException("Username already exists");
-				
-			prep = link.getConnetion().prepareStatement("insert into Users values (?, ?, ?, ?)");
+			
+			link = new DataBaseManager();
+			prep = link.getConnetion().prepareStatement("insert into users values (?,?,?,?)");
 			prep.setString(1, map.get("username"));
 			prep.setString(2, map.get("password"));
 			prep.setString(3, map.get("email"));

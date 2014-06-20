@@ -26,6 +26,7 @@ import ls.commands.users.PostUsers;
 import ls.db.IType;
 import ls.exception.AuthenticationException;
 import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
 import ls.jdbc.CRUD;
 import ls.rentalManager.RentalManager;
@@ -50,7 +51,7 @@ public class TestCommands {
 	
 	static RentalManager gest;
 	@BeforeClass
-	public static void setUp() throws IllegalCommandException, ConnectionDatabaseException
+	public static void setUp() throws IllegalCommandException, ConnectionDatabaseException, FileException
 	{
 		gest = new RentalManager();
 		gest.add("GET /users", new GetUsers());
@@ -101,7 +102,7 @@ public class TestCommands {
 	
 	//get de um especifico user
 	@Test
-	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException, AuthenticationException
+	public void Get_User_With_Username_Test() throws IllegalCommandException, ConnectionDatabaseException, SQLException, AuthenticationException, FileException
 	{
 		String [] user = {"GET", "/users/testeJUNIT1"};
 		ICommand<IType> ex1 = gest.find(user, map);
@@ -111,7 +112,7 @@ public class TestCommands {
 	
 	
 	@Test
-	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
+	public void Get_Properties_Location_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException
 	{
 		String [] properties = {"GET", "/properties/location/Peniche|Peniche"};
 		ICommand<IType> ex1 = gest.find(properties, map);
@@ -120,10 +121,10 @@ public class TestCommands {
 	}	
 	
 	@Test
-	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
+	public void Post_Users_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException
 	{
 		String username = "testeJUNIT3";
-		String [] command = {"POST", "/users", "auth_username=superadmin&auth_password=ls1213&username=" + username + "&password=testeJUNIT&email=testeJUNIT10@teste.pt&fullname=teste+JUNIT"};
+		String [] command = {"POST", "/users", "auth_username=superadmin&auth_password=ls1213&username=" + username + "&password=testeJUNIT&email=testeJUNIT30@teste.pt&fullname=teste+JUNIT"};
 		ICommand<?> ex1 = gest.find(command, map);
 		ex1.execute(map);
 		String cmd = "Select username from users where username = ?";
@@ -134,7 +135,7 @@ public class TestCommands {
 	}
 	
 	@Test(expected = AuthenticationException.class)
-	public void Post_Users_Without_Authentication_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException
+	public void Post_Users_Without_Authentication_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException
 	{
 		String [] command = {"POST", "/users", "username=testeJUNIT&password=testeJUNIT&email=testeJUNIT@teste.pt&fullname=teste+JUNIT"};
 		ICommand<?> ex1 = gest.find(command, map);
@@ -143,7 +144,7 @@ public class TestCommands {
 	}
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Empty_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		ICommand<?> ex1 = gest.find(null, null);
 		if(ex1!= null)
@@ -151,7 +152,7 @@ public class TestCommands {
 	}
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Get_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] get = {"GET", ""};
 		ICommand<?> ex1 = gest.find(get, map);
@@ -159,7 +160,7 @@ public class TestCommands {
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Get_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] get = {"GET", "/"};
 		ICommand<?> ex1 = gest.find(get, map);
@@ -167,7 +168,7 @@ public class TestCommands {
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Post_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] post = {"POST", ""};
 		ICommand<?> ex1 = gest.find(post, map);
@@ -175,7 +176,7 @@ public class TestCommands {
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Post_Wrong_Command2_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] post = {"POST", "/"};
 		ICommand<?> ex1 = gest.find(post, map);
@@ -185,7 +186,7 @@ public class TestCommands {
 	
 	
 	@Test(expected = IllegalCommandException.class)
-	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Post_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] post = {"POST", "/users", ""};
 		ICommand<IType> ex1 = gest.find(post, map);
@@ -193,7 +194,7 @@ public class TestCommands {
 			ex1.execute(null);
 	}
 	@Test(expected = IllegalCommandException.class)
-	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException 
+	public void Get_Users_Wrong_Command_Test() throws IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException 
 	{
 		String [] get = {"GET", "/users", ""};
 		ICommand<IType> ex1 = gest.find(get, map);
@@ -202,7 +203,7 @@ public class TestCommands {
 	}
 	
 	@Test
-	public void Delete_Rental_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
+	public void Delete_Rental_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException, FileException
 	{
 //		Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
@@ -218,7 +219,7 @@ public class TestCommands {
 	}
 	
 	@Test(expected= IllegalCommandException.class)
-	public void Delete_Rental_confirmed_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
+	public void Delete_Rental_confirmed_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException, FileException
 	{
 
 //		Inserir um rental do cliente 2 
@@ -234,7 +235,7 @@ public class TestCommands {
 		
 	}
 	@Test
-	public void Patch_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException
+	public void Patch_Pending_Test() throws ConnectionDatabaseException, IllegalCommandException, AuthenticationException, FileException
 	{
 		//	Inserir um rental do cliente 2 
 		String insertRentalOnClient2 = "insert into rental values("+pid+",'testeJUNIT2',2100,12,'pending',GETDATE(),null)";
@@ -250,14 +251,14 @@ public class TestCommands {
 	}
 	
 	@After
-	public void clean() throws ConnectionDatabaseException
+	public void clean() throws ConnectionDatabaseException, FileException
 	{
 		String deleteRentalClient2 = "delete from rental where [renter] = 'testeJUNIT2'";
 		CRUD.executeNonQuery(deleteRentalClient2);
 	}
 	
 	@AfterClass
-	public static void tearDown() throws SQLException, ConnectionDatabaseException
+	public static void tearDown() throws SQLException, ConnectionDatabaseException, FileException
 	{
 		String deletePropertyClient1 = "delete from properties where [owner] = 'testeJUNIT1'";
 		String deleteCliente1 = "delete from users where username = 'testeJUNIT1'";

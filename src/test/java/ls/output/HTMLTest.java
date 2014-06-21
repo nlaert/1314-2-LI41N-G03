@@ -1,6 +1,7 @@
 package ls.output;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,14 +10,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ls.commands.result.ICommandResult;
 import ls.commands.result.UsersResult;
+import ls.db.IType;
 import ls.db.User;
 import ls.exception.AppException;
+import ls.exception.ConnectionDatabaseException;
+import ls.exception.FileException;
+import ls.exception.IllegalCommandException;
 import ls.output.html.HtmlPage;
+import ls.output.html.view.HtmlView;
 import ls.output.html.view.UsersView;
-import ls.output.html.view.ViewHtml;
+import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -24,51 +32,60 @@ import org.junit.Test;
 public class HTMLTest {
 	
 	static RentalManager gest;
+	static ICommandResult commandResult;
 	
-	
-	public static void addViews()
-	{
-		gest.addView(UsersResult.class, UsersView.class);
-	
-	}
-	
-	@Test
-	public void multiple_Rows_Test() throws AppException, IOException{
-		String resultOutput="";
-		gest = new RentalManager();
-		addViews();
-
-		User u1 = new User("nick", "pass", "a35466@alunos.isel.pt", "Laert");
+	@BeforeClass
+	public static void setUp() throws IllegalCommandException, ConnectionDatabaseException{
+		User u1 = new User("nick", "pass", "a35466@alunos.isel.pt", "Nick Laert");
 		User u2 = new User("joao", "pass", "a35392@alunos.isel.pt", "Joao Rodrigues");
 		ArrayList<User> aux = new ArrayList<User>();
 		aux.add(u1);
 		aux.add(u2);
-		UsersResult commandResult = new UsersResult(aux);
-		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("output-file", "HTMLTest");
-		int style = 150 * 4;
-		ViewHtml v;
-		HtmlPage hp;
-		v = gest.getView();
-		
-			hp = v.getView(commandResult, map);
-			Output.send(hp, map);
-			resultOutput = OutputReadBuffer(map);
-			
-
-		
-		String result = "<html><head><Title>Users</Title></head><body><h1>All Users</h1><table style=\"width:600px\" border=\"1\"><tr><th>Username<th>email<th>Fullname</th></th></th></tr><tr><td><a href='/users/nick'>nick</a><td>a35466@alunos.isel.pt<td>Laert</td></td></td></tr><tr><td><a href='/users/joao'>joao</a><td>a35392@alunos.isel.pt<td>Joao Rodrigues</td></td></td></tr></table style=\"width:600px\" border=\"1\"><h3><li><a href='/'>Menu</a></li></h3></body></html>";
-		assertEquals(result, resultOutput);
+		commandResult = new UsersResult(aux);
+		gest = new RentalManager();
+		gest.addView(UsersResult.class, UsersView.class);
 		
 		
 	}
-//	@Test
-//	public void empty_params(){
-//		assertEquals("", HTML.htmlify(null));
-//		assertEquals("", HTML.htmlify(new ArrayList<String>()));
-//	}
+	
+	@Test
+	public void JSON_multiple_Rows_Test() throws FileException, IOException{
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("output-file", "JSONTest");
+		String resultOutput = OutputReadBuffer(map);
+		String result = "[{\"Username\":\"nick\",\"Password\":\"pass\",\"Email\":\"a35466@alunos.isel.pt\",\"FullName\":\"Nick Laert\"},"
+				+ "{\"Username\":\"joao\",\"Password\":\"pass\",\"Email\":\"a35392@alunos.isel.pt\",\"FullName\":\"Joao Rodrigues\"}]";
+		JsonView.jsonify(commandResult, map);
+		assertEquals(result, resultOutput.toString());
+	}
+	
+	@Test
+	public void HTML_multiple_Rows_Test() throws AppException, IOException{
+		String resultOutput="";
 
-	private String OutputReadBuffer(HashMap<String, String> map) throws IOException {
+//		User u1 = new User("nick", "pass", "a35466@alunos.isel.pt", "Nick Laert");
+//		User u2 = new User("joao", "pass", "a35392@alunos.isel.pt", "Joao Rodrigues");
+//		ArrayList<User> aux = new ArrayList<User>();
+//		aux.add(u1);
+//		aux.add(u2);
+//		UsersResult commandResult = new UsersResult(aux);
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("output-file", "HTMLTest");
+		HtmlView v;
+		HtmlPage hp;
+		v = gest.getView();
+
+		hp = v.getView(commandResult, map);
+		Output.send(hp, map);
+		resultOutput = OutputReadBuffer(map);
+
+		String expected = "<tr><td><a href='/users/nick'>nick</a></td><td>a35466@alunos.isel.pt</td><td>Nick Laert</td></tr>";
+		String expected2 = "<tr><td><a href='/users/joao'>joao</a></td><td>a35392@alunos.isel.pt</td><td>Joao Rodrigues</td></tr>";
+		assertTrue(resultOutput.contains(expected));
+		assertTrue(resultOutput.contains(expected2));	
+	}
+
+	public static String OutputReadBuffer(HashMap<String, String> map) throws IOException {
 		StringBuilder result = new StringBuilder();
 		BufferedReader reader = null;
 		try {
@@ -79,12 +96,9 @@ public class HTMLTest {
 				result.append(line);
 			}
 			
-			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally
@@ -94,31 +108,3 @@ public class HTMLTest {
 		return result.toString();
 	}
 }
-/*
-
-<html>
-    <body>
-        
-        <table  border="1">
-            <tr>
-                <th>username</th>
-                <th>password</th>
-                <th>email</th>
-                <th>fullname</th>
-            </tr>
-            <tr>
-                <td>nick</td>
-                <td>pass</td> 
-                <td>a35466@alunos.isel.pt</td>
-                <td>Nick Laert</td>
-            </tr>
-            <tr>
-                <td>joao</td>
-                <td>pass</td> 
-                <td>a35392@alunos.isel.pt</td>
-                <td>Joao Rodrigues</td>
-            </tr>
-        </table>
-    </body>
-
-*/

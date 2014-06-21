@@ -32,6 +32,7 @@ public class ViewTest {
 	
 	static RentalManager gest;
 	static ICommandResult commandResult;
+	static ICommandResult emptyCommandResult;
 	
 	@BeforeClass
 	public static void setUp() throws IllegalCommandException, ConnectionDatabaseException{
@@ -41,6 +42,10 @@ public class ViewTest {
 		aux.add(u1);
 		aux.add(u2);
 		commandResult = new UsersResult(aux);
+		
+		ArrayList<User> emptyList = new ArrayList<User>();
+		emptyCommandResult= new UsersResult(emptyList);
+		
 		gest = new RentalManager();
 		gest.addView(UsersResult.class, UsersView.class);
 	}
@@ -48,20 +53,29 @@ public class ViewTest {
 	@Test
 	public void JSON_multiple_Rows_Test() throws FileException, IOException{
 		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("output-file", "JSONTest");
+		map.put("output-file", "ViewTest");
 		Output.send(new JsonView(commandResult,map),map);
 		
 		String resultOutput = OutputReadBuffer(map);
 		String result = "[{\"Username\":\"nick\",\"Password\":\"pass\",\"Email\":\"a35466@alunos.isel.pt\",\"FullName\":\"Nick Laert\"},"
 				+ "{\"Username\":\"joao\",\"Password\":\"pass\",\"Email\":\"a35392@alunos.isel.pt\",\"FullName\":\"Joao Rodrigues\"}]";
 		
-		assertEquals(result, resultOutput.toString());
+		assertEquals(result, resultOutput);
+	}
+	
+	@Test
+	public void JSON_empty_test() throws FileException, IOException{
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("output-file", "ViewTest");
+		Output.send(new JsonView(emptyCommandResult,map),map);
+		String resultOutput = OutputReadBuffer(map);
+		assertEquals("{}", resultOutput);
 	}
 	
 	@Test
 	public void HTML_multiple_Rows_Test() throws AppException, IOException{
 		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("output-file", "HTMLTest");
+		map.put("output-file", "ViewTest");
 		HtmlView v;
 		HtmlPage hp;
 		v = gest.getView();
@@ -75,6 +89,20 @@ public class ViewTest {
 		assertTrue(resultOutput.contains(expected));
 		assertTrue(resultOutput.contains(expected2));	
 	}
+	
+	@Test public void HTML_empty_test() throws IllegalCommandException, FileException, IOException{
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("output-file", "ViewTest");
+		HtmlView v;
+		HtmlPage hp;
+		v = gest.getView();
+
+		hp = v.getView(emptyCommandResult, map);
+		Output.send(hp, map);
+		String resultOutput = OutputReadBuffer(map);
+		String expected = "<html><head><Title>Users</Title></head><body><h1>All Users</h1><br></br><table style='width:600px' border='1'><tr><th>Username<th>email<th>Fullname</th></th></th></tr></table>";
+		assertTrue(resultOutput.contains(expected));
+	}
 
 	private static String OutputReadBuffer(HashMap<String, String> map) throws IOException {
 		StringBuilder result = new StringBuilder();
@@ -86,7 +114,6 @@ public class ViewTest {
 			{
 				result.append(line);
 			}
-			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

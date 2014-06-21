@@ -1,9 +1,0 @@
-Testsuite: ls.utils.PathParametersTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,018 sec
-------------- Standard Output ---------------
-Invalid command
-------------- ---------------- ---------------
-
-Testcase: null_command_Test took 0,005 sec
-Testcase: path_without_parameters_Test took 0,001 sec
-Testcase: path_with_separated_parameters_Test took 0 sec

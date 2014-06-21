@@ -44,12 +44,17 @@ public class ServerHTTP {
     	}
     }
     
-    public void stopServer() throws Exception{
+    public void stopServer() throws ServerHttpException{
+    	try{
     	if (server != null){
     		server.stop();
     		System.out.println("Server is stopped, bye");
     	}
     	else
     		System.out.println("Server is not running");
+    	}catch(Exception bi)
+    	{
+    		throw new ServerHttpException("Fail stop Http server");
+    	}
     }
 }

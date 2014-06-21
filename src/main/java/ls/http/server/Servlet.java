@@ -48,8 +48,6 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
     	
 		doMethod(req, resp);
-	
-
     }
     
     private void doMethod(HttpServletRequest req, HttpServletResponse resp) throws IOException{
@@ -61,7 +59,7 @@ public class Servlet extends HttpServlet {
     	catch(Throwable th) {
             // No exception should go unnoticed!
             //new HttpResponse(HttpStatusCode.InternalServerError).send(resp);
-    		new HttpResponse(HttpStatusCode.InternalServerError, new InternalServerError(th.getMessage()));
+    		new HttpResponse(HttpStatusCode.InternalServerError, new InternalServerError(th.getMessage())).send(resp);
             
         }
     }       
@@ -85,7 +83,13 @@ public class Servlet extends HttpServlet {
         {
         	if(command[1].contains("rentals"))
         		getProperty(req.getHeader("referer"), commandParameters);
-        	commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
+        	try{
+        		commandParameters.putAll(FormUrlEncoded.retrieveFrom(req));
+        	}catch(IllegalCommandException e)
+        	{
+        		return new HttpResponse(HttpStatusCode.BadRequest, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
+        	}
+        	
         }
         
         RentalManager gest = ServerHTTP.getRental();
@@ -105,7 +109,7 @@ public class Servlet extends HttpServlet {
 		catch(IllegalCommandException e)
 		{
 			
-			return new HttpResponse(HttpStatusCode.NotFound, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
+			return new HttpResponse(HttpStatusCode.BadRequest, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
 		}
         catch(ConnectionDatabaseException e){
         	return new HttpResponse(HttpStatusCode.InternalServerError, modelView(new InternalServerError(e.getMessage()),new JsonErrorView(e.getMessage()),type));
@@ -138,6 +142,8 @@ public class Servlet extends HttpServlet {
 		return new HttpResponse(HttpStatusCode.Ok, page);
        
     }
+	
+	
 
 	private void getProperty(String parameter,
 			HashMap<String, String> commandParameters) {

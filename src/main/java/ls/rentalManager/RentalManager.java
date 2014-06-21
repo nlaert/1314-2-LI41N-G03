@@ -1,5 +1,6 @@
 package ls.rentalManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,8 +8,10 @@ import ls.commands.Commands;
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
+import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.IllegalCommandException;
+import ls.exception.ServerHttpException;
 import ls.http.server.ServerHTTP;
 import ls.output.Output;
 import ls.output.html.view.HtmlView;
@@ -95,7 +98,7 @@ public class RentalManager {
 			System.out.println(list.get(i).path);
 		}	
 	}
-	public  void executeCommand(String [] command) throws Exception{
+	public  void executeCommand(String [] command) throws AppException, IOException{
 		if (command[0].equals("OPTION"))
 			printCommands();
 		else if(command[0].contains("LISTEN"))
@@ -114,10 +117,12 @@ public class RentalManager {
 		}
 	}
 	
-	private  void startServer(String [] command) throws Exception
+	private  void startServer(String [] command) throws IllegalCommandException, ServerHttpException 
 	{
 		if(!activeServer){
 			HashMap <String,String> map = new HashMap<String, String>(); 
+			if(command.length != 3)
+				throw new IllegalCommandException("command LISTEN fail");
 			map = Utils.mapper(command[2], map);
 			Integer port;
 			try{

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
-import ls.jdbc.CRUD;
+import ls.exception.FileException;
 import ls.jdbc.DataBaseManager;
 
 import org.junit.After;
@@ -20,14 +20,14 @@ public class checkAuthTest {
 	String insertUser = "insert into Users values('" + username + "', '" + password + "', 'test@test.com', 'Tester')";
 	DataBaseManager manager;
 	@Before
-	public void setUp() throws SQLException, ConnectionDatabaseException
+	public void setUp() throws SQLException, ConnectionDatabaseException, FileException
 	{
 		CRUD.executeNonQuery(insertUser);
 		manager = new DataBaseManager();
 	}
 	
 	@After
-	public void tearDown() throws SQLException, ConnectionDatabaseException
+	public void tearDown() throws SQLException, ConnectionDatabaseException, FileException
 	{
 		CRUD.executeNonQuery("delete from Users where username = '" + username + "'");
 		manager.closeConnection();

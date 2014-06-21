@@ -1,13 +1,13 @@
 use LS
 
 if object_id('Rental') is not null
-	drop table rental
+	drop table Rental
 if object_id('Properties') is not null
-	drop table properties
+	drop table Properties
 if object_id('Type') is not null
 	drop table [Type]
 if object_id('Users') is not null
-	drop table users
+	drop table Users
 
 create table Users(
 	[username] varchar(15) primary key,
@@ -74,5 +74,5 @@ select * from properties inner join rental on pid = property
 delete from rental where property=1
 delete from properties where pid = 1
 */
-
+select * from Users
 select * from properties

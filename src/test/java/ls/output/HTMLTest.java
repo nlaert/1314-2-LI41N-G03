@@ -47,7 +47,7 @@ public class HTMLTest {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("output-file", "HTMLTest");
 		int style = 150 * 4;
-		ViewHtml v;
+		//ViewHtml v;
 		HtmlPage hp;
 		v = gest.getView();
 		

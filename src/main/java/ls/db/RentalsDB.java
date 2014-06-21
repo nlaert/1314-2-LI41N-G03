@@ -147,6 +147,10 @@ public class RentalsDB extends CommandsUtils{
 		try{
 			link = new DataBaseManager();
 			int yearActual = Calendar.getInstance().get(Calendar.YEAR);
+			
+			if(!checkDigit(map.get("year")) || !checkDigit(map.get("cw")))
+				throw new IllegalCommandException("year or cw is not a digit");
+			
 			if(Integer.parseInt(map.get("year")) < yearActual || Integer.parseInt(map.get("cw")) > 52 || Integer.parseInt(map.get("cw")) < 1)
 			{
 				throw new IllegalCommandException("Invalid Date");

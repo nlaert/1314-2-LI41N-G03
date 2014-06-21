@@ -24,7 +24,8 @@ import ls.http.response.HttpStatusCode;
 import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
 import ls.output.html.view.HtmlView;
-import ls.output.html.view.InternalServerError;
+import ls.output.html.view.InternalServerErrorView;
+import ls.output.html.view.NotFoundView;
 import ls.output.json.view.JsonErrorView;
 import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
@@ -58,15 +59,20 @@ public class Servlet extends HttpServlet {
         }
     	catch(Throwable th) {
             // No exception should go unnoticed!
-            //new HttpResponse(HttpStatusCode.InternalServerError).send(resp);
-    		new HttpResponse(HttpStatusCode.InternalServerError, new InternalServerError(th.getMessage())).send(resp);
+    		new HttpResponse(HttpStatusCode.InternalServerError, new InternalServerErrorView(th.getMessage())).send(resp);
             
         }
     }       
    	    
 	private HttpResponse resolveHttpHandler(HttpServletRequest req, HttpServletResponse resp) throws IOException, URISyntaxException, IllegalCommandException, ConnectionDatabaseException, AuthenticationException, FileException {
 		String type = req.getHeader("accept");
+		RentalManager gest = ServerHTTP.getRental();
+        ICommand<IType> cmd = null;
+        ICommandResult<IType> result = null;
+        HttpContent page = null;
 		
+        
+        
 		URI reqUri = new URI(req.getRequestURI());
         if(reqUri.getPath().equals("/"))
         {
@@ -92,15 +98,12 @@ public class Servlet extends HttpServlet {
         	
         }
         
-        RentalManager gest = ServerHTTP.getRental();
-        
-        ICommand<IType> cmd = null;
-        ICommandResult<IType> result = null;
         try{
         	if(command[0].equals("POST"))
         		tryRestoreCurrentUser(req, commandParameters);
         	cmd = gest.find(command,commandParameters);
 			result = cmd.execute(commandParameters);
+
         }
         catch(AuthenticationException e)
 		{
@@ -112,11 +115,11 @@ public class Servlet extends HttpServlet {
 			return new HttpResponse(HttpStatusCode.BadRequest, modelView(new BadRequestView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
 		}
         catch(ConnectionDatabaseException e){
-        	return new HttpResponse(HttpStatusCode.InternalServerError, modelView(new InternalServerError(e.getMessage()),new JsonErrorView(e.getMessage()),type));
+        	return new HttpResponse(HttpStatusCode.InternalServerError, modelView(new InternalServerErrorView(e.getMessage()),new JsonErrorView(e.getMessage()),type));
         }
         
         
-        HttpContent page = null;
+        
         if(type.contains("text/html")){
         	
         	HtmlView<IType> view = gest.getView();
@@ -184,9 +187,7 @@ public class Servlet extends HttpServlet {
 	private HttpContent modelView(HttpContent html,HttpContent json, String type)
 	{
 		if(type.contains("text/html"))
-		{
 			return html;
-		}
 		else 
 			return json;
 	}

@@ -10,4 +10,9 @@ public class JsonErrorView extends JsonPage{
 		super(new JsonText(String.format("{\"error\":\"%s\"}",error)));
 	}
 	
+	public JsonErrorView()
+	{
+		super(new JsonText("{}"));
+	}
+	
 }

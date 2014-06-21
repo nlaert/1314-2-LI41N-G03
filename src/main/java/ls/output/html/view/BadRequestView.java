@@ -11,5 +11,14 @@ public class BadRequestView extends HtmlPage implements ITypeView{
 				goInit()
 				);
 	}
+	
+	public BadRequestView() {
+		super("NJ Rentals",
+				h1(text("Bad Request")),
+				goInit()
+				);
+	}
+	
+	
 
 }

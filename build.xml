@@ -116,7 +116,7 @@
     <echo message="TODO: Replace GROUPID with your group identifier (.e.g LI41D-G00)"/>
     <jar 	jarfile="${target}/1314-2-LS-LI41N-G03.jar" basedir="${target-classes}" >
     	<manifest>
-    		<attribute name="Main-Class" value="ls.app.App"/>
+    		<attribute name="Main-Class" value="ls.app.NJRentals"/>
      		<attribute name="Class-Path" value="${mf.classpath}"/>
     	</manifest>
     </jar>

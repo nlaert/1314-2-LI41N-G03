@@ -62,6 +62,9 @@ public class NJRentals {
 				gest.executeCommand(args);
 		} catch (AppException e) {
 			e.getMessage();
+		} catch (Exception e)
+		{
+			e.getMessage();
 		}
 				
 	}

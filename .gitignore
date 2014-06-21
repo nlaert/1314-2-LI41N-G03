@@ -27,3 +27,9 @@ target/test-reports/TEST-ls.commands.checkIfExistsTest.txt
 target/test-reports/TEST-ls.commands.TestCommands.txt
 
 target/test-reports/TEST-ls.output.HTMLTest.txt
+
+target/test-reports/TEST-ls.utils.locationTransformerTest.txt
+
+target/test-reports/TEST-ls.utils.mapperTest.txt
+
+target/test-reports/TEST-ls.utils.PathParametersTest.txt

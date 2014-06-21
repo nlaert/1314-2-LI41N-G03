@@ -1,4 +1,4 @@
-package ls.jdbc;
+package ls.commands;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +10,7 @@ import ls.commands.CommandsUtils;
 import ls.exception.ConnectionDatabaseException;
 import ls.exception.FileException;
 import ls.exception.IllegalCommandException;
+import ls.jdbc.DataBaseManager;
 
 public class CRUD {
 	private static DataBaseManager link;

@@ -38,6 +38,22 @@ public abstract class CommandsUtils {
 			link.closeConnection();
 	}
 	
+	public static boolean empty(String text)
+	{
+		return text.equals("");
+	}
+	
+	public static boolean checkDigit(String text)
+	{
+		int i = 0;
+		do{
+			if(!Character.isDigit(text.charAt(i)))
+				return false;
+			i++;
+		}while(i<text.length());
+		return true;
+	}
+	
 	public static boolean checkAuth(String username, String password, Connection conn) throws SQLException
 	{
 		String auth = ("Select username from Users Where username = ? and password = ?");

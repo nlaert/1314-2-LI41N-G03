@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ls.exception.IllegalCommandException;
+
 import com.sun.net.httpserver.HttpExchange;
 
 public class FormUrlEncoded {
@@ -18,7 +20,7 @@ public class FormUrlEncoded {
     }
     
     // TODO assumes Content-Length present and UTF-8 charset
-    public static Map<String,String> retrieveFrom(HttpServletRequest req) throws IOException{
+    public static Map<String,String> retrieveFrom(HttpServletRequest req) throws IOException, IllegalCommandException{
         Map<String, String> map = new HashMap<String,String>();
         byte[] bytes = new byte[req.getContentLength()];
         req.getInputStream().read(bytes);
@@ -26,7 +28,10 @@ public class FormUrlEncoded {
         String[] pairs = content.split("&");
         for(String pair : pairs) {
             String[] kvp = pair.split("=");
-            map.put(URLDecoder.decode(kvp[0], "UTF-8"),
+            if(!(kvp.length==2))
+            	throw new IllegalCommandException("Empty parameters");
+            else
+            	map.put(URLDecoder.decode(kvp[0], "UTF-8"),
                     URLDecoder.decode(kvp[1], "UTF-8"));
         }
         return map;

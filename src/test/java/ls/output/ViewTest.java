@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import ls.commands.result.ICommandResult;
 import ls.commands.result.UsersResult;
-import ls.db.IType;
 import ls.db.User;
 import ls.exception.AppException;
 import ls.exception.ConnectionDatabaseException;

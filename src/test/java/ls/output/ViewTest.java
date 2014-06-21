@@ -29,7 +29,7 @@ import org.junit.Test;
 
 
 
-public class HTMLTest {
+public class ViewTest {
 	
 	static RentalManager gest;
 	static ICommandResult commandResult;
@@ -44,31 +44,23 @@ public class HTMLTest {
 		commandResult = new UsersResult(aux);
 		gest = new RentalManager();
 		gest.addView(UsersResult.class, UsersView.class);
-		
-		
 	}
 	
 	@Test
 	public void JSON_multiple_Rows_Test() throws FileException, IOException{
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("output-file", "JSONTest");
+		Output.send(new JsonView(commandResult,map),map);
+		
 		String resultOutput = OutputReadBuffer(map);
 		String result = "[{\"Username\":\"nick\",\"Password\":\"pass\",\"Email\":\"a35466@alunos.isel.pt\",\"FullName\":\"Nick Laert\"},"
 				+ "{\"Username\":\"joao\",\"Password\":\"pass\",\"Email\":\"a35392@alunos.isel.pt\",\"FullName\":\"Joao Rodrigues\"}]";
-		JsonView.jsonify(commandResult, map);
+		
 		assertEquals(result, resultOutput.toString());
 	}
 	
 	@Test
 	public void HTML_multiple_Rows_Test() throws AppException, IOException{
-		String resultOutput="";
-
-//		User u1 = new User("nick", "pass", "a35466@alunos.isel.pt", "Nick Laert");
-//		User u2 = new User("joao", "pass", "a35392@alunos.isel.pt", "Joao Rodrigues");
-//		ArrayList<User> aux = new ArrayList<User>();
-//		aux.add(u1);
-//		aux.add(u2);
-//		UsersResult commandResult = new UsersResult(aux);
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("output-file", "HTMLTest");
 		HtmlView v;
@@ -77,7 +69,7 @@ public class HTMLTest {
 
 		hp = v.getView(commandResult, map);
 		Output.send(hp, map);
-		resultOutput = OutputReadBuffer(map);
+		String resultOutput = OutputReadBuffer(map);
 
 		String expected = "<tr><td><a href='/users/nick'>nick</a></td><td>a35466@alunos.isel.pt</td><td>Nick Laert</td></tr>";
 		String expected2 = "<tr><td><a href='/users/joao'>joao</a></td><td>a35392@alunos.isel.pt</td><td>Joao Rodrigues</td></tr>";
@@ -85,7 +77,7 @@ public class HTMLTest {
 		assertTrue(resultOutput.contains(expected2));	
 	}
 
-	public static String OutputReadBuffer(HashMap<String, String> map) throws IOException {
+	private static String OutputReadBuffer(HashMap<String, String> map) throws IOException {
 		StringBuilder result = new StringBuilder();
 		BufferedReader reader = null;
 		try {

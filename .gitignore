@@ -17,3 +17,13 @@ src/main/java/ls/jdbc/config.txt
 target/classes/ls/jdbc/config.txt
 .metadata/
 
+
+target/test-reports/TEST-ls.commands.checkAuthTest.txt
+
+*.txt
+
+target/test-reports/TEST-ls.commands.checkIfExistsTest.txt
+
+target/test-reports/TEST-ls.commands.TestCommands.txt
+
+target/test-reports/TEST-ls.output.HTMLTest.txt

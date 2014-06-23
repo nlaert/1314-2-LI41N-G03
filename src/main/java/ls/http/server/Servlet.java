@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
+
 import ls.commands.ICommand;
 import ls.commands.result.ICommandResult;
 import ls.db.IType;
@@ -25,12 +27,9 @@ import ls.output.html.view.BadRequestView;
 import ls.output.html.view.HomePageView;
 import ls.output.html.view.HtmlView;
 import ls.output.html.view.InternalServerErrorView;
-import ls.output.html.view.NotFoundView;
 import ls.output.json.view.JsonErrorView;
 import ls.output.json.view.JsonView;
 import ls.rentalManager.RentalManager;
-
-import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 
 public class Servlet extends HttpServlet {
@@ -177,8 +176,8 @@ public class Servlet extends HttpServlet {
 			throw new AuthenticationException("Invalid Login");
 		
 		auth = auth.split(" ")[1];
-		
-		auth = Base64.base64Decode(auth);
+		Base64 b = new Base64();
+		auth = new String(b.decode(auth));
 		String [] parametersAuthentication = auth.split(":");
 		commandParameters.put("auth_username", parametersAuthentication[0]);
 		commandParameters.put("auth_password", parametersAuthentication[1]);
